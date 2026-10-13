@@ -1,0 +1,1151 @@
+<title>Floor Ready</title>
+<style>
+/* Layout: mobile-first app with bottom dock, top tabs on desktop; SharkNinja teal/black/white/silver */
+:root{
+  --bg:#ffffff; --surface:#f2f3f4; --surface-2:#e4e5e7; --ink:#000000; --muted:#4b4c4e;
+  --line:#d3d4d6; --teal:#00a5af; --on-teal:#000000; --accent-text:#000000;
+  --warn:#e74c39; --ok:#97c93c; --chip-a-bg:#000000; --chip-a-ink:#ffffff;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#000000; --surface:#171717; --surface-2:#2a2a2a; --ink:#ffffff; --muted:#bbbdc0;
+    --line:#333333; --accent-text:#00a5af; --chip-a-bg:#ffffff; --chip-a-ink:#000000; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#000000; --surface:#171717; --surface-2:#2a2a2a; --ink:#ffffff; --muted:#bbbdc0;
+  --line:#333333; --accent-text:#00a5af; --chip-a-bg:#ffffff; --chip-a-ink:#000000; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.5 "Proxima Nova","Gotham","Helvetica Neue",Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+button,input,select,textarea{font-family:inherit}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.wrap{max-width:780px;margin:0 auto;padding-inline:20px}
+h1,h2,h3,p{margin:0}
+.pivot{display:inline-block;width:30px;height:10px;background:var(--teal);transform:skewX(-24deg);flex:none}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:1px solid var(--line)}
+.top-in{display:flex;align-items:center;justify-content:space-between;height:56px}
+.mark{display:flex;align-items:center;gap:12px;font-weight:700;font-size:20px;letter-spacing:0;background:none;border:0;padding:0;color:var(--ink)}
+.tabs{display:none;gap:4px}
+.tab{background:none;border:0;padding:8px 14px;font-weight:600;color:var(--muted);border-bottom:3px solid transparent}
+.tab[aria-current="page"]{color:var(--ink);border-bottom-color:var(--teal)}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--bg);border-top:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom,0px)}
+.dock button{background:none;border:0;padding:10px 0 9px;display:flex;flex-direction:column;align-items:center;gap:3px;
+  font-size:12.5px;font-weight:600;color:var(--muted)}
+.dock button[aria-current="page"]{color:var(--ink)}
+.dock button[aria-current="page"] svg{stroke:var(--teal)}
+.dock svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+body[data-view="session"] .dock{display:none}
+@media (min-width:780px){.tabs{display:flex}.dock{display:none}}
+
+main{padding-top:28px;padding-bottom:110px;min-height:70vh}
+body[data-view="session"] main{padding-top:0;padding-bottom:0}
+@media (min-width:780px){main{padding-bottom:64px}}
+
+/* hero */
+.hero h1{font-size:clamp(30px,7.2vw,48px);line-height:1.04;font-weight:700;max-width:16em}
+.lede{margin-top:14px;color:var(--muted);max-width:34em;font-size:17px}
+.controls{margin:26px 0 8px;display:flex;flex-wrap:wrap;gap:14px 22px;align-items:flex-end}
+.field{display:flex;flex-direction:column;gap:6px}
+.lab{font-size:13px;font-weight:600;color:var(--muted)}
+.seg{display:inline-flex;flex-wrap:wrap;border:1.5px solid var(--ink);border-radius:999px;padding:3px;gap:2px}
+.seg button{border:0;background:none;padding:7px 14px;border-radius:999px;font-weight:600;font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--teal);color:var(--on-teal)}
+.ghost{background:none;border:1.5px solid var(--ink);border-radius:999px;padding:8px 16px;font-weight:600;font-size:14px}
+.ghost:hover{border-color:var(--teal)}
+.primary{background:var(--teal);color:var(--on-teal);border:0;border-radius:999px;padding:11px 22px;font-weight:700}
+.primary:disabled{opacity:.45;cursor:not-allowed}
+.banner{margin:18px 0 0;padding:12px 16px;border-left:4px solid var(--warn);background:var(--surface);font-size:15px}
+
+/* persona cards */
+.personas{display:grid;gap:14px;margin-top:20px;grid-template-columns:1fr}
+@media (min-width:640px){.personas{grid-template-columns:1fr 1fr}}
+.pcard{position:relative;text-align:left;background:var(--surface);border:1.5px solid transparent;border-radius:4px 18px 18px 4px;
+  padding:18px 18px 16px 26px;display:flex;flex-direction:column;gap:10px;min-height:210px;min-width:0}
+.pcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:10px;background:var(--teal);clip-path:polygon(0 0,100% 0,35% 100%,0 100%)}
+.pcard:hover{border-color:var(--teal)}
+.pcard-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.chip{display:inline-block;font-size:12.5px;font-weight:700;padding:2px 10px;border-radius:999px}
+.chip.shark{background:var(--chip-a-bg);color:var(--chip-a-ink)}
+.chip.ninja{background:var(--teal);color:#000}
+.vs{font-size:13px;color:var(--muted);font-weight:600}
+.pcard-quote{font-size:19px;line-height:1.28;font-weight:600}
+.pcard-name{font-weight:700;margin-top:auto}
+.pcard-store{font-size:13.5px;color:var(--muted);margin-top:-6px}
+
+/* session */
+.session{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
+.s-top{position:sticky;top:calc(env(safe-area-inset-top,0px) + 56px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:10px;padding:10px 0}
+.s-title{flex:1;min-width:0}
+.s-title b{display:block;font-size:16px;line-height:1.2}
+.s-title span{font-size:13px;color:var(--muted)}
+.icon-btn{background:none;border:1.5px solid var(--line);border-radius:999px;width:42px;height:42px;display:grid;place-items:center;flex:none}
+.icon-btn[aria-pressed="true"]{border-color:var(--teal);background:var(--teal);color:#000}
+.icon-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.brief{margin:14px 0 6px;padding:10px 14px;border-left:4px solid var(--teal);background:var(--surface);font-size:14px;color:var(--muted)}
+.thread{flex:1;padding:14px 0 18px}
+.b{max-width:88%;padding:10px 14px;border-radius:16px;margin:0 0 10px;white-space:pre-wrap;overflow-wrap:anywhere}
+.b.shopper{background:var(--surface);border-bottom-left-radius:4px}
+.b.you{background:var(--teal);color:#000;margin-left:auto;border-bottom-right-radius:4px}
+.b.wait{color:var(--muted);font-style:italic}
+.note{font-size:14px;color:var(--muted);margin:0 0 12px;padding:10px 14px;border:1px dashed var(--line);border-radius:10px}
+.note button{background:none;border:0;padding:0;text-decoration:underline;font-weight:600}
+.composer{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px))}
+.c-row{display:flex;gap:8px;align-items:flex-end}
+.c-row textarea{flex:1;min-width:0;resize:none;min-height:46px;max-height:130px;border:1.5px solid var(--line);border-radius:23px;padding:11px 16px;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.35}
+.c-row textarea:focus{border-color:var(--teal);outline:none}
+.c-tools{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.linkish{background:none;border:0;padding:0;font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.end-btn{margin-left:auto}
+.micnote{font-size:13px;color:var(--muted)}
+
+/* debrief */
+.deb h1{font-size:clamp(28px,6.4vw,42px);line-height:1.06;font-weight:700;max-width:17em}
+.deb .sub{margin-top:10px;color:var(--muted)}
+.scores{margin:28px 0 8px;display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:640px){.scores{grid-template-columns:1fr 1fr}}
+.sc{border-top:3px solid var(--teal);padding-top:10px}
+.sc-h{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.sc-h b{font-size:15px}
+.sc p{margin-top:6px;font-size:14.5px;color:var(--muted)}
+.meter{display:inline-flex;gap:4px}
+.meter i{width:20px;height:9px;background:var(--surface-2);transform:skewX(-24deg)}
+.meter i.on{background:var(--teal)}
+@media (prefers-reduced-motion:no-preference){
+  .deb .meter i.on{animation:fill .5s both}
+  .deb .meter i:nth-child(2){animation-delay:.08s}.deb .meter i:nth-child(3){animation-delay:.16s}
+  .deb .meter i:nth-child(4){animation-delay:.24s}.deb .meter i:nth-child(5){animation-delay:.32s}
+  @keyframes fill{from{background:var(--surface-2)}to{background:var(--teal)}}
+}
+.reveal{margin:26px 0;border:1.5px solid var(--ink)}
+.reveal summary{list-style:none;cursor:pointer;padding:16px 18px;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  background:repeating-linear-gradient(-45deg,var(--teal) 0 12px,var(--bg) 12px 24px);color:#000}
+.reveal summary span{background:var(--bg);color:var(--ink);padding:4px 12px;border-radius:999px;font-size:14px}
+.reveal summary::-webkit-details-marker{display:none}
+.reveal[open] summary{background:var(--teal)}
+.reveal .rv{padding:16px 18px;display:grid;gap:10px}
+.found{font-weight:700}
+.two{display:grid;gap:22px;grid-template-columns:1fr;margin-top:6px}
+@media (min-width:640px){.two{grid-template-columns:1fr 1fr}}
+.two h3,.h3{font-size:17px;font-weight:700;margin-bottom:8px}
+ul.clean{margin:0;padding-left:18px;display:grid;gap:8px}
+.say{margin-top:24px;padding:18px 20px;background:var(--surface);border-left:6px solid var(--teal)}
+.say q{display:block;font-size:20px;font-weight:600;line-height:1.3;quotes:"“" "”";margin-top:6px}
+.flag{margin-top:22px;padding:14px 16px;border-left:4px solid var(--warn);background:var(--surface)}
+.themes{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.theme{border:1.5px solid var(--line);border-radius:999px;padding:3px 12px;font-size:14px;font-weight:600}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.loading{padding:56px 0;display:grid;gap:14px;justify-items:start}
+.loading .pivot{width:64px}
+
+/* guide */
+.page-h{font-size:clamp(26px,5.6vw,38px);line-height:1.08;font-weight:700}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.fchip{border:1.5px solid var(--line);background:none;border-radius:999px;padding:6px 14px;font-weight:600;font-size:14px}
+.fchip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.prod{border:1.5px solid var(--line);margin:0 0 14px;border-radius:4px 16px 16px 4px;overflow:hidden}
+.prod>summary{list-style:none;cursor:pointer;padding:16px 18px;display:flex;gap:12px;align-items:center;justify-content:space-between}
+.prod>summary::-webkit-details-marker{display:none}
+.prod>summary b{font-size:18px;display:block;line-height:1.2}
+.prod>summary small{color:var(--muted);font-size:14px}
+.prod[open]>summary{border-bottom:1px solid var(--line);background:var(--surface)}
+.facts{padding:14px 18px 4px;font-size:14.5px}
+.facts ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.confirm{margin:10px 18px 4px;font-size:13.5px;color:var(--muted)}
+.qs{padding:8px 18px 18px}
+.q{border-top:1px solid var(--line)}
+.q summary{list-style:none;cursor:pointer;padding:14px 0;display:grid;gap:2px}
+.q summary::-webkit-details-marker{display:none}
+.q summary b{font-weight:600;font-size:16.5px}
+.q summary small{color:var(--muted);font-size:13.5px}
+.q .qb{padding:0 0 16px;display:grid;gap:12px}
+.qb .lab{margin-bottom:2px}
+.qb .sayline{padding:10px 14px;background:var(--surface);border-left:4px solid var(--teal);font-weight:600}
+.qb .care{padding:10px 14px;border-left:4px solid var(--warn);background:var(--surface);font-size:15px}
+.vcard{border:1.5px solid var(--line);padding:18px;margin-bottom:14px;border-radius:4px 16px 16px 4px;display:grid;gap:12px}
+.vcard h3{font-size:19px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tag-warn{font-size:12.5px;font-weight:700;background:var(--warn);color:#000;border-radius:999px;padding:2px 10px}
+.gap{display:grid;gap:4px;padding:14px 0;border-top:1px solid var(--line)}
+.gap b{font-size:16.5px}
+.gap .st{justify-self:start;font-size:12.5px;font-weight:700;border-radius:999px;padding:2px 10px;background:var(--surface-2)}
+
+/* insights */
+.stats{display:grid;gap:14px;grid-template-columns:1fr 1fr;margin:22px 0}
+@media (min-width:640px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{border-top:3px solid var(--teal);padding-top:8px}
+.stat b{font-size:34px;line-height:1;font-weight:700;display:block;font-variant-numeric:tabular-nums}
+.stat span{font-size:13.5px;color:var(--muted)}
+.bars{display:grid;gap:10px;margin:12px 0 4px}
+.bar{display:grid;grid-template-columns:minmax(120px,38%) 1fr 28px;gap:10px;align-items:center;font-size:14.5px}
+.bar i{display:block;height:12px;background:var(--teal);transform:skewX(-24deg);transform-origin:left}
+.bar em{font-style:normal;font-weight:700;text-align:right}
+.split{display:flex;height:16px;margin:10px 0 6px}
+.split i{display:block;height:100%}
+.sec{margin-top:36px}
+.sec h2{font-size:22px;font-weight:700}
+.sec>p{color:var(--muted);margin-top:4px}
+.logform{display:grid;gap:12px;margin-top:14px;padding:18px;background:var(--surface);border-radius:4px 16px 16px 4px;border-left:6px solid var(--teal)}
+.logform select,.logform textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);color:var(--ink);font-size:16px}
+.logform textarea{min-height:70px;resize:vertical}
+.priv{margin-top:26px;font-size:13.5px;color:var(--muted)}
+.recent{display:grid;gap:8px;margin-top:14px}
+.recent div{padding:10px 14px;border-left:4px solid #bbbdc0;background:var(--surface);font-size:15px}
+.empty{padding:22px;border:1.5px dashed var(--line);border-radius:12px;color:var(--muted)}
+/* landing */
+.land h1{font-size:clamp(34px,8.4vw,58px);line-height:1.0;font-weight:700;max-width:11em}
+.land .hi{margin-top:10px;color:var(--muted);font-size:17px;max-width:30em}
+.sbox{position:relative;margin-top:24px}
+.sbox label{display:block;font-size:14px;font-weight:600;margin-bottom:8px}
+.sfield{position:relative}
+.sfield svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round}
+.sfield input{width:100%;border:2px solid var(--ink);border-radius:999px;padding:15px 20px 15px 52px;font-size:17px;background:var(--bg);color:var(--ink)}
+.sfield input:focus{border-color:var(--teal);outline:3px solid rgba(0,165,175,.35);outline-offset:0}
+.sugg{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.sres{margin-top:12px}
+.sres:empty{display:none}
+.sres .inner{border:1.5px solid var(--line);border-radius:4px 16px 16px 4px;padding:2px 16px 4px}
+.sres .q:first-child{border-top:0}
+.today{position:relative;margin-top:28px;background:var(--teal);color:#000;padding:24px 24px 34px;
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 24px),calc(100% - 44px) 100%,0 100%)}
+.today .lab{color:#000;opacity:.78;font-size:14px;font-weight:600}
+.today q{display:block;font-size:clamp(23px,5.8vw,34px);line-height:1.16;font-weight:700;margin:10px 0 8px;quotes:"\201C" "\201D";max-width:20em}
+.today .who{font-size:15px;max-width:34em}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.btn-black{background:#000;color:#fff;border:2px solid #000;border-radius:999px;padding:12px 22px;font-weight:700}
+.btn-line{background:none;color:#000;border:2px solid #000;border-radius:999px;padding:12px 22px;font-weight:700}
+.btn-black:focus-visible,.btn-line:focus-visible{outline-color:#000}
+.tiles{display:grid;gap:12px;margin-top:22px;grid-template-columns:1fr}
+@media (min-width:640px){.tiles{grid-template-columns:repeat(3,1fr)}}
+.tile{position:relative;text-align:left;display:grid;grid-template-columns:44px 1fr;gap:6px 14px;align-items:center;background:var(--surface);
+  border:1.5px solid transparent;border-radius:4px 18px 18px 4px;padding:16px 16px 16px 24px;min-width:0}
+.tile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:9px;background:var(--teal);clip-path:polygon(0 0,100% 0,35% 100%,0 100%)}
+.tile:hover{border-color:var(--teal)}
+.tile .ti svg{width:34px;height:34px;fill:none;stroke:var(--teal);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;display:block}
+.tile .tt{display:block}
+.tile b{display:block;font-size:19px;line-height:1.15}
+.tile .d{display:block;font-size:14.5px;color:var(--muted);margin-top:3px}
+.tile .m{display:block;font-size:13px;font-weight:700;margin-top:6px}
+@media (min-width:640px){.tile{grid-template-columns:1fr;align-items:start;min-height:200px}.tile .ti{margin-bottom:6px}}
+.resume{margin-top:26px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:14px 0;border-top:1px solid var(--line);font-size:15px}
+.resume span{color:var(--muted)}
+/* learn */
+.lsec{padding:16px 18px 4px}
+.lsec h3{font-size:16px;font-weight:700;margin:0 0 8px}
+.lsec p{margin:0}
+.specs{display:grid;grid-template-columns:1fr;margin:0}
+@media (min-width:640px){.specs{grid-template-columns:1fr 1fr;column-gap:26px}}
+.specs div{padding:9px 0;border-top:1px solid var(--line)}
+.specs dt{font-size:13px;font-weight:600;color:var(--muted)}
+.specs dd{margin:0;font-size:15.5px}
+.specs dd em{font-style:normal;color:var(--muted);font-size:13px}
+.feat{padding:12px 14px;border-left:4px solid var(--teal);background:var(--surface);margin-bottom:10px}
+.feat b{display:block}
+.feat p{margin:2px 0 0;font-size:15px}
+.feat .gain{font-weight:600;margin-top:6px}
+.fitgrid{display:grid;gap:18px;grid-template-columns:1fr}
+@media (min-width:640px){.fitgrid{grid-template-columns:1fr 1fr}}
+.flagbox{margin:12px 18px 0;padding:12px 14px;border-left:4px solid var(--warn);background:var(--surface);font-size:15px}
+.flagbox b{display:block;margin-bottom:4px}
+.flagbox ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.lact{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:16px 18px 18px}
+.srcnote{font-size:13px;color:var(--muted)}
+.tbl{overflow-x:auto;margin:14px 0 24px;border:1.5px solid var(--line)}
+.tbl table{border-collapse:collapse;min-width:720px;width:100%;font-size:14.5px}
+.tbl th,.tbl td{padding:10px 12px;text-align:left;vertical-align:top;border-top:1px solid var(--line)}
+.tbl thead th{border-top:0;background:var(--surface);font-weight:700}
+.tbl th[scope="row"]{position:sticky;left:0;background:var(--surface);font-weight:600;min-width:120px}
+.need{display:grid;gap:2px;padding:12px 0;border-top:1px solid var(--line)}
+.need b{font-size:16.5px}
+.need span{color:var(--muted);font-size:15px}
+.terms{margin:0}
+.terms dt{font-weight:700;margin-top:16px}
+.terms dd{margin:2px 0 0;color:var(--muted)}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);
+  padding:10px 18px;border-radius:999px;font-size:14.5px;font-weight:600;z-index:60;max-width:90vw;display:none}
+</style>
+
+<header class="top"><div class="wrap top-in">
+  <button class="mark" data-act="tab" data-tab="home" aria-label="Floor Ready home"><span class="pivot"></span>Floor Ready</button>
+  <nav class="tabs" id="tabsTop" aria-label="Sections"></nav>
+</div></header>
+<main id="app" class="wrap"></main>
+<nav class="dock" id="tabsDock" aria-label="Sections"></nav>
+<div id="toast" role="status"></div>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+
+/* ---------- CONTENT: drawn from promoter conversations; confirm against approved sheets ---------- */
+var THEMES=[`Price vs online`,`No-cost EMI / finance`,`Service and repairs`,`Weight`,`Suction / air watts`,`Attachments and versatility`,`Battery run time`,`Warranty / accidental damage`,`Home demo`,`Capacity looks small`,`Indian cooking fit`,`Interior material`,`Accessories and spares`,`Recipes and app`,`Competitor claim`,`Other`];
+
+var PERSONAS=[
+{id:'dyson',cat:'Shark',name:`The Dyson demo-er`,store:`Premium mall counter. Dyson is demoed next door.`,vs:`vs Dyson`,
+ line:`Abhi side wale counter pe Dyson dekha. Ye Shark thoda bhaari lag raha hai. Isme alag kya hai?`,
+ who:`A man in his late thirties who just tried a Dyson at the next counter. Lives in a 3BHK in a metro city.`,
+ surface:[`weight compared with Dyson`,`air watts`,`wants one machine for floor, sofa and curtains`,`accidental damage cover`],
+ hidden:`His wife has a sore wrist and will do most of the cleaning, so weight really matters, though he has not said so. He also hates the idea of buying and storing a second machine for sofas and curtains.`},
+{id:'online',cat:'Ninja',name:`The Amazon checker`,store:`Mixed-crowd standalone store. Phone already open on Amazon.`,vs:`vs Amazon / Flipkart`,
+ line:`Amazon pe HDFC card ke saath ₹3,000 kam dikh raha hai. Aap match kar sakte ho? EMI bhi chahiye.`,
+ who:`A woman in her early thirties with a Ninja product already in mind. Checks reviews and prices on her phone.`,
+ surface:[`₹3,000 online gap with bank card offer`,`wants no-cost EMI`,`will leave and buy online`],
+ hidden:`It is festive season and she plans to buy three or four appliances together. She cares about total outlay and monthly payments more than any single price, and would pay a little more if someone made the whole plan clear and honest.`},
+{id:'cooking',cat:'Ninja',name:`The Indian-cooking sceptic`,store:`Standalone store. A Philips promoter just spoke to her.`,vs:`vs Philips`,
+ line:`Philips wale bhaiya bol rahe the ye European design hai, isme Indian khana nahi banta. Sach hai kya?`,
+ who:`A woman in her forties who cooks daily for a joint family and compares every appliance with her OTG.`,
+ surface:[`European design claim`,`can I stir with a spatula`,`plastic interior`,`looks small inside`],
+ hidden:`She cooks three meals a day for a joint family and dinner always runs late because everything waits for one burner. She wants two dishes ready together, but fears spending on a gadget that ends up unused.`},
+{id:'upgrader',cat:'Ninja',name:`The microwave upgrader`,store:`Mall store. Came for a microwave; your counter caught her eye.`,vs:`vs microwave / OTG`,
+ line:`Haan, microwave dekh rahi thi. Ye kya alag hai usse?`,
+ who:`A woman in her thirties, open-minded, shopping for a convection microwave. Easy to convert if you ask the right things.`,
+ surface:[`what is different from a microwave`,`price versus a microwave`,`will it replace my microwave`],
+ hidden:`Her old microwave only reheats. She bakes on weekends and her son keeps asking for pizza and cake, but there is no counter space for a separate OTG.`},
+{id:'service',cat:'Ninja',name:`The repair worrier`,store:`Standalone store. Likes the product, hesitating at the counter.`,vs:`no service centre`,
+ line:`Product achha hai, par kharab ho gaya toh service center kahan hai? Mere area mein toh koi dikhta nahi.`,
+ who:`A man in his forties, careful with money, who has been burned by after-sales before.`,
+ surface:[`where is the service centre`,`what if it breaks`,`warranty`],
+ hidden:`His last appliance broke and took three weeks to repair. This is about trust after the sale, not features. A clear, honest plan matters more to him than a discount.`},
+{id:'pethair',cat:'Shark',name:`The dog-hair household`,store:`Premium store. Walks in with phone photos of her flat.`,vs:`vs corded vacuum`,
+ line:`Ghar mein dog hai, baal poore ghar mein. Ye cordless chalega? Battery kitni der chalti hai?`,
+ who:`A woman in her thirties with a large shedding dog, a 3BHK flat and a corded vacuum she dislikes.`,
+ surface:[`battery run time`,`will it handle dog hair`,`cordless worries`],
+ hidden:`She cleans a 3BHK every day and goes over the same spots again and again. What she really wants is to finish in one pass, and she is afraid a short battery will leave half the flat undone.`},
+{id:'blast',cat:'Ninja',name:`The mixer-grinder comparer`,store:`Mall store. Holding a Ninja Blast and frowning at the tag.`,vs:`vs mixer-grinder`,
+ line:`Blast ke itne paise? Itne mein toh mixer-grinder aata hai teen jar ke saath.`,
+ who:`A man in his late twenties, works in IT, early riser, health-conscious.`,
+ surface:[`price versus a ₹3,500-4,000 mixer-grinder`,`only one jar`,`wants an extra jar`],
+ hidden:`He makes protein shakes before work and hates washing three jars. He would happily buy a second Blast jar if it were sold separately.`},
+{id:'eureka',cat:'Shark',name:`The Eureka Forbes loyalist`,store:`Standalone store. Has used the same vacuum brand for years.`,vs:`vs Eureka Forbes`,
+ line:`Hum toh hamesha Eureka Forbes use karte aaye hain. Unka service bhi achha hai. Ye alag kyun hai?`,
+ who:`A man in his fifties, loyal and practical. Speaks about Eureka Forbes only in general terms of familiarity and trusted service.`,
+ surface:[`loyalty to current brand`,`trust in service`,`why switch`],
+ hidden:`His corded vacuum is heavy to drag up and down the stairs of his duplex. He is loyal because he trusts the after-sales, not because he loves the machine.`}
+];
+
+var PRODUCTS=[
+{id:'hydrovac',brand:'Shark',name:`Shark Hydrovac`,sub:`Cordless wet and dry cleaning`,
+ facts:[`Vacuums and mops hard floors in one pass; Freshen mode refreshes area rugs and mats`,`Run time: about 25 minutes on global Shark pages; promoters report 25 to 30`,`Sofa, curtain and ceiling cleaning need a separate product`],confirm:true,
+ qs:[
+ {q:`Ye Dyson se bhaari lag raha hai.`,g:`Weight. Raised in almost every side-by-side demo.`,
+  why:`The Dyson counter is next door, so shoppers lift both back to back. Weight is the first thing the hand notices.`,
+  say:`Haan, haath mein dono rakh ke farak lagta hai. Ye bataiye, ghar mein zyadatar safai kaun karta hai, aur kitni der?`,
+  care:`Never say it is light or the same as Dyson. Acknowledge it, ask who will use it and for how long, then let them try it on their own floor type.`},
+ {q:`Air watts kitne hain?`,g:`Suction. Shoppers compare air watts after seeing Dyson.`,
+  why:`Dyson quotes air watts while Shark lists watts. Different measures, so the numbers do not line up and shoppers feel something is hidden.`,
+  say:`Dono alag tarah se naap rahe hain, isliye number seedha compare nahi hota. Aapke ghar ka sabse mushkil kachra kya hai? Wahi yahan chala ke dikhata hoon.`,
+  care:`Do not convert watts into air watts or quote a figure you have not seen on an approved sheet.`},
+ {q:`Dyson mein sofa, curtain sab ho jaata hai.`,g:`Attachments. They want one device, not two.`,
+  why:`Shoppers do not want to buy and store two machines.`,
+  say:`Sahi baat hai. Hydrovac floor aur carpet ke liye hai. Aapki safai mein floor kitna hai aur sofa-parde kitne? Usi hisaab se bataunga.`,
+  care:`Hydrovac does not cover sofas, curtains or ceilings. Say so before they find out at home.`},
+ {q:`2 saal ka accidental damage cover milega?`,g:`Warranty. Asked directly by shoppers who tried Dyson first.`,
+  why:`Dyson offers two-year accidental damage cover. Shark does not.`,
+  say:`Accidental damage cover Shark ke saath nahi aata. Standard warranty mein kya hai wo main saaf bata deta hoon. Aapko kis cheez ka darr hai, bacche ya girne ka?`,
+  care:`Never imply a cover that does not exist. Read the approved warranty wording exactly.`},
+ {q:`Battery sirf 25-30 minute?`,g:`Run time. Shoppers expect longer after hearing the charging time.`,
+  why:`Long charging next to a short run time feels like a bad trade.`,
+  say:`Ghar kitna bada hai? Ek charge mein kitna ho jaata hai wo hum yahin andaza laga lete hain. Zyada bada hai toh main seedha bol dunga.`,
+  care:`Do not promise coverage in square feet unless it is on the approved sheet.`},
+ {q:`Pehle ghar pe demo ho sakta hai?`,g:`Home demo. Competitors offer it before purchase.`,
+  why:`Dyson and others offer pre-sale home demos. Shark demos only after purchase, and the process is slow.`,
+  say:`Ghar pe demo kharidne ke baad hota hai. Abhi yahan aapke jaise floor pe chala ke dikha deta hoon, aur jo bhi sawal ho poochh lijiye.`,
+  care:`Be upfront about the post-purchase timing. Do not promise a date.`}
+ ]},
+{id:'flex',brand:'Shark',name:`Shark FlexBreeze fan`,sub:`Promoters call it Flex Beast. Handle the 70 ft claim with care`,
+ facts:[`The pack and website say air throw "up to 70 feet", which prompts questions`,`The Singapore page footnotes the figure as measured at fan speed 1 without oscillation. Confirm the India wording`,`SharkNinja is already working to address the questions`],confirm:true,
+ qs:[
+ {q:`Box pe 70 feet likha hai. Kitni door tak jaata hai?`,g:`Claim on the pack. Shoppers test it.`,
+  why:`A large number on the box invites a literal question.`,
+  say:`Box pe jo number hai wo ek khaas condition mein naapa gaya hai. Aapka kamra kitna bada hai? Main aapko wahi dikha deta hoon.`,
+  care:`Confirm the India footnote first. If it matches the Singapore page, say the speed and oscillation condition out loud. Do not add your own distances.`}
+ ]},
+{id:'combi',brand:'Ninja',name:`Ninja Combi`,sub:`14-in-1, cooks 2 to 3 dishes at once`,
+ facts:[`14 functions in one unit`,`Cooks a main and two sides together`,`12.5 L capacity; retail listings say it suits family meals for up to 8`,`Retail listings call the cavity stainless steel, while shoppers say it looks plastic. Confirm which parts are which`,`Most shoppers do not ask for it by name; promoters usually start the conversation`],confirm:true,
+ qs:[
+ {q:`Andar se chhota lagta hai.`,g:`Capacity. 12.5L looks smaller than it is.`,
+  why:`It looks small inside, and the One Chef pot looks visibly larger next to it.`,
+  say:`Dikhne mein chhota lagta hai par 12.5 litre hai. Ghar mein kitne log khaate hain? Main aapko wahi dish rakh ke dikhata hoon jo aap roz banate ho.`,
+  care:`Do not argue with how it looks. Show a real dish in it. Do not compare it with One Chef.`},
+ {q:`Philips wale bol rahe the ye European design hai, Indian khana nahi banta.`,g:`Indian cooking fit. Philips promoters say this actively.`,
+  why:`Shoppers then ask about stirring with a spatula and cooking Indian food properly.`,
+  say:`Aap roz kya banate ho? Dal, sabzi, roti? Ek dish yahin check karte hain, phir aap khud decide kijiye.`,
+  care:`Never run down Philips. Demo a real Indian dish and be honest about stirring room and tray shape.`},
+ {q:`Andar plastic kyun hai, steel kyun nahi?`,g:`Interior material. Competitors use steel.`,
+  why:`Shoppers say Combi looks plastic inside and worry about heat and durability. Retail listings describe a stainless steel cavity.`,
+  say:`Achha sawal hai. Andar ka cavity aur baaki parts kis material ke hain, ye main approved jaankari se bata deta hoon.`,
+  care:`Confirm with the product team which parts are steel and which are plastic, then say it plainly. Do not guess in either direction.`},
+ {q:`Veg aur non-veg alag ban sakta hai?`,g:`Separation. Common in Indian homes.`,
+  why:`Shoppers ask this before they trust a multi-dish cooker.`,
+  say:`Do-teen dish ek saath ban sakti hain. Aapke ghar mein veg-non-veg alag rakhna zaroori hai? Main dikhata hoon tray kaise lagti hain.`,
+  care:`Confirm how trays keep dishes separate before you promise it.`},
+ {q:`Extra tray ya grid alag se mil jayegi?`,g:`Accessories. Shoppers want spares.`,
+  why:`No accessory purchase option exists on the website today.`,
+  say:`Abhi website pe alag se tray nahi mil rahi. Ye hum aage ke liye note kar rahe hain.`,
+  care:`Accessory sales are being explored. Do not promise a date.`},
+ {q:`Isme app ya recipe book hai? Philips mein hai.`,g:`Recipes and app. Indian recipes especially.`,
+  why:`Philips has an app and LG buyers get 600+ recipes, so shoppers expect the same.`,
+  say:`Indian recipes ki demand hai, ye hum note kar rahe hain. Jo recipes abhi available hain wo main aapko dikhata hoon.`,
+  care:`Confirm what recipe content exists today before promising any.`}
+ ]},
+{id:'crispy',brand:'Ninja',name:`Ninja Crispi`,sub:`Glass-container air fryer`,
+ facts:[`Two glass containers: 1.4 L and 3.8 L`,`Four functions: Air Fry, Roast, Recrisp, Keep Warm. No baking or grilling`,`Promoters quote around ₹16,000. Confirm the MRP`,`Competitor (EDT) bakes and grills, per shoppers`],confirm:true,
+ qs:[
+ {q:`₹16,000 mein baking aur grilling nahi hai?`,g:`Price vs the EDT competitor.`,
+  why:`The competitor offers more functions and a steel plate for the money.`,
+  say:`Crispi air fry, roast, recrisp aur keep warm ke liye hai. Aap baking ya grilling bhi karte ho? Agar haan, toh Combi aapke liye sahi hai, main wahi dikhata hoon.`,
+  care:`Recommend the right model even if it is not the one they walked up to.`}
+ ]},
+{id:'maxpro',brand:'Ninja',name:`Ninja Max Pro`,sub:`6.2 L air fryer`,
+ facts:[`6.2 L basket, 2,000 W`,`Six functions: Air Fry, Max Crisp, Roast, Bake, Reheat, Dehydrate`,`No window is listed; shoppers ask for one`],confirm:true,
+ qs:[
+ {q:`Andar khana dikh sakta hai kya?`,g:`See-through window.`,
+  why:`Shoppers want to watch food while it cooks.`,
+  say:`Max Pro mein window nahi hai. Agar khana dekhna zaroori hai, toh Crispi ke glass container mein poora dikhta hai. Aap kya dekhna chahte ho?`,
+  care:`No window is listed for Max Pro. Crispi's glass containers are listed with 360 degree clear view. Do not say Max Pro has a window.`}
+ ]},
+{id:'blast',brand:'Ninja',name:`Ninja Blast`,sub:`Portable blender`,
+ facts:[`MRP ₹6,590; 530 ml cup, 140 W, USB-C rechargeable, one cup`,`Shoppers compare it with ₹3,500 to 4,000 mixer-grinders that come with several jars`,`An extra jar cannot be bought separately right now`],confirm:true,
+ qs:[
+ {q:`Mixer-grinder itne mein teen jar ke saath aata hai.`,g:`Price vs mixer-grinder.`,
+  why:`Shoppers weigh one portable jar against a full kitchen machine.`,
+  say:`Dono alag kaam ke hain. Mixer-grinder masala aur chutney ke liye, Blast aapke shake ke liye. Aap isse kab aur kahan use karenge?`,
+  care:`Do not claim it replaces a mixer-grinder.`},
+ {q:`Extra jar de do, main Blast le leta hoon.`,g:`Accessory. A real lost sale.`,
+  why:`One shopper said he would buy if he could get an extra jar.`,
+  say:`Abhi extra jar alag se nahi milta. Main aapka ye feedback likh leta hoon.`,
+  care:`Do not promise availability.`}
+ ]},
+{id:'any',brand:'Both',name:`Every product: price, EMI, service`,sub:`The questions a pitch cannot fix`,
+ facts:[`No no-cost EMI, card EMI or paper finance today`,`No physical service centres; shoppers are directed to Vijay Sales or the website`,`Online card offers can open a gap of ₹3,000 or more`],confirm:false,
+ qs:[
+ {q:`Service center kahan hai?`,g:`After-sales. The biggest concern after purchase.`,
+  why:`Shoppers want a local place to take it if something goes wrong.`,
+  say:`Abhi alag se service center nahi hai. Repair ke liye Vijay Sales ya SharkNinja website se kaam hota hai. Aapko kis cheez ka darr hai? Main wahi dekh ke bataunga.`,
+  care:`Say it plainly. Never suggest a service centre exists.`},
+ {q:`Amazon pe ₹3,000 kam hai.`,g:`Online price. Shoppers leave to buy there.`,
+  why:`Bank card offers online create gaps of ₹3,000 or more. Premium-store shoppers check online first about half the time.`,
+  say:`Card offer ke saath wo number kam dikhta hai. Yahan aap product haath mein lekar demo dekh sakte ho. Aap kitne products ek saath le rahe ho?`,
+  care:`Do not invent a price match or a discount. Ask about the whole basket.`},
+ {q:`No-cost EMI hai?`,g:`Finance. The biggest closing gap.`,
+  why:`There is no no-cost EMI today, which hurts most in sale season when shoppers plan three or four purchases.`,
+  say:`Abhi no-cost EMI nahi hai. Main seedha bol raha hoon taki baad mein surprise na ho. Aapka budget kitna hai, usi hisaab se dekhte hain.`,
+  care:`Never imply EMI exists. This gap is being escalated.`}
+ ]}
+];
+
+var VERSUS=[
+{n:`Dyson`,says:`Lighter in the hand. Quotes air watts. Two-year accidental damage cover. Wet, dry, sofa, curtain and ceiling in one device. Pre-sale home demo.`,
+ straight:`Shark feels heavier side by side. There is no accidental damage cover. Hydrovac covers floors and carpet only. The demo happens after purchase.`,
+ lead:`Start with their home and who does the cleaning. Let them try both on their own floor type. Win on fit, not on a spec contest.`},
+{n:`Philips`,says:`Philips promoters call Combi a European design that does not suit Indian cooking. Philips has an app and recipe content. Steel interior.`,
+ straight:`Combi's interior is plastic. Indian recipe content and an app are requested and need confirming. Capacity looks smaller than it is.`,
+ lead:`Ask what they cook every day, then demo a real dish. Show cooking two or three dishes at once for a household with a busy dinner hour. Never speak badly of Philips.`},
+{n:`Eureka Forbes`,tag:`Needs input`,says:`No promoter data collected yet.`,
+ straight:`Do not quote specs, prices or service claims about Eureka Forbes until the team shares verified comparison points.`,
+ lead:`Ask what they like about their current machine and what they would never give up. Then compare on their need, not on the brand.`},
+{n:`Amazon and Flipkart`,says:`Card discounts open a ₹3,000+ gap. Reviews are mostly positive, so the sale is lost on price. About half of premium-store shoppers research first; in Curry Road most check price and reviews; in Banashankari about 30%.`,
+ straight:`No no-cost EMI and no price match. Say so early.`,
+ lead:`Use the good reviews. Win the try-it-today moment. Ask about the whole basket they are planning, not one product.`}
+];
+
+var GAPS=[
+{t:`No no-cost, card or paper EMI`,s:`Being escalated`,d:`Shoppers planning three or four purchases in sale season leave to buy online. Promoters say floor closures would rise with it.`},
+{t:`Online card offers widen the price gap by ₹3,000 or more`,s:`Tracking`,d:`Reviews are positive; price is where sales are lost.`},
+{t:`No physical service centres`,s:`Directed to Vijay Sales or website`,d:`Shoppers want a local place for repairs.`},
+{t:`No separate accessory purchase (Combi trays, Blast jar)`,s:`Exploring options`,d:`At least one shopper would buy Blast if an extra jar were sold.`},
+{t:`No pre-sale home demo; post-purchase demo is slow`,s:`Open`,d:`Competitors offer home demos before purchase.`},
+{t:`No accidental damage warranty`,s:`Open`,d:`Dyson offers two years and shoppers ask directly.`},
+{t:`Fan box claim "up to 70 feet" draws questions`,s:`Being addressed`,d:`Use approved wording only.`},
+{t:`Indian recipe content and app requested`,s:`Requested by shoppers`,d:`Philips has an app; LG and OTG buyers get 600+ recipes.`}
+];
+
+var LEARN=[
+{id:'combi',brand:'Ninja',name:`Ninja Combi 14-in-1 (SFP701IN)`,tag:`A whole family meal from one machine`,price:`MRP ₹29,990`,persona:'cooking',
+ problem:`Dinner for a busy household usually waits on one burner, so everything is ready at different times. Combi cooks a main and two sides together so the meal finishes together, and it can replace an oven, air fryer and steamer on the counter.`,
+ specs:[[`Capacity`,`12.5 L. Listings say it suits family meals for up to 8 people`],
+  [`Functions`,`14: Combi Meal, Combi Crisp, Combi Bake, Rice/Pasta, Steam, Prove, Grill, Air Fry, Bake, Reheat, Slow Cook, Sear and Saute, Pizza, Toast`],
+  [`Power`,`About 1,780 W. Retail listings show 1,760 to 1,780 W`],
+  [`Top temperature`,`Up to 240°C`,`third-party listing`],
+  [`Weight`,`9.14 kg`],
+  [`Warranty`,`2 years`,`retailer listing`],
+  [`In the box`,`Bake tray, Crisper tray, Combi pan, Inspiration guide`],
+  [`Cavity`,`Retail listings say stainless steel. Confirm before quoting`]],
+ features:[
+  {n:`Combi Meals`,what:`Cooks a main and two sides together, from scratch, in about 15 minutes.`,gain:`One cook, one timer, one wash-up. Dinner lands together instead of in stages.`},
+  {n:`HyperSteam with hot air`,what:`Superheated steam combined with fast-moving air.`,gain:`Food stays moist inside and crisp outside, so kebabs, tikkas and vegetables are less likely to dry out.`},
+  {n:`Combi Bake, wet or dry`,what:`Wet mode uses steam for moist bread and cakes. Dry Bake is oven-style roasting and crisping.`,gain:`A soft cake and a crisp roast from the same machine.`},
+  {n:`14 functions`,what:`Air fry, bake, steam, slow cook, saute, grill, toast, pizza and more.`,gain:`Can stand in for several appliances when counter space is tight.`}],
+ fits:[`Families who cook several things at dinner`,`Shoppers with a microwave or OTG they are ready to retire`,`Homes short on counter space`],
+ notFit:[`Shoppers who mainly reheat or air fry snacks. A simpler air fryer may serve them better`],
+ flags:[`Which interior parts are stainless steel and which are plastic. Shoppers say it looks plastic; listings say stainless steel cavity.`],
+ check:[{q:`What does Combi Meals do?`,a:`Cooks a main and two sides together in about 15 minutes.`},
+  {q:`How many people does the 12.5 L suit?`,a:`Listings say family meals for up to 8 people.`},
+  {q:`A shopper asks if the inside is plastic. What do you say?`,a:`Not confirmed. Listings describe a stainless steel cavity, so confirm with the product team and state it plainly.`}],
+ src:`sharkninja.in, Reliance Digital, Smartprix`},
+
+{id:'crispi',brand:'Ninja',name:`Ninja Crispi`,tag:`Crisp snacks and leftovers, in glass you can see through`,price:`Promoters quote about ₹16,000. Confirm MRP`,persona:null,
+ problem:`Many homes want crispy snacks and revived leftovers without a big appliance. Crispi is an air fryer built around glass containers, so food goes from the freezer to the air fryer in the same container.`,
+ specs:[[`Containers`,`Two glass containers: 1.4 L small batch and 3.8 L`],
+  [`Functions`,`4: Air Fry, Roast, Recrisp, Keep Warm. No baking or grilling`],
+  [`Power`,`1,700 W PowerPod`],
+  [`Glass`,`Borosilicate, 360 degree clear view`],
+  [`Safety claims`,`BPA-free and 100% PFAS-free certification on the Croma listing`],
+  [`Controls`,`Top-mounted digital soft-touch panel`],
+  [`Warranty`,`Confirm India warranty. Global pages show 2 years`]],
+ features:[
+  {n:`Two glass containers`,what:`A 1.4 L container for small batches and a 3.8 L container for bigger ones.`,gain:`A snack for one or a batch for the family without a second appliance.`},
+  {n:`360 degree clear view`,what:`The glass lets you see the food while it cooks.`,gain:`Answers the shopper who asks for a see-through window on other fryers.`},
+  {n:`Recrisp`,what:`A dedicated function to bring leftovers back to fryer-fresh crunch.`,gain:`Yesterday's snacks are crunchy again.`},
+  {n:`Freezer to air fryer`,what:`The glass is listed as going from freezer to air fryer without shattering, and as microwave safe.`,gain:`Less transferring of food and less washing up.`}],
+ fits:[`Small households and snack lovers`,`Shoppers who prefer glass over coated baskets`,`Shoppers who want to watch their food`],
+ notFit:[`Anyone who wants to bake or grill. Point them to Combi or Max Pro`],
+ flags:[`India MRP and warranty. The ₹16,000 figure came from promoters.`],
+ check:[{q:`Which functions does Crispi have?`,a:`Air Fry, Roast, Recrisp and Keep Warm. No baking or grilling.`},
+  {q:`A shopper wants to watch the food cook. What do you say?`,a:`Crispi's glass containers are listed with 360 degree clear view.`},
+  {q:`What are the two container sizes?`,a:`1.4 L and 3.8 L.`}],
+ src:`Croma India listing, Choice Australia`},
+
+{id:'maxpro',brand:'Ninja',name:`Ninja Max Pro (AF180IN)`,tag:`Everyday air frying for the whole family`,price:`About ₹10,999 on third-party trackers. Confirm MRP`,persona:null,
+ problem:`A family that wants fried-style food with far less oil, without paying for a multicooker.`,
+ specs:[[`Capacity`,`6.2 L square basket`],
+  [`Functions`,`6: Air Fry, Max Crisp, Roast, Bake, Reheat, Dehydrate`],
+  [`Power`,`2,000 W`],
+  [`Max Crisp`,`240°C superheated air with 360 degree airflow`],
+  [`Crisper plate`,`Adjustable`],
+  [`Basket`,`PFOA-free non-stick`],
+  [`Fat claim`,`Up to 75% less fat than deep frying (listing claim)`],
+  [`Window`,`None listed`],
+  [`Warranty`,`Confirm`]],
+ features:[
+  {n:`Max Crisp`,what:`240°C superheated air with strong 360 degree airflow.`,gain:`Faster, crunchier frozen snacks and fries with little to no oil.`},
+  {n:`6.2 L square basket`,what:`A large square basket.`,gain:`Fits family portions, frozen foods and, per the listing, a whole chicken.`},
+  {n:`Bake and Dehydrate`,what:`Two functions beyond frying.`,gain:`Small bakes and dried snacks from the same fryer.`},
+  {n:`Adjustable crisper plate`,what:`Lets air move around the food.`,gain:`More even, golden results.`}],
+ fits:[`Families who want a straightforward air fryer`,`Shoppers who also want to bake small items or dehydrate`],
+ notFit:[`Shoppers who want to watch food cook. No window is listed`,`Anyone who needs two dishes at once. Look at DualZone or Combi`],
+ flags:[`India MRP and warranty. The price comes from third-party trackers.`],
+ check:[{q:`What is Max Crisp?`,a:`240°C superheated air with 360 degree airflow for faster, crispier cooking.`},
+  {q:`Capacity and power?`,a:`6.2 L and 2,000 W.`},
+  {q:`Can it cook two different dishes at the same time?`,a:`Not listed. DualZone has two zones and Combi cooks a main and two sides.`}],
+ src:`Vijay Sales listing, Smartprix`},
+
+{id:'dualzone',brand:'Ninja',name:`Ninja Foodi DualZone 7.6 L (AF300IN)`,tag:`Two dishes, two ways, finishing together`,price:`MRP ₹22,990`,persona:null,
+ problem:`A main and a side usually need different temperatures and times. DualZone has two independent zones, and Sync makes them finish at the same moment.`,
+ specs:[[`Capacity`,`7.6 L with two cooking zones`],
+  [`Power`,`2,470 W, 220 V`],
+  [`Airflow`,`Variable, 1,200 to 2,600 RPM`],
+  [`Key functions`,`Max Crisp, Sync, temperature control, timer, auto shut-off`],
+  [`Display`,`Digital`],
+  [`Body`,`Plastic and aluminium`],
+  [`Warranty`,`2 years`]],
+ features:[
+  {n:`Two independent zones`,what:`Each zone has its own temperature and time.`,gain:`Chicken and chips, or a main and a side, cooked two different ways.`},
+  {n:`Sync`,what:`Matches the finish time of both zones.`,gain:`Everything is hot at the same moment.`},
+  {n:`Max Crisp`,what:`High-heat crisping for fast, even results.`,gain:`Crispy results with little to no oil.`}],
+ fits:[`Families who cook two things at once`,`Shoppers who want an air fryer with more flexibility than a single basket`],
+ notFit:[`Shoppers who want steaming, slow cooking or a whole-meal multicooker. Combi covers that`],
+ flags:[],
+ check:[{q:`What does Sync do?`,a:`Lets two zones with different dishes finish at the same time.`},
+  {q:`How many zones and what capacity?`,a:`Two zones, 7.6 L.`}],
+ src:`Reliance Digital listing`},
+
+{id:'blast',brand:'Ninja',name:`Ninja Blast (BC151IN)`,tag:`A fresh shake, blended and carried in the same cup`,price:`MRP ₹6,590`,persona:'blast',
+ problem:`Busy people skip shakes and smoothies because of the prep and the washing. Blast blends in the cup you drink from, anywhere, with no cord.`,
+ specs:[[`Cup`,`530 ml, with 470 ml max fill`],
+  [`Motor`,`140 W`],
+  [`Charging`,`USB-C, about 2 hours`],
+  [`Per charge`,`15+ blending cycles`],
+  [`Blade`,`Stainless steel BlastBlade`],
+  [`Blend time`,`Crushes ice and frozen fruit in about 30 seconds`],
+  [`Lid`,`Leak-proof sip lid with carry handle`],
+  [`Weight`,`790 g`],
+  [`Jars`,`1`],
+  [`Warranty`,`1 year`]],
+ features:[
+  {n:`Blend and drink in the same cup`,what:`The blending cup is also the sipper.`,gain:`One thing to wash instead of several jars.`},
+  {n:`Cordless, USB-C rechargeable`,what:`About 2 hours to charge and 15+ blends per charge.`,gain:`Works at the office, the gym or on a trip.`},
+  {n:`BlastBlade`,what:`A stainless steel blade that crushes frozen fruit and ice.`,gain:`Frozen smoothies and cold drinks work.`},
+  {n:`Leak-proof sip lid`,what:`A sealed lid with a carry handle.`,gain:`Can go in a bag.`}],
+ fits:[`Single-serve shakes and smoothies`,`Office, gym and travel`],
+ notFit:[`Grinding masala, chutney or batter. It is not listed for that, so point those shoppers to a mixer-grinder`],
+ flags:[`An extra jar cannot be bought separately right now. Log the request.`],
+ check:[{q:`Cup size and max fill?`,a:`530 ml cup, 470 ml max fill.`},
+  {q:`How long to charge, and how many blends?`,a:`About 2 hours, and 15+ blending cycles per charge.`},
+  {q:`A shopper wants a second jar. What do you say?`,a:`It is not sold separately at the moment. Note the request.`}],
+ src:`Croma and Reliance Digital listings`},
+
+{id:'hydrovac',brand:'Shark',name:`Shark HydroVac`,tag:`Vacuum and mop in one pass, then it cleans itself`,price:`Confirm India MRP`,persona:'dyson',
+ problem:`Cleaning hard floors usually means sweeping, then mopping, then waiting for them to dry. HydroVac picks up dry dirt and wet mess and mops at the same time, and its self-clean mode washes the brush and tubing on the dock.`,
+ specs:[[`Type`,`Cordless wet and dry, upright`],
+  [`Power`,`170 W`],
+  [`Speed levels`,`5`],
+  [`Tanks`,`500 ml clean water, 360 ml dirty water`],
+  [`Modes`,`Hard Floor, Freshen (area rugs, thin-pile rugs, mats), Self-clean on the dock`],
+  [`Display`,`Smart LED on the handle: battery, tank and mode`],
+  [`Filter`,`Foam`],
+  [`Run time`,`About 25 minutes (a Singapore model says up to 30)`,`global pages`],
+  [`Charge time`,`About 4 hours`,`global pages`],
+  [`Warranty`,`2 years`,`India listing`],
+  [`Cleaning solution`,`Refills are sold separately on global pages. Confirm India`]],
+ features:[
+  {n:`Vacuums and mops at the same time`,what:`Suction and hydro mopping in one pass.`,gain:`One pass instead of sweep, then mop.`},
+  {n:`Ultra-fast dry time`,what:`Floors dry quickly after cleaning.`,gain:`Walk on them almost straight away.`},
+  {n:`Separate clean and dirty tanks`,what:`Clean water and dirty water are kept apart.`,gain:`Dirty water does not go back onto the floor.`},
+  {n:`Self-cleaning mode`,what:`On the dock, the brush, floorhead and tubing are washed.`,gain:`No scrubbing a dirty brush roll.`},
+  {n:`Freshen mode`,what:`Refreshes area rugs, thin-pile rugs and mats.`,gain:`A quick refresh for rugs. It is not a deep carpet clean.`}],
+ fits:[`Homes with mostly hard floors, kids, pets and spills`,`Shoppers tired of sweeping and then mopping`],
+ notFit:[`Shoppers who want one machine for sofas, curtains and ceilings. HydroVac is a floor tool`,`Homes that are mostly wall-to-wall carpet. Freshen mode is for rugs and mats`],
+ flags:[`Run time and charge time come from global pages, not the India listing.`,`Whether cleaning solution refills are sold in India.`],
+ notes:`Be clear what category this is: a wet-and-dry floor cleaner. When a shopper compares it with a Dyson stick vacuum, compare on the job they need done.`,
+ check:[{q:`What are the cleaning modes?`,a:`Hard Floor and Freshen (for area rugs and mats), plus Self-clean on the dock.`},
+  {q:`How big are the tanks?`,a:`500 ml clean and 360 ml dirty, per the India listing.`},
+  {q:`Can it clean sofas or curtains?`,a:`No. It is a floor tool. Those need a separate product.`},
+  {q:`What run time do you quote?`,a:`Global pages say about 25 minutes. Confirm the India figure before you quote it.`}],
+ src:`Croma India listing, Shark global pages`},
+
+{id:'flexbreeze',brand:'Shark',name:`Shark FlexBreeze (FA200IN)`,tag:`A fan that goes where you go, indoors or out`,price:`MRP ₹20,990`,persona:null,
+ problem:`Ordinary fans stay tied to a plug and a spot. FlexBreeze runs on its battery or plugged in, changes from pedestal to tabletop in seconds, and can go out to a balcony or patio.`,
+ specs:[[`Motor`,`36 W BLDC, 3 blades`],
+  [`Battery`,`3,800 mAh`],
+  [`Run time`,`About 24 hours on the lowest speed, about 2 hours on the highest`],
+  [`Charge time`,`About 5 hours`],
+  [`Speeds`,`5, plus BreezeBoost for maximum airflow`],
+  [`Air throw`,`Up to 70 ft. See the note below`],
+  [`Design`,`2-in-1: pedestal to tabletop with one-touch height change`],
+  [`Remote`,`Magnetic, stores on the fan`],
+  [`Weather`,`Water-resistant for light rain. IPX4 on the Singapore page`,`global page`],
+  [`Warranty`,`Confirm`]],
+ features:[
+  {n:`Cordless or plugged in`,what:`Runs on a built-in battery, or plugs in for continuous power while it recharges.`,gain:`Moves to the balcony or another room without a cord.`},
+  {n:`Pedestal to tabletop`,what:`A one-touch change in height.`,gain:`One fan for the floor and the table.`},
+  {n:`BLDC motor`,what:`A brushless motor, listed as efficient and quiet at 36 W.`,gain:`Cooling without the noise or a large power draw.`},
+  {n:`BreezeBoost`,what:`A maximum airflow mode.`,gain:`Extra push on the hottest days. Expect shorter battery time.`}],
+ fits:[`Shoppers who want portable cooling for a balcony, terrace or different rooms`,`Homes that want one fan for floor and table`],
+ notFit:[`Shoppers who simply want the lowest-cost fan`,`Anyone who wants to use or charge it in heavy rain. Light rain only`],
+ flags:[`The 70 ft figure. The Singapore page footnotes it as measured at fan speed 1 without oscillation. Confirm the India wording and state the condition when you quote it.`],
+ check:[{q:`How long does the battery last?`,a:`About 24 hours on the lowest speed and about 2 hours on the highest.`},
+  {q:`What condition goes with the 70 ft claim?`,a:`Singapore page: fan speed 1, no oscillation. Confirm the India wording.`},
+  {q:`Can it be used in the rain?`,a:`Light rain only. Do not use or charge it in heavy rain.`}],
+ src:`sharkninja.in, Croma India listing, Singapore page`}
+];
+
+var CMP={cols:[`Combi`,`Crispi`,`Max Pro`,`DualZone 7.6 L`],rows:[
+[`Capacity`,`12.5 L`,`1.4 L and 3.8 L, glass`,`6.2 L`,`7.6 L, two zones`],
+[`Functions`,`14`,`4: Air Fry, Roast, Recrisp, Keep Warm`,`6: Air Fry, Max Crisp, Roast, Bake, Reheat, Dehydrate`,`Dual zones, Sync, Max Crisp`],
+[`Power`,`About 1,780 W`,`1,700 W`,`2,000 W`,`2,470 W`],
+[`Bakes`,`Yes`,`No`,`Yes`,`Confirm`],
+[`Two dishes together`,`Yes: main and two sides`,`Not listed`,`Not listed`,`Yes: two zones with Sync`],
+[`See the food`,`Confirm`,`Yes: 360 degree clear view`,`No window listed`,`Confirm`],
+[`Warranty`,`2 years`,`Confirm`,`Confirm`,`2 years`],
+[`MRP`,`₹29,990`,`Confirm. Promoters say about ₹16,000`,`Confirm. About ₹10,999 on trackers`,`₹22,990`]]};
+
+var NEEDS=[
+[`Cook a main and two sides together`,`Combi`,`Combi Meals finishes them together in about 15 minutes.`],
+[`Bake a cake or bread, or steam and slow cook`,`Combi`,`Combi Bake has wet and dry modes, plus steam and slow cook functions.`],
+[`Cook two different dishes that finish together`,`DualZone 7.6 L`,`Two independent zones with Sync.`],
+[`Watch the food cook`,`Crispi`,`Glass containers listed with 360 degree clear view.`],
+[`A small snack batch and a family batch in one machine`,`Crispi`,`1.4 L and 3.8 L containers.`],
+[`Bring leftovers back to crunchy`,`Crispi`,`Recrisp is a dedicated function.`],
+[`A straightforward family air fryer that also bakes and dehydrates`,`Max Pro`,`6.2 L basket with six functions.`]];
+
+var TERMS=[
+[`HyperSteam`,`Superheated steam combined with fast-moving air. It cooks quickly and keeps food moist inside. Combi uses it in its Combi Cooker mode.`],
+[`Combi Meals`,`A main and two sides cooked together so they finish together, in about 15 minutes.`],
+[`Combi Bake: wet and dry`,`Wet mode adds steam for moist breads and cakes. Dry Bake is classic oven-style roasting.`],
+[`Prove`,`A low-heat function on Combi for letting dough rise.`],
+[`Air Fry and Max Crisp`,`Air fry moves hot air quickly around food. On Max Pro, Max Crisp is 240°C superheated air with 360 degree airflow for extra crunch.`],
+[`Recrisp`,`A Crispi function that brings leftovers back to fryer-fresh crunch.`],
+[`DualZone and Sync`,`Two independent cooking zones. Sync makes both zones finish at the same time.`],
+[`Self-clean (HydroVac)`,`Place the HydroVac on its dock and the brush, floorhead and tubing are washed.`],
+[`Freshen mode (HydroVac)`,`A mode for refreshing area rugs, thin-pile rugs and mats. It is not a deep carpet clean.`],
+[`BLDC motor`,`A brushless motor. FlexBreeze lists it for efficient, quiet running at 36 W.`],
+[`BreezeBoost`,`The FlexBreeze maximum airflow mode.`],
+[`IPX4`,`Protected against water splashes. This is why FlexBreeze handles light rain but not heavy rain.`],
+[`Watts and air watts`,`Air watts is how Dyson quotes suction. SharkNinja lists watts. They are different measures, so the numbers cannot be compared directly. Do not convert one into the other.`]];
+
+var HINTS=[`Who will use it most at home?`,`What are you using right now, and what annoys you about it?`,`How big is your home, and how often do you clean or cook?`,`What would make you feel this was a good decision a month from now?`,`What worried you when you saw the price?`];
+var DIMS=[{k:'diagnose',n:`Asked before pitching`},{k:'need',n:`Found the real need`},{k:'link',n:`Tied it to their life`},{k:'honest',n:`Stayed honest`}];
+var OUTCOME={would_buy:`She is reaching for her card.`,thinking:`Wants to think about it, and will probably check online tonight.`,walks:`Walked off to compare online.`};
+
+/* ---------- STATE ---------- */
+var S={tab:'home',view:'home',origin:null,diff:2,cat:'all',gseg:'products',persona:null,turns:[],busy:false,speak:false,vlang:'en-IN',
+  listening:false,debrief:null,coaching:false,coachErr:null,ai:'pending',hist:[],dbDocs:null,saved:false,lastErr:false,gcat:'all',lseg:'products',lcat:'all'};
+var sampleFn=null,dbRef=null,ctl=null,rec=null,micErr='';
+try{S.hist=JSON.parse(localStorage.getItem('fr_hist')||'[]')}catch(e){S.hist=[]}
+
+/* ---------- ICONS ---------- */
+var IC={
+home:'<svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/></svg>',
+search:'<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>',
+practice:'<svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>',
+guide:'<svg viewBox="0 0 24 24"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M8 20a3 3 0 0 1-3-3"/></svg>',
+insights:'<svg viewBox="0 0 24 24"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>',
+learn:'<svg viewBox="0 0 24 24"><path d="M3 9l9-5 9 5-9 5z"/><path d="M7 11.5V16c0 1.5 2.5 3 5 3s5-1.5 5-3v-4.5"/></svg>',
+mic:'<svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+spk:'<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>',
+back:'<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>',
+send:'<svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-3-7z"/></svg>'
+};
+var TABS=[['home','Home'],['practice','Practice'],['learn','Learn'],['guide','Answers'],['insights','Insights']];
+
+/* ---------- HELPERS ---------- */
+function toast(m){var t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast._t);toast._t=setTimeout(function(){t.style.display='none'},3200)}
+function meter(n){var h='';for(var i=1;i<=5;i++)h+='<i'+(i<=n?' class="on"':'')+'></i>';return '<span class="meter" role="img" aria-label="'+n+' out of 5">'+h+'</span>'}
+function clamp(n){n=Math.round(Number(n)||1);return Math.max(1,Math.min(5,n))}
+function allRecs(){return S.dbDocs||S.hist}
+function kb(){
+  return PRODUCTS.map(function(p){
+    return '## '+p.name+' ('+p.sub+')\nKnown facts: '+p.facts.join('; ')+'\n'+p.qs.map(function(q){return '- Shopper asks: '+q.q+' | Why: '+q.why+' | Safe handling: '+q.care}).join('\n');
+  }).join('\n\n')+'\n\n## Verified specs from India listings (Oct 2026)\n'+LEARN.map(function(p){return p.name+': '+p.specs.map(function(x){return x[0]+' '+x[1]}).join('; ')+(p.flags.length?' | Open points to confirm: '+p.flags.join(' '):'')}).join('\n')+'\n\n## Competitor notes\n'+VERSUS.map(function(v){return v.n+': shoppers say: '+v.says+' | be straight: '+v.straight}).join('\n');
+}
+function setTabs(){
+  var top='',dock='';
+  TABS.forEach(function(t){
+    var cur=S.tab===t[0]?' aria-current="page"':'';
+    top+='<button class="tab" data-act="tab" data-tab="'+t[0]+'"'+cur+'>'+t[1]+'</button>';
+    dock+='<button data-act="tab" data-tab="'+t[0]+'"'+cur+'>'+IC[t[0]]+t[1]+'</button>';
+  });
+  $('#tabsTop').innerHTML=top;$('#tabsDock').innerHTML=dock;
+}
+
+/* ---------- VIEWS ---------- */
+var SIDX=null;
+var SYN={emi:'finance emi cost',finance:'emi finance',service:'service repair kharab center',repair:'service repair kharab',heavy:'weight bhaari',weight:'weight bhaari',bhaari:'weight bhaari',
+  price:'price amazon online discount paise',cheaper:'amazon price online',online:'amazon online price',amazon:'amazon online price',plastic:'plastic steel material interior',steel:'plastic steel material',
+  battery:'battery run time minute',window:'window see-through glass',jar:'jar accessory extra',tray:'tray grid accessory extra',recipe:'recipe app',app:'recipe app',demo:'demo',warranty:'warranty accidental damage',
+  suction:'air watts suction',watts:'air watts suction',sofa:'sofa curtain attachments',small:'small capacity chhota'};
+function buildIdx(){SIDX=[];PRODUCTS.forEach(function(p){p.qs.forEach(function(q){SIDX.push({p:p.name,q:q.q,g:q.g,why:q.why,say:q.say,care:q.care,h:(p.name+' '+q.q+' '+q.g+' '+q.why+' '+q.say).toLowerCase()})})})}
+function searchHtml(v){
+  v=(v||'').trim().toLowerCase();if(!v)return '';
+  if(!SIDX)buildIdx();
+  var groups=v.split(/\s+/).filter(Boolean).map(function(t){return [t].concat((SYN[t]||'').split(' ').filter(Boolean))});
+  var hits=SIDX.map(function(it){var sc=0;groups.forEach(function(g){if(g.some(function(w){return it.h.indexOf(w)>-1}))sc++});return {it:it,sc:sc}}).filter(function(x){return x.sc>0});
+  var full=hits.filter(function(x){return x.sc===groups.length});
+  var use=(full.length?full:hits).sort(function(a,b){return b.sc-a.sc}).slice(0,6);
+  if(!use.length)return '<div class="empty">Nothing matches &ldquo;'+esc(v)+'&rdquo;. Try EMI, weight, service, plastic or battery. Heard something new? <button class="linkish" data-act="tab" data-tab="insights">Log it</button></div>';
+  return '<div class="inner">'+use.map(function(x,i){var q=x.it;
+    return '<details class="q"'+(i===0&&use.length===1?' open':'')+'><summary><b>&ldquo;'+esc(q.q)+'&rdquo;</b><small>'+esc(q.p)+'. '+esc(q.g)+'</small></summary><div class="qb">'
+     +'<div><div class="lab">Say it in your words</div><div class="sayline">'+esc(q.say)+'</div></div>'
+     +'<div><div class="lab">Be careful</div><div class="care">'+esc(q.care)+'</div></div></div></details>'}).join('')+'</div>';
+}
+function vLanding(){
+  var day=Math.floor(Date.now()/86400000);var tp=PERSONAS[day%PERSONAS.length];
+  var nQ=0;PRODUCTS.forEach(function(p){nQ+=p.qs.length});
+  var lp=null;for(var i=S.hist.length-1;i>=0;i--){if(S.hist[i].type==='practice'){lp=S.hist[i];break}}
+  var lpP=lp&&PERSONAS.find(function(p){return p.id===lp.persona});
+  var chips=['EMI','Service centre','Too heavy','Cheaper online','Plastic inside','Battery'].map(function(c){return '<button class="fchip" data-act="chip" data-q="'+esc(c)+'" aria-pressed="false">'+esc(c)+'</button>'}).join('');
+  function tile(tab,ic,t,d,m){return '<button class="tile" data-act="tab" data-tab="'+tab+'"><span class="ti">'+IC[ic]+'</span><span class="tt"><b>'+t+'</b><span class="d">'+d+'</span><span class="m">'+m+'</span></span></button>'}
+  return '<div class="land"><h1>What do you want to do?</h1>'
+   +'<p class="hi">Pick a path. Everything here comes from what shoppers actually ask on the shop floor.</p>'
+   +'<div class="sbox"><label for="q">Shopper waiting? Find what to say.</label><div class="sfield">'+IC.search+'<input id="q" type="search" autocomplete="off" placeholder="Type what they asked, like EMI or service" aria-describedby="sres"></div>'
+   +'<div class="sugg">'+chips+'</div><div class="sres" id="sres" aria-live="polite"></div></div>'
+   +'<section class="today" aria-label="Practise today\'s shopper"><span class="lab">Practise a conversation. Today\'s shopper says:</span>'
+   +'<q>'+esc(tp.line)+'</q><p class="who">'+esc(tp.name)+'. '+esc(tp.store)+' Hinglish, by text or voice, with coaching at the end.</p>'
+   +'<div class="btnrow"><button class="btn-black" data-act="start" data-id="'+tp.id+'">Start this conversation</button><button class="btn-line" data-act="tab" data-tab="practice">Pick someone else</button></div></section>'
+   +(S.ai==='off'?'<p class="srcnote" style="margin-top:10px">Practice needs Claude access, which is off for this view. Learn and Answers still work.</p>':'')
+   +'<div class="tiles">'
+   +tile('learn','learn','Learn a product','Specs and features, and what each one means for a shopper.',LEARN.length+' products')
+   +tile('guide','guide','Handle a tough question','What to say, and what not to promise, when a shopper pushes back.',nQ+' questions')
+   +tile('insights','insights','See what shoppers ask','Top concerns from the floor, and a ten-second way to log yours.',allRecs().length+' entries')
+   +'</div>'
+   +(lpP?'<div class="resume"><span>Last practice: '+esc(lpP.name)+', '+esc(({would_buy:'she was ready to buy',thinking:'she wanted to think',walks:'she walked away'})[lp.outcome]||'finished')+'.</span><button class="ghost" data-act="start" data-id="'+lpP.id+'">Go again</button></div>':'')
+   +'</div>';
+}
+function vPractice(){
+  var list=PERSONAS.filter(function(p){return S.cat==='all'||p.cat===S.cat});
+  var cards=list.map(function(p){
+    return '<button class="pcard" data-act="start" data-id="'+p.id+'">'
+     +'<span class="pcard-top"><span class="chip '+p.cat.toLowerCase()+'">'+p.cat+'</span><span class="vs">'+esc(p.vs)+'</span></span>'
+     +'<span class="pcard-quote">&ldquo;'+esc(p.line)+'&rdquo;</span>'
+     +'<span class="pcard-name">'+esc(p.name)+'</span>'
+     +'<span class="pcard-store">'+esc(p.store)+'</span></button>';
+  }).join('');
+  var ban=S.ai==='off'?'<div class="banner">Practice needs Claude access, which is switched off for this view. Open this page inside Claude and allow it to ask Claude. The Guide and Insights still work.</div>':'';
+  function lv(n,t){return '<button data-act="diff" data-n="'+n+'" aria-pressed="'+(S.diff===n)+'">'+t+'</button>'}
+  function ct(c,t){return '<button data-act="cat" data-c="'+c+'" aria-pressed="'+(S.cat===c)+'">'+t+'</button>'}
+  return '<section class="hero"><h1>A shopper is walking up. What do you ask first?</h1>'
+   +'<p class="lede">Pick who walks up. Talk it through by text or voice. Then get coached on how well you found what they actually need.</p></section>'+ban
+   +'<div class="controls">'
+   +'<div class="field"><span class="lab" id="l1">How hard should they be?</span><div class="seg" role="group" aria-labelledby="l1">'+lv(1,'Friendly')+lv(2,'Realistic')+lv(3,'Tough')+'</div></div>'
+   +'<div class="field"><span class="lab" id="l2">Brand</span><div class="seg" role="group" aria-labelledby="l2">'+ct('all','All')+ct('Shark','Shark')+ct('Ninja','Ninja')+'</div></div>'
+   +'<button class="ghost" data-act="surprise">Surprise me</button></div>'
+   +'<div class="personas">'+cards+'</div>'
+   +'<p class="priv" style="margin-top:28px">These shoppers are composites built from what promoters told us on the floor. They are for practice, not scripts.</p>';
+}
+
+function vSession(){
+  var p=S.persona;var lvl={1:'Friendly',2:'Realistic',3:'Tough'}[S.diff];
+  var canSpeak='speechSynthesis' in window;var canMic=!!(window.SpeechRecognition||window.webkitSpeechRecognition);
+  return '<section class="session">'
+   +'<div class="s-top"><button class="icon-btn" data-act="leave" aria-label="Leave this practice">'+IC.back+'</button>'
+   +'<div class="s-title"><b>'+esc(p.name)+'</b><span>'+lvl+' level</span></div>'
+   +(canSpeak?'<button class="icon-btn" data-act="speak" aria-pressed="'+S.speak+'" aria-label="Read shopper replies aloud">'+IC.spk+'</button>':'')
+   +'<button class="primary" data-act="end" id="endBtn">Get coaching</button></div>'
+   +'<div class="brief"><b>At your counter:</b> '+esc(p.store)+'</div>'
+   +'<div class="thread" id="thread" aria-live="polite"></div>'
+   +'<div class="composer"><div class="c-row"><textarea id="ta" rows="1" placeholder="Say it the way you would on the floor" aria-label="Your reply"></textarea>'
+   +(canMic?'<button class="icon-btn" id="micBtn" data-act="mic" aria-pressed="false" aria-label="Speak your reply">'+IC.mic+'</button>':'')
+   +'<button class="icon-btn" data-act="send" id="sendBtn" aria-label="Send">'+IC.send+'</button></div>'
+   +'<div class="c-tools"><button class="linkish" data-act="hint">Stuck? Get a question to ask</button>'
+   +(canMic?'<button class="linkish" data-act="vlang">Voice: '+(S.vlang==='en-IN'?'English / Hinglish':'Hindi')+'</button>':'')
+   +'<span class="micnote" id="micNote"></span></div></div></section>';
+}
+
+function drawThread(extra){
+  var th=$('#thread');if(!th)return;
+  var h=S.turns.map(function(t){return '<div class="b '+(t.who==='you'?'you':'shopper')+'">'+esc(t.text)+'</div>'}).join('');
+  if(S.busy)h+='<div class="b shopper wait" id="typing">Typing&hellip;</div>';
+  if(S.lastErr)h+='<div class="note">'+esc(S.lastErr)+' <button data-act="retry">Try again</button></div>';
+  th.innerHTML=h;
+  var last=th.lastElementChild;if(last)last.scrollIntoView({block:'end'});
+}
+
+function vDebrief(){
+  if(S.coaching)return '<div class="loading deb"><span class="pivot"></span><h1>Reading your conversation&hellip;</h1><p class="sub">Checking what you asked, what you found, and what you claimed.</p></div>';
+  if(S.coachErr)return '<div class="loading deb"><h1>Coaching did not come through.</h1><p class="sub">'+esc(S.coachErr)+'</p><div class="actions"><button class="primary" data-act="recoach">Try again</button><button class="ghost" data-act="leave">Back to practice</button></div></div>';
+  var d=S.debrief,p=S.persona;
+  var sc=DIMS.map(function(x){var s=d.scores[x.k];return '<div class="sc"><div class="sc-h"><b>'+x.n+'</b>'+meter(s.score)+'</div><p>'+esc(s.note)+'</p></div>'}).join('');
+  var li=function(a){return a.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')};
+  return '<div class="deb"><h1>'+esc(OUTCOME[d.outcome]||OUTCOME.thinking)+'</h1><p class="sub">'+esc(p.name)+', '+({1:'friendly',2:'realistic',3:'tough'}[S.diff])+' level.</p>'
+   +'<div class="scores">'+sc+'</div>'
+   +'<details class="reveal"><summary>What the shopper was not saying<span>Open</span></summary><div class="rv"><p>'+esc(p.hidden)+'</p>'
+   +'<p class="found">'+(d.needFound?'You found it.':'You did not quite find it.')+'</p><p>'+esc(d.needNote)+'</p></div></details>'
+   +'<div class="two"><div><h3>What worked</h3><ul class="clean">'+li(d.worked)+'</ul></div><div><h3>What to sharpen</h3><ul class="clean">'+li(d.sharpen)+'</ul></div></div>'
+   +'<div class="say"><span class="lab">A stronger line at the key moment</span><q>'+esc(d.line)+'</q></div>'
+   +(d.flags.length?'<div class="flag"><div class="h3">Check before you say it on the floor</div><ul class="clean">'+li(d.flags)+'</ul></div>':'')
+   +(d.themes.length?'<p class="lab" style="margin-top:22px">Logged to Insights as</p><div class="themes">'+d.themes.map(function(t){return '<span class="theme">'+esc(t)+'</span>'}).join('')+'</div>':'')
+   +'<div class="actions"><button class="primary" data-act="again">Same shopper again</button><button class="ghost" data-act="leave">Pick a new shopper</button></div></div>';
+}
+
+function vGuide(){
+  var seg=function(k,t){return '<button data-act="gseg" data-k="'+k+'" aria-pressed="'+(S.gseg===k)+'">'+t+'</button>'};
+  var head='<h1 class="page-h">Know what to say, and what not to promise</h1>'
+   +'<p class="lede">Built from what shoppers actually asked your colleagues. Wording is a starting point, not a script.</p>'
+   +'<div class="controls"><div class="seg" role="group" aria-label="Guide sections">'+seg('products','Products')+seg('versus','Versus')+seg('gaps','Be honest about')+'</div></div>';
+  var body='';
+  if(S.gseg==='products'){
+    var fc=function(c,t){return '<button class="fchip" data-act="gcat" data-c="'+c+'" aria-pressed="'+(S.gcat===c)+'">'+t+'</button>'};
+    body='<div class="chips">'+fc('all','All')+fc('Shark','Shark')+fc('Ninja','Ninja')+'</div>';
+    body+=PRODUCTS.filter(function(p){return S.gcat==='all'||p.brand===S.gcat||p.brand==='Both'}).map(function(p,i){
+      var qs=p.qs.map(function(q){
+        return '<details class="q"><summary><b>&ldquo;'+esc(q.q)+'&rdquo;</b><small>'+esc(q.g)+'</small></summary><div class="qb">'
+         +'<div><div class="lab">Why they ask</div>'+esc(q.why)+'</div>'
+         +'<div><div class="lab">Say it in your words</div><div class="sayline">'+esc(q.say)+'</div></div>'
+         +'<div><div class="lab">Be careful</div><div class="care">'+esc(q.care)+'</div></div></div></details>';
+      }).join('');
+      return '<details class="prod"'+(i===0?' open':'')+'><summary><span><b>'+esc(p.name)+'</b><small>'+esc(p.sub)+'</small></span><span class="chip '+(p.brand==='Shark'?'shark':'ninja')+'">'+esc(p.brand==='Both'?'All':p.brand)+'</span></summary>'
+       +'<div class="facts"><ul>'+p.facts.map(function(f){return '<li>'+esc(f)+'</li>'}).join('')+'</ul></div>'
+       +(p.confirm?'<p class="confirm">These points come from promoter conversations. Check the approved spec sheet before quoting any number.</p>':'')
+       +'<div class="qs">'+qs+'</div></details>';
+    }).join('');
+  }else if(S.gseg==='versus'){
+    body=VERSUS.map(function(v){
+      return '<div class="vcard"><h3>'+esc(v.n)+(v.tag?'<span class="tag-warn">'+esc(v.tag)+'</span>':'')+'</h3>'
+       +'<div><div class="lab">What shoppers say</div>'+esc(v.says)+'</div>'
+       +'<div><div class="lab">Be straight about</div>'+esc(v.straight)+'</div>'
+       +'<div><div class="lab">Where to lead</div>'+esc(v.lead)+'</div></div>';
+    }).join('');
+  }else{
+    body='<p class="lede" style="margin-bottom:8px">These are gaps a better pitch cannot close. Say them plainly, early, and ask what the shopper needs next.</p>'+gapsHtml();
+  }
+  return head+body;
+}
+function gapsHtml(){return GAPS.map(function(g){return '<div class="gap"><b>'+esc(g.t)+'</b><span class="st">'+esc(g.s)+'</span><span>'+esc(g.d)+'</span></div>'}).join('')}
+
+function vLearn(){
+  var seg=function(k,t){return '<button data-act="lseg" data-k="'+k+'" aria-pressed="'+(S.lseg===k)+'">'+t+'</button>'};
+  var head='<h1 class="page-h">Know the product before you pitch it</h1>'
+   +'<p class="lede">Specs and features in plain words, with what each one means for a shopper. Checked against SharkNinja India and retailer listings in October 2026.</p>'
+   +'<div class="controls"><div class="seg" role="group" aria-label="Learn sections">'+seg('products','Products')+seg('compare','Compare')+seg('terms','Terms')+'</div></div>';
+  var body='';
+  var li=function(a){return a.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')};
+  if(S.lseg==='products'){
+    var fc=function(c,t){return '<button class="fchip" data-act="lcat" data-c="'+c+'" aria-pressed="'+(S.lcat===c)+'">'+t+'</button>'};
+    body='<div class="chips">'+fc('all','All')+fc('Ninja','Ninja')+fc('Shark','Shark')+'</div>';
+    body+=LEARN.filter(function(p){return S.lcat==='all'||p.brand===S.lcat}).map(function(p,i){
+      var sp=p.specs.map(function(s){return '<div><dt>'+esc(s[0])+'</dt><dd>'+esc(s[1])+(s[2]?' <em>('+esc(s[2])+')</em>':'')+'</dd></div>'}).join('');
+      var ft=p.features.map(function(f){return '<div class="feat"><b>'+esc(f.n)+'</b><p>'+esc(f.what)+'</p><p class="gain">'+esc(f.gain)+'</p></div>'}).join('');
+      var ck=p.check.map(function(c){return '<details class="q"><summary><b>'+esc(c.q)+'</b></summary><div class="qb"><div class="sayline">'+esc(c.a)+'</div></div></details>'}).join('');
+      return '<details class="prod"'+(i===0?' open':'')+'><summary><span><b>'+esc(p.name)+'</b><small>'+esc(p.tag)+'</small></span><span class="chip '+p.brand.toLowerCase()+'">'+p.brand+'</span></summary>'
+       +'<div class="lsec"><h3>The problem it solves</h3><p>'+esc(p.problem)+'</p></div>'
+       +(p.notes?'<div class="lsec"><p>'+esc(p.notes)+'</p></div>':'')
+       +'<div class="lsec"><h3>At a glance</h3><p class="srcnote" style="margin-bottom:6px">'+esc(p.price)+'</p><dl class="specs">'+sp+'</dl></div>'
+       +'<div class="lsec"><h3>Features, and what each means for a shopper</h3>'+ft+'</div>'
+       +'<div class="lsec"><div class="fitgrid"><div><h3>Suits</h3><ul class="clean">'+li(p.fits)+'</ul></div><div><h3>Not the best fit</h3><ul class="clean">'+li(p.notFit)+'</ul></div></div></div>'
+       +(p.flags.length?'<div class="flagbox"><b>Confirm before you quote</b><ul>'+li(p.flags)+'</ul></div>':'')
+       +'<div class="lsec"><h3>Quick check</h3>'+ck+'</div>'
+       +'<div class="lact">'+(p.persona?'<button class="ghost" data-act="learnprac" data-id="'+p.persona+'">Practise with a shopper</button>':'')+'<span class="srcnote">Sources: '+esc(p.src)+'. Confirm against the current approved spec sheet.</span></div></details>';
+    }).join('');
+  }else if(S.lseg==='compare'){
+    var th=CMP.cols.map(function(c){return '<th scope="col">'+esc(c)+'</th>'}).join('');
+    var rows=CMP.rows.map(function(r){return '<tr><th scope="row">'+esc(r[0])+'</th>'+r.slice(1).map(function(c){return '<td>'+esc(c)+'</td>'}).join('')+'</tr>'}).join('');
+    body='<h2 class="h3" style="margin-top:8px">Ninja air fryers and cookers side by side</h2>'
+     +'<div class="tbl" tabindex="0" role="region" aria-label="Ninja air fryer range comparison"><table><thead><tr><th scope="col">&nbsp;</th>'+th+'</tr></thead><tbody>'+rows+'</tbody></table></div>'
+     +'<h2 class="h3">Match the need</h2><div>'+NEEDS.map(function(n){return '<div class="need"><b>'+esc(n[0])+': '+esc(n[1])+'</b><span>'+esc(n[2])+'</span></div>'}).join('')+'</div>'
+     +'<p class="srcnote" style="margin-top:14px">Where a cell says Confirm, no reliable India figure was found. Check the approved spec sheet.</p>';
+  }else{
+    body='<dl class="terms">'+TERMS.map(function(t){return '<dt>'+esc(t[0])+'</dt><dd>'+esc(t[1])+'</dd>'}).join('')+'</dl>';
+  }
+  return head+body;
+}
+
+function vInsights(){
+  var R=allRecs();var pr=R.filter(function(r){return r.type==='practice'});var re=R.filter(function(r){return r.type==='real'});
+  var avg=function(k){if(!pr.length)return '-';var s=0;pr.forEach(function(r){s+=(r.scores&&r.scores[k])||0});return (s/pr.length).toFixed(1)};
+  var counts={};R.forEach(function(r){var t=r.type==='real'?[r.theme]:(r.themes||[]);t.forEach(function(x){if(x)counts[x]=(counts[x]||0)+1})});
+  var rows=Object.keys(counts).map(function(k){return [k,counts[k]]}).sort(function(a,b){return b[1]-a[1]}).slice(0,8);
+  var mx=rows.length?rows[0][1]:1;
+  var bars=rows.length?'<div class="bars">'+rows.map(function(r){return '<div class="bar"><span>'+esc(r[0])+'</span><i style="width:'+Math.max(6,Math.round(r[1]/mx*100))+'%"></i><em>'+r[1]+'</em></div>'}).join('')+'</div>'
+    :'<div class="empty">Nothing here yet. Finish a practice round or log a real shopper question and themes will start to appear.</div>';
+  var oc={would_buy:0,thinking:0,walks:0};pr.forEach(function(r){if(oc[r.outcome]!=null)oc[r.outcome]++});
+  var tot=pr.length||1;
+  var split=pr.length?'<div class="split" aria-hidden="true"><i style="width:'+oc.would_buy/tot*100+'%;background:var(--teal)"></i><i style="width:'+oc.thinking/tot*100+'%;background:var(--surface-2)"></i><i style="width:'+oc.walks/tot*100+'%;background:var(--warn)"></i></div><p class="lab">'+oc.would_buy+' would buy &nbsp; '+oc.thinking+' undecided &nbsp; '+oc.walks+' walked</p>':'';
+  var rr={closed:0,online:0,think:0};re.forEach(function(r){if(rr[r.result]!=null)rr[r.result]++});
+  var recent=re.slice().sort(function(a,b){return (b.ts||0)-(a.ts||0)}).filter(function(r){return r.text}).slice(0,5);
+  var opts=PRODUCTS.map(function(p){return '<option>'+esc(p.name)+'</option>'}).join('');
+  var th=THEMES.map(function(t){return '<option>'+esc(t)+'</option>'}).join('');
+  return '<h1 class="page-h">What shoppers are really asking</h1>'
+   +'<p class="lede">Every practice round and every real question you log becomes a datapoint for the Consumer Insights team, ahead of the next survey.</p>'
+   +'<div class="stats"><div class="stat"><b>'+pr.length+'</b><span>practice rounds</span></div><div class="stat"><b>'+re.length+'</b><span>real questions logged</span></div>'
+   +'<div class="stat"><b>'+avg('diagnose')+'</b><span>avg. asked before pitching</span></div><div class="stat"><b>'+avg('need')+'</b><span>avg. found the real need</span></div></div>'
+   +'<div class="sec"><h2>Top shopper concerns</h2>'+bars+split+'</div>'
+   +(re.length?'<div class="sec"><h2>What real shoppers did</h2><p>'+rr.closed+' closed on the floor, '+rr.think+' said they would think, '+rr.online+' left to buy online.</p></div>':'')
+   +'<div class="sec"><h2>Heard something new on the floor?</h2><p>Log it in ten seconds. No names or phone numbers.</p>'
+   +'<div class="logform"><label><span class="lab">Product</span><select id="lgP">'+opts+'</select></label>'
+   +'<label><span class="lab">Closest theme</span><select id="lgT">'+th+'</select></label>'
+   +'<label><span class="lab">What the shopper said (optional)</span><textarea id="lgX" maxlength="240"></textarea></label>'
+   +'<label><span class="lab">What happened</span><select id="lgR"><option value="closed">Closed on the floor</option><option value="think">Said they would think about it</option><option value="online">Left to buy online</option></select></label>'
+   +'<button class="primary" data-act="logreal" style="justify-self:start">Log it</button></div>'
+   +(recent.length?'<div class="recent">'+recent.map(function(r){return '<div>'+esc(r.text)+'</div>'}).join('')+'</div>':'')+'</div>'
+   +'<div class="sec"><h2>Gaps a pitch cannot fix</h2><p>Tracked from the promoter conversations.</p>'+gapsHtml()+'</div>'
+   +'<p class="priv">Only themes, scores and the notes you type here are shared. Practice transcripts stay on your device.'+(S.dbDocs?'':' Team sharing is not available in this view, so you are seeing your own data.')+'</p>';
+}
+
+/* ---------- RENDER ---------- */
+function render(){
+  document.body.dataset.view=S.tab==='practice'?S.view:S.tab;
+  setTabs();
+  var h='';
+  if(S.tab==='home')h=vLanding();
+  else if(S.tab==='practice')h=S.view==='home'?vPractice():S.view==='session'?vSession():vDebrief();
+  else if(S.tab==='learn')h=vLearn();else if(S.tab==='guide')h=vGuide();else h=vInsights();
+  $('#app').innerHTML=h;
+  if(S.tab==='practice'&&S.view==='session'){drawThread();var ta=$('#ta');if(ta)ta.focus({preventScroll:true})}
+  else window.scrollTo(0,0);
+}
+
+/* ---------- SHOPPER ---------- */
+function shopperPrompt(p,diff){
+  var lvl={1:`Friendly: you open up about your home as soon as the promoter asks one sensible question.`,
+    2:`Realistic: you answer only what is asked. You reveal your real situation after two sensible open questions about you, not the product.`,
+    3:`Tough: you are guarded and in a hurry. If the promoter pitches before asking about you, repeat your main objection. Open up only when asked something that shows they care about your situation. Press on any claim that sounds vague or too good to be true.`}[diff];
+  return `You are role-playing a SHOPPER in an Indian electronics retail store so a retail promoter can practise a real conversation. Stay in character at all times and never mention being an AI.\n\n`
+   +`Language: natural Hinglish, Hindi written in Roman script mixed with English, the way people actually speak on a shop floor. One to three short sentences per reply. No lists. No stage directions.\n\n`
+   +`Who you are: ${p.who}\nStore context: ${p.store}\nYour opening line (already said): ${p.line}\nThings you raise or care about on the surface: ${p.surface.join('; ')}\n`
+   +`Your hidden need (never volunteer it; let it out gradually only when the promoter asks about your home, family, routine or what annoys you): ${p.hidden}\n\n`
+   +`Difficulty: ${lvl}\n\n`
+   +`Behaviour rules:\n- If the promoter lists features without asking about you, get slightly impatient and return to your main objection.\n- If the promoter admits a limitation honestly, trust them more.\n- If the promoter makes a vague or exaggerated claim, push back like a real shopper.\n- If you feel understood and the fit is real, move toward buying: ask to try it, ask about price or how to pay.\n- If you feel pitched at or misled, drift toward leaving or buying online.\n- Never invent specific specs, prices or service facts about SharkNinja products; you are the shopper and you may ask about them. About rival brands speak only in general terms of what shoppers commonly say.\n\n`
+   +`Facts the promoter may legitimately know (for reference only, do not recite them):\n${kb()}\n\nReply only as the shopper.`;
+}
+function buildMsgs(){
+  var m=[{role:'user',content:shopperPrompt(S.persona,S.diff)}];
+  S.turns.slice(-20).forEach(function(t){m.push({role:t.who==='you'?'user':'assistant',content:t.text})});
+  if(m[1]&&m[1].role==='user')m.splice(1,0,{role:'assistant',content:S.persona.line});
+  return m;
+}
+function errCopy(e){
+  var c=e&&e.code;
+  if(c==='not_granted'){S.ai='off';return `Claude access was declined for this view. Reload and allow it to practise.`}
+  if(c==='rate_limited')return `Too many requests at once. Wait a few seconds, then try again.`;
+  return `The shopper did not answer.`;
+}
+async function getReply(){
+  S.busy=true;S.lastErr=false;drawThread();setBusy(true);
+  ctl=new AbortController();
+  try{
+    var r=await sampleFn(buildMsgs(),{cache:false,modelTier:'quick',signal:ctl.signal,onText:function(u){var t=$('#typing');if(t){t.classList.remove('wait');t.textContent=u.text}}});
+    var txt=String(r.text||'').trim();
+    if(!txt)throw {code:'empty'};
+    S.turns.push({who:'shopper',text:txt});
+    if(S.speak)say(txt);
+  }catch(e){
+    if(e&&e.code==='cancelled'){}
+    else{S.lastErr=errCopy(e)}
+  }finally{S.busy=false;setBusy(false);drawThread()}
+}
+function setBusy(b){var s=$('#sendBtn');if(s)s.disabled=b;var e=$('#endBtn');if(e)e.disabled=b}
+async function sendTxt(txt){
+  txt=(txt||'').trim();
+  if(!txt||S.busy)return;
+  if(!sampleFn){toast(`Practice is not available in this view.`);return}
+  stopSay();
+  S.turns.push({who:'you',text:txt});
+  var ta=$('#ta');if(ta){ta.value='';ta.style.height='auto'}
+  await getReply();
+}
+
+/* ---------- VOICE ---------- */
+function say(text){
+  try{
+    if(!('speechSynthesis' in window))return;
+    speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(text);
+    var vs=speechSynthesis.getVoices();
+    var v=vs.find(function(x){return x.lang==='en-IN'})||vs.find(function(x){return x.lang==='hi-IN'})||null;
+    if(v){u.voice=v;u.lang=v.lang}else u.lang='en-IN';
+    u.rate=1;speechSynthesis.speak(u);
+  }catch(e){}
+}
+function stopSay(){try{if('speechSynthesis' in window)speechSynthesis.cancel()}catch(e){}}
+function stopMic(){try{if(rec)rec.stop()}catch(e){}S.listening=false;var b=$('#micBtn');if(b)b.setAttribute('aria-pressed','false')}
+function startMic(){
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR||S.busy)return;
+  var note=$('#micNote'),ta=$('#ta'),btn=$('#micBtn');
+  stopSay();micErr='';
+  try{
+    rec=new SR();rec.lang=S.vlang;rec.interimResults=true;rec.continuous=false;
+    var finalT='';
+    rec.onresult=function(ev){var t='';for(var i=0;i<ev.results.length;i++){t+=ev.results[i][0].transcript;if(ev.results[i].isFinal)finalT=t}if(ta)ta.value=t};
+    rec.onerror=function(ev){
+      micErr=(ev.error==='not-allowed'||ev.error==='service-not-allowed')?`Mic is blocked here. Type your reply, or allow the mic for this page.`:`Could not hear that. Try again or type.`;
+      if(note)note.textContent=micErr;
+    };
+    rec.onend=function(){
+      S.listening=false;if(btn)btn.setAttribute('aria-pressed','false');
+      var t=(ta&&ta.value||'').trim();
+      if(t&&!micErr){if(note)note.textContent='';sendTxt(t)}
+    };
+    rec.start();S.listening=true;btn.setAttribute('aria-pressed','true');if(note)note.textContent=`Listening. Pause when you are done.`;
+  }catch(e){if(note)note.textContent=`Voice is not available here. Type your reply.`}
+}
+
+/* ---------- COACHING ---------- */
+function coachPrompt(){
+  var p=S.persona;
+  var tr=S.turns.map(function(t){return (t.who==='you'?'PROMOTER: ':'SHOPPER: ')+t.text}).join('\n');
+  return `You are a retail sales coach for SharkNinja promoters in India. Coach in plain, warm, direct English. Judge the PROMOTER only. The philosophy: a promoter should be a consumer problem-solver, not a feature-lister. Reward asking before recommending, finding the underlying need, connecting a feature to that specific life, recommending the genuinely right model, and being honest about limits.\n\n`
+   +`The shopper persona: ${p.who}\nThe shopper's hidden need (the promoter was not told): ${p.hidden}\nDifficulty level: ${S.diff} of 3\n\n`
+   +`Known facts and safe handling (anything the promoter claims beyond this, or that contradicts it, should be flagged for checking):\n${kb()}\n\n`
+   +`CONVERSATION:\n${tr}\n\n`
+   +`Return ONLY a JSON object with exactly these keys:\n`
+   +`{"scores":{"diagnose":{"score":1-5,"note":"one sentence"},"need":{"score":1-5,"note":"one sentence"},"link":{"score":1-5,"note":"one sentence"},"honest":{"score":1-5,"note":"one sentence"}},`
+   +`"needFound":true|false,"needNote":"one or two sentences on how the promoter did or did not surface the hidden need",`
+   +`"worked":["max 3 specific things, quoting the promoter's own words briefly"],"sharpen":["max 3 specific, actionable improvements"],`
+   +`"line":"one stronger line in natural Hinglish (Roman script) the promoter could have said at the key moment",`
+   +`"outcome":"would_buy"|"thinking"|"walks",`
+   +`"themes":["up to 3 chosen ONLY from this list: ${THEMES.join(' | ')}"],`
+   +`"flags":["any claim by the promoter that is not in the known facts, may be unapproved, invents a spec, price, offer or service, or runs down a competitor; empty array if none"]}\n`
+   +`Scoring: diagnose = asked about the shopper before pitching; need = surfaced the hidden need; link = tied features to their life rather than listing; honest = admitted limits and made no unsupported claims. Be fair: a short conversation caps what can be shown. Do not praise what did not happen.`;
+}
+function norm(d){
+  var sc={};DIMS.forEach(function(x){var s=(d.scores&&d.scores[x.k])||{};sc[x.k]={score:clamp(s.score),note:String(s.note||'')}});
+  var arr=function(a,n){return (Array.isArray(a)?a:[]).slice(0,n).map(String).filter(Boolean)};
+  return {scores:sc,needFound:!!d.needFound,needNote:String(d.needNote||''),worked:arr(d.worked,3),sharpen:arr(d.sharpen,3),line:String(d.line||''),
+    outcome:({would_buy:1,thinking:1,walks:1}[d.outcome]?d.outcome:'thinking'),themes:arr(d.themes,3).filter(function(t){return THEMES.indexOf(t)>-1}),flags:arr(d.flags,4)};
+}
+async function runCoach(){
+  S.coaching=true;S.coachErr=null;S.debrief=null;S.saved=false;render();
+  try{
+    var raw=await sampleFn.json(coachPrompt(),{modelTier:'default',cache:false});
+    S.debrief=norm(raw||{});
+    if(!S.saved){
+      S.saved=true;
+      var r=S.debrief;
+      saveRec({type:'practice',persona:S.persona.id,cat:S.persona.cat,diff:S.diff,outcome:r.outcome,
+        scores:{diagnose:r.scores.diagnose.score,need:r.scores.need.score,link:r.scores.link.score,honest:r.scores.honest.score},themes:r.themes});
+    }
+  }catch(e){
+    S.coachErr=(e&&e.code==='not_granted')?`Claude access was declined for this view.`:(e&&e.code==='rate_limited')?`Too many requests at once. Wait a few seconds and try again.`:`Something went wrong reading the conversation. Your practice chat is still here.`;
+  }
+  S.coaching=false;
+  if(S.tab==='practice'&&S.view==='debrief')render();
+}
+function saveRec(r){
+  r.ts=Date.now();
+  S.hist.push(r);
+  try{localStorage.setItem('fr_hist',JSON.stringify(S.hist.slice(-200)))}catch(e){}
+  if(dbRef){try{dbRef.collection('sessions').add(r).catch(function(){})}catch(e){}}
+}
+
+/* ---------- ACTIONS ---------- */
+function startSession(id){
+  if(S.tab==='home')S.origin='home';
+  S.tab='practice';
+  S.persona=PERSONAS.find(function(p){return p.id===id});if(!S.persona)return;
+  S.turns=[{who:'shopper',text:S.persona.line}];S.view='session';S.busy=false;S.lastErr=false;S.debrief=null;S.saved=false;micErr='';
+  render();if(S.speak)say(S.persona.line);
+}
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-act]');if(!t)return;
+  var a=t.dataset.act;
+  switch(a){
+    case 'tab':S.tab=t.dataset.tab;if(S.tab==='practice'&&S.view==='debrief'&&!S.coaching)S.view='home';render();break;
+    case 'chip':var qi=$('#q');if(qi){qi.value=t.dataset.q;$('#sres').innerHTML=searchHtml(qi.value);qi.focus()}break;
+    case 'diff':S.diff=+t.dataset.n;render();break;
+    case 'cat':S.cat=t.dataset.c;render();break;
+    case 'surprise':if(S.ai==='off'){toast(`Practice is not available in this view.`);break}
+      var pool=PERSONAS.filter(function(p){return S.cat==='all'||p.cat===S.cat});startSession(pool[Math.floor(Math.random()*pool.length)].id);break;
+    case 'start':if(S.ai==='off'){toast(`Practice is not available in this view.`);break}startSession(t.dataset.id);break;
+    case 'leave':stopSay();stopMic();if(ctl)try{ctl.abort()}catch(x){}S.view='home';S.busy=false;if(S.origin==='home'){S.tab='home';S.origin=null}render();break;
+    case 'speak':S.speak=!S.speak;t.setAttribute('aria-pressed',String(S.speak));if(!S.speak)stopSay();break;
+    case 'send':sendTxt($('#ta').value);break;
+    case 'retry':getReply();break;
+    case 'mic':if(S.listening)stopMic();else startMic();break;
+    case 'vlang':S.vlang=S.vlang==='en-IN'?'hi-IN':'en-IN';t.textContent='Voice: '+(S.vlang==='en-IN'?'English / Hinglish':'Hindi');break;
+    case 'hint':var ta=$('#ta');if(ta){ta.value=HINTS[Math.floor(Math.random()*HINTS.length)];ta.focus()}break;
+    case 'end':
+      var n=S.turns.filter(function(x){return x.who==='you'}).length;
+      if(n<2){toast(`Say a bit more first. Coaching needs at least two replies from you.`);break}
+      stopSay();stopMic();S.view='debrief';runCoach();break;
+    case 'recoach':runCoach();break;
+    case 'again':startSession(S.persona.id);break;
+    case 'gseg':S.gseg=t.dataset.k;render();break;
+    case 'gcat':S.gcat=t.dataset.c;render();break;
+    case 'lseg':S.lseg=t.dataset.k;render();break;
+    case 'lcat':S.lcat=t.dataset.c;render();break;
+    case 'learnprac':if(S.ai==='off'){toast(`Practice is not available in this view.`);break}S.tab='practice';startSession(t.dataset.id);break;
+    case 'logreal':
+      var theme=$('#lgT').value,prod=$('#lgP').value,txt=$('#lgX').value.trim().slice(0,240),res=$('#lgR').value;
+      saveRec({type:'real',product:prod,theme:theme,text:txt,result:res});toast(`Logged. Thank you.`);render();break;
+  }
+});
+document.addEventListener('keydown',function(e){
+  if(e.target&&e.target.id==='ta'&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendTxt(e.target.value)}
+});
+document.addEventListener('input',function(e){
+  if(e.target&&e.target.id==='ta'){e.target.style.height='auto';e.target.style.height=Math.min(130,e.target.scrollHeight)+'px'}
+  if(e.target&&e.target.id==='q'){var r=$('#sres');if(r)r.innerHTML=searchHtml(e.target.value)}
+});
+
+/* ---------- CAPABILITIES ---------- */
+(async function(){
+  render();
+  try{
+    if(window.claude&&window.claude.use){
+      sampleFn=await window.claude.use('sample');
+      S.ai=sampleFn?'ok':'off';
+      try{
+        var db=await window.claude.use('db');
+        if(db){
+          dbRef=db;
+          db.collection('sessions').orderBy('ts','desc').limit(500).onSnapshot(function(snap){
+            S.dbDocs=snap.docs.map(function(d){return d.data()});
+            if(S.tab==='insights'||(S.tab==='home'&&!($('#q')&&$('#q').value)))render();
+          },function(){S.dbDocs=null});
+        }
+      }catch(e){}
+    }else S.ai='off';
+  }catch(e){S.ai='off'}
+  var qq=$('#q');if(S.view!=='session'&&!S.coaching&&!(qq&&qq.value))render();
+})();
+})();
+</script>
