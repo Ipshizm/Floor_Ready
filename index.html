@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Floor Ready</title>
 <style>
 /* Layout: mobile-first app with bottom dock, top tabs on desktop; SharkNinja teal/black/white/silver */
@@ -267,10 +272,51 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:8px}
 .terms{margin:0}
 .terms dt{font-weight:700;margin-top:16px}
 .terms dd{margin:2px 0 0;color:var(--muted)}
+/* drills */
+.topics{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 18px}
+.topic{border:1.5px solid var(--line);background:none;border-radius:999px;padding:6px 14px;font-weight:600;font-size:14px;display:inline-flex;gap:8px;align-items:center}
+.topic.on{border-color:var(--teal);background:var(--teal);color:#000}
+.tk{font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 8px;background:var(--surface-2);color:var(--ink)}
+.tk.best{background:var(--ok);color:#000}.tk.risk{background:var(--warn);color:#000}
+.shopbub{padding:18px 20px;background:var(--surface);border-left:6px solid var(--teal);margin-bottom:16px}
+.shopbub q{display:block;font-size:clamp(19px,4.6vw,24px);font-weight:600;line-height:1.3;margin-top:6px;quotes:"\201C" "\201D"}
+.opts{display:grid;gap:10px}
+.opt{display:grid;grid-template-columns:30px 1fr;gap:12px;text-align:left;border:1.5px solid var(--line);background:var(--bg);border-radius:4px 16px 16px 4px;padding:14px 16px;min-width:0}
+.opt:hover:not(:disabled){border-color:var(--teal)}
+.opt:disabled{cursor:default;color:var(--ink)}
+.opt .ol{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--ink);font-weight:700;font-size:14px}
+.opt .ot{overflow-wrap:anywhere}
+.opt.done:not(.sel){opacity:.72}
+.opt.sel.best{border-color:var(--ok);border-width:2.5px}
+.opt.sel.ok{border-color:var(--muted);border-width:2.5px}
+.opt.sel.risk{border-color:var(--warn);border-width:2.5px}
+.fb{margin:-4px 0 4px 42px;padding:10px 14px;background:var(--surface);border-left:4px solid var(--line);font-size:15px}
+.fb.best{border-left-color:var(--ok)}.fb.risk{border-left-color:var(--warn)}
+.vtag{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:1px 9px;margin-right:6px;background:var(--surface-2)}
+.vtag.best{background:var(--ok);color:#000}.vtag.risk{background:var(--warn);color:#000}
+/* compare, terms */
+.tbl td.us,.tbl th.us{background:rgba(0,165,175,.14)}
+.tbl thead th.us{box-shadow:inset 0 -3px 0 var(--teal)}
+.cmpbox{padding:14px 16px;border-top:3px solid var(--teal);background:var(--surface)}
+.cmpbox.be{border-top-color:var(--warn)}
+.cmpbox h3{margin:0 0 8px;font-size:16px}
+.costcard{margin:6px 0 26px;padding:18px;background:var(--surface);border-left:6px solid var(--teal)}
+.cbody{display:grid;margin-top:14px}
+.crow{display:flex;justify-content:space-between;gap:14px;align-items:baseline;padding:10px 0;border-top:1px solid var(--line)}
+.crow>div{min-width:0}
+.crow b{display:block}
+.crow span{display:block;font-size:13.5px;color:var(--muted)}
+.crow em{font-style:normal;font-weight:700;font-size:17px;text-align:right;font-variant-numeric:tabular-nums;flex:none;max-width:48%}
+.cnote{margin:12px 0 8px;font-size:15px}
+.term{border:1.5px solid var(--line);margin:0 0 10px;border-radius:4px 14px 14px 4px;padding:0 16px}
+.term>summary{padding:14px 0}
+.term[open]{background:var(--bg)}
+.benefit{padding:10px 14px;background:var(--surface);border-left:4px solid var(--teal);font-weight:600}
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);
   padding:10px 18px;border-radius:999px;font-size:14.5px;font-weight:600;z-index:60;max-width:90vw;display:none}
 </style>
-
+</head>
+<body data-view="home">
 <header class="top"><div class="wrap top-in">
   <button class="mark" data-act="tab" data-tab="home" aria-label="Floor Ready home"><span class="pivot"></span>Floor Ready</button>
   <nav class="tabs" id="tabsTop" aria-label="Sections"></nav>
@@ -286,7 +332,7 @@ var $=function(s,r){return (r||document).querySelector(s)};
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
 
 /* ---------- CONTENT: drawn from promoter conversations; confirm against approved sheets ---------- */
-var THEMES=[`Price vs online`,`No-cost EMI / finance`,`Service and repairs`,`Weight`,`Suction / air watts`,`Attachments and versatility`,`Battery run time`,`Warranty / accidental damage`,`Home demo`,`Capacity looks small`,`Indian cooking fit`,`Interior material`,`Accessories and spares`,`Recipes and app`,`Competitor claim`,`Other`];
+var THEMES=[`Price vs online`,`No-cost EMI / finance`,`Service and repairs`,`Weight`,`Suction / air watts`,`Attachments and versatility`,`Battery run time`,`Warranty / accidental damage`,`Home demo`,`Capacity looks small`,`Indian cooking fit`,`Interior material`,`Accessories and spares`,`Recipes and app`,`Competitor claim`,`Filter cost / maintenance`,`Air purifier coverage`,`Noise level`,`Coating / safety`,`Other`];
 
 var PERSONAS=[
 {id:'dyson',cat:'Shark',name:`The Dyson demo-er`,store:`Premium mall counter. Dyson is demoed next door.`,vs:`vs Dyson`,
@@ -328,8 +374,21 @@ var PERSONAS=[
  line:`Hum toh hamesha Eureka Forbes use karte aaye hain. Unka service bhi achha hai. Ye alag kyun hai?`,
  who:`A man in his fifties, loyal and practical. Speaks about Eureka Forbes only in general terms of familiarity and trusted service.`,
  surface:[`loyalty to current brand`,`trust in service`,`why switch`],
- hidden:`His corded vacuum is heavy to drag up and down the stairs of his duplex. He is loyal because he trusts the after-sales, not because he loves the machine.`}
+ hidden:`His corded vacuum is heavy to drag up and down the stairs of his duplex. He is loyal because he trusts the after-sales, not because he loves the machine.`},
+{id:'crispi',cat:'Ninja',name:`The air-fryer value hunter`,store:`Mall store. Compared the Crispi price tag with a Philips box on the next shelf.`,vs:`vs Philips NA231`,
+ line:`Philips ka 6.2 litre ₹10,000 mein aa raha hai aur bake bhi karta hai. Ye Crispi itna mehnga kyun?`,
+ who:`A woman in her late twenties, newly married, cooks for two and reads reviews on her phone.`,
+ surface:[`price versus Philips NA231`,`bigger capacity next door`,`baking and grilling`,`will the glass break`],
+ hidden:`She cooks for two and mostly makes snacks and reheats leftovers. She worries about non-stick coatings and likes watching the food cook. She has not mentioned that her kitchen counter is small and a big machine will not fit.`},
+{id:'purifier',cat:'Shark',name:`The filter-cost calculator`,store:`Premium store. Works from home, has a toddler, and has read reviews.`,vs:`vs Philips and Dyson`,
+ line:`Philips ka sasta lag raha hai, par filter ka kharcha? Aur Dyson bhi toh 5 saal ka filter bolta hai. Aap kya alag ho?`,
+ who:`A man in his late thirties who works from home in a 2BHK in a high-AQI city, with a toddler.`,
+ surface:[`filter replacement cost`,`Dyson 5-year filter`,`noise at night`,`does 1400 sq ft claim hold`],
+ hidden:`His toddler has a cough every winter and they spend nights in one bedroom, so a quiet machine matters more to him than the coverage number. He was burned once by a purifier whose filter cost kept rising, so he wants a clear five-year cost.`}
 ];
+/* personas shown in Practice. Limited to the four focus products plus questions that apply to every product */
+var PERSONA_PROD={dyson:'hydrovac',pethair:'hydrovac',cooking:'combi',upgrader:'combi',crispi:'crispi',purifier:'hp300',online:'any',service:'any'};
+var PRACTICE_PRODS=[['all','All'],['combi','Combi'],['crispi','Crispi'],['hydrovac','HydroVac'],['hp300','HP300']];
 
 var PRODUCTS=[
 {id:'hydrovac',brand:'Shark',name:`Shark Hydrovac`,sub:`Cordless wet and dry cleaning`,
@@ -424,6 +483,30 @@ var PRODUCTS=[
   say:`Abhi extra jar alag se nahi milta. Main aapka ye feedback likh leta hoon.`,
   care:`Do not promise availability.`}
  ]},
+{id:'hp300',brand:'Shark',name:`Shark HP300 Air Purifier`,sub:`NeverChange HEPA filter, up to 5 years`,
+ facts:[`True HEPA 14 filter listed at 99.98%, tested at 0.1 to 0.2 microns`,`Filter is listed as lasting up to 5 years. That is a tested maximum, not a promise`,`Covers up to 1,400 sq ft in one hour, per the product page`,`MRP ₹34,990. One retailer sells it at ₹28,999`,`Purifier only. No humidifier`,`CADR figure for India is not confirmed`],confirm:true,
+ qs:[
+ {q:`Philips ka filter har saal badalna padta hai. Isme?`,g:`Filter cost. The main reason to pick HP300.`,
+  why:`Shoppers compare the sticker price, not the cost of ownership. A yearly filter adds up.`,
+  say:`HP300 ka filter 5 saal tak chalne ke liye test hua hai, toh filter ka kharcha nahi. Aap kitne saal ke liye le rahe ho? Main aapko 5 saal ka hisaab likh ke dikha deta hoon.`,
+  care:`Say "up to 5 years", never "never needs changing". Use the filter cost table in Learn and say the Philips price is indicative until confirmed.`},
+ {q:`Dyson HushJet mein bhi 5 saal ka filter hai aur woh quiet hai.`,g:`Competitor claim. Dyson matches the 5-year filter.`,
+  why:`The 5-year filter is not unique to Shark any more. Dyson lists 24 dB in sleep mode.`,
+  say:`Sahi baat hai, Dyson bhi 5 saal tak bolta hai. Farak aapke kamre ke size, raat ke shor aur budget mein dekhte hain. Aapka bedroom kitna bada hai?`,
+  care:`Do not say Dyson is more expensive. Dyson lists ₹34,900 MRP and ₹29,900 selling, close to HP300. Do not deny that Dyson is quieter in sleep mode.`},
+ {q:`1,400 sq ft kya sach mein? Mera hall itna bada nahi.`,g:`Coverage claim. Shoppers test it against their own room.`,
+  why:`A big number invites doubt. The figure is for one hour under test conditions.`,
+  say:`Ye company ka tested figure hai, ek ghante ke liye. Aapka kamra kitna bada hai? Chhote kamre mein aur jaldi saaf hoga, wahi main aapko dikhata hoon.`,
+  care:`Do not promise that a whole home is clean in an hour. State the one-hour test condition.`},
+ {q:`Philips mein humidifier bhi hai. Isme?`,g:`Features. Philips 3400 is a 2-in-1.`,
+  why:`Dry-climate and winter buyers like a humidifier in the same unit.`,
+  say:`HP300 sirf purifier hai, humidifier nahi hai. Aapke ghar mein hawa sookhi lagti hai ya dhool aur smoke ka problem zyada hai?`,
+  care:`Do not say HP300 humidifies. Do not say humidifiers are not needed.`},
+ {q:`Raat ko kitni awaaz karta hai?`,g:`Noise. Bedroom use.`,
+  why:`Most purifiers run at night. Dyson advertises 24 dB in sleep mode.`,
+  say:`Ek retailer page pe 38.8 dB likha hai. Main sleep mode yahin chala ke dikhata hoon, aap khud suniye.`,
+  care:`Confirm the noise figure and the mode it was measured in on the approved sheet before quoting.`}
+ ]},
 {id:'any',brand:'Both',name:`Every product: price, EMI, service`,sub:`The questions a pitch cannot fix`,
  facts:[`No no-cost EMI, card EMI or paper finance today`,`No physical service centres; shoppers are directed to Vijay Sales or the website`,`Online card offers can open a gap of ₹3,000 or more`],confirm:false,
  qs:[
@@ -478,7 +561,8 @@ var LEARN=[
   [`Weight`,`9.14 kg`],
   [`Warranty`,`2 years`,`retailer listing`],
   [`In the box`,`Bake tray, Crisper tray, Combi pan, Inspiration guide`],
-  [`Cavity`,`Retail listings say stainless steel. Confirm before quoting`]],
+  [`Cavity`,`Retail listings say stainless steel. Confirm before quoting`],
+  [`Pan coating`,`Combi Pan and Crisper Tray are aluminium with a nano-ceramic non-stick coating, listed as PTFE-free and PFOA-free`,`Shark support, US page. Confirm India wording`]],
  features:[
   {n:`Combi Meals`,what:`Cooks a main and two sides together, from scratch, in about 15 minutes.`,gain:`One cook, one timer, one wash-up. Dinner lands together instead of in stages.`},
   {n:`HyperSteam with hot air`,what:`Superheated steam combined with fast-moving air.`,gain:`Food stays moist inside and crisp outside, so kebabs, tikkas and vegetables are less likely to dry out.`},
@@ -583,6 +667,34 @@ var LEARN=[
   {q:`A shopper wants a second jar. What do you say?`,a:`It is not sold separately at the moment. Note the request.`}],
  src:`Croma and Reliance Digital listings`},
 
+{id:'hp300',brand:'Shark',name:`Shark HP300 Air Purifier (HP300IN)`,tag:`Clean air without buying a new filter every year`,price:`MRP ₹34,990. One retailer lists ₹28,999`,persona:'purifier',
+ problem:`Most air purifiers need a new filter about once a year, so the real cost shows up after the purchase. HP300 uses a NeverChange HEPA filter listed for up to 5 years, so the money goes on the machine and not on repeat filters.`,
+ specs:[[`Filter`,`NeverChange True HEPA 14, listed at 99.98% of particles`,`tested at 0.1 to 0.2 microns`],
+  [`Filter life`,`Up to 5 years`,`tested maximum, depends on use`],
+  [`Coverage`,`Up to 1,400 sq ft in one hour`,`product page`],
+  [`Noise`,`38.8 dB`,`retailer page. Confirm mode`],
+  [`Power`,`54 W`,`retailer page`],
+  [`Weight`,`6 kg`,`retailer page`],
+  [`Dimensions`,`33.5 x 57 x 33.5 cm`,`retailer page`],
+  [`Display`,`Real-time LED display`],
+  [`Warranty`,`2 years`,`retailer page`],
+  [`CADR`,`Not confirmed for India`]],
+ features:[
+  {n:`NeverChange filter`,what:`A HEPA 14 filter listed for up to 5 years of use.`,gain:`No yearly filter bill. See the 5-year cost table in Terms.`},
+  {n:`Debris Defense`,what:`Screens catch hair, dust and dander before they reach the HEPA filter. You vacuum or rinse the screens.`,gain:`The main filter stays clean, so it keeps working for longer.`},
+  {n:`Clean Sense IQ`,what:`Tracks PM1, PM2.5 and PM10 and adjusts power on its own.`,gain:`It speeds up when the air is bad and settles when it is clean. You do not have to keep changing the setting.`},
+  {n:`Odor Neutralizer`,what:`Releases a fresh scent. Listed as 2x better odour reduction than filtration alone.`,gain:`Cooking and pet smells are handled as well as dust.`},
+  {n:`Whole-home coverage`,what:`Up to 1,400 sq ft in one hour under test conditions.`,gain:`Suits big living rooms and open plans. A smaller room should clean faster.`}],
+ fits:[`Homes with allergies, kids, elders or pets`,`Shoppers in high-AQI cities who run a purifier every day`,`Buyers who want to know the five-year cost before they buy`],
+ notFit:[`Shoppers who want a built-in humidifier. Philips 3400 has one`,`Shoppers whose top priority is the lowest noise in sleep mode. Dyson lists 24 dB`],
+ flags:[`CADR for the India model.`,`Noise figure (38.8 dB) is from a retailer page and its test mode is not stated.`,`Whether SharkNinja allows the Rs 16,000 filter saving claim on the shop floor.`,`Wattage, weight and warranty come from a retailer page.`],
+ notes:`Be honest that Dyson HushJet also lists a 5-year filter. The edge is the clear five-year cost and the bigger coverage claim, not the filter life alone.`,
+ check:[{q:`How long does the filter last?`,a:`Listed as up to 5 years. It is a tested maximum and depends on use and air quality.`},
+  {q:`What is the coverage claim?`,a:`Up to 1,400 sq ft in one hour, per the product page.`},
+  {q:`Does it have a humidifier?`,a:`No. It is a purifier only.`},
+  {q:`A shopper says Dyson also has a 5-year filter. What do you say?`,a:`Agree. Then compare on room size, noise and budget.`}],
+ src:`Epik retailer page, Shark support, sharkninja.co.th`},
+
 {id:'hydrovac',brand:'Shark',name:`Shark HydroVac`,tag:`Vacuum and mop in one pass, then it cleans itself`,price:`Confirm India MRP`,persona:'dyson',
  problem:`Cleaning hard floors usually means sweeping, then mopping, then waiting for them to dry. HydroVac picks up dry dirt and wet mess and mops at the same time, and its self-clean mode washes the brush and tubing on the dock.`,
  specs:[[`Type`,`Cordless wet and dry, upright`],
@@ -657,28 +769,287 @@ var NEEDS=[
 [`Bring leftovers back to crunchy`,`Crispi`,`Recrisp is a dedicated function.`],
 [`A straightforward family air fryer that also bakes and dehydrates`,`Max Pro`,`6.2 L basket with six functions.`]];
 
-var TERMS=[
-[`HyperSteam`,`Superheated steam combined with fast-moving air. It cooks quickly and keeps food moist inside. Combi uses it in its Combi Cooker mode.`],
-[`Combi Meals`,`A main and two sides cooked together so they finish together, in about 15 minutes.`],
-[`Combi Bake: wet and dry`,`Wet mode adds steam for moist breads and cakes. Dry Bake is classic oven-style roasting.`],
-[`Prove`,`A low-heat function on Combi for letting dough rise.`],
-[`Air Fry and Max Crisp`,`Air fry moves hot air quickly around food. On Max Pro, Max Crisp is 240°C superheated air with 360 degree airflow for extra crunch.`],
-[`Recrisp`,`A Crispi function that brings leftovers back to fryer-fresh crunch.`],
-[`DualZone and Sync`,`Two independent cooking zones. Sync makes both zones finish at the same time.`],
-[`Self-clean (HydroVac)`,`Place the HydroVac on its dock and the brush, floorhead and tubing are washed.`],
-[`Freshen mode (HydroVac)`,`A mode for refreshing area rugs, thin-pile rugs and mats. It is not a deep carpet clean.`],
-[`BLDC motor`,`A brushless motor. FlexBreeze lists it for efficient, quiet running at 36 W.`],
-[`BreezeBoost`,`The FlexBreeze maximum airflow mode.`],
-[`IPX4`,`Protected against water splashes. This is why FlexBreeze handles light rain but not heavy rain.`],
-[`Watts and air watts`,`Air watts is how Dyson quotes suction. SharkNinja lists watts. They are different measures, so the numbers cannot be compared directly. Do not convert one into the other.`]];
+/* Head-to-head comparisons. First column after the label is always the SharkNinja product.
+   "Confirm" means no reliable India figure was found. Check the approved sheet before quoting. */
+var COMPARE=[
+{id:'hp300',label:`HP300 air purifier`,title:`Shark HP300 against Philips 3400 and Dyson HushJet`,
+ cols:[`Shark HP300`,`Philips 3400 (AC3421, 2-in-1)`,`Dyson HushJet Compact (HJ10)`],
+ rows:[
+ [`Price`,`MRP ₹34,990. One retailer lists ₹28,999`,`Confirm India price`,`MRP ₹34,900. Listed at ₹29,900`],
+ [`Room size`,`Up to 1,400 sq ft in one hour`,`Up to 78 m² (about 840 sq ft)`,`Up to 100 m² (about 1,076 sq ft)`],
+ [`Filter`,`NeverChange True HEPA 14, 99.98% at 0.1 to 0.2 microns`,`HEPA NanoProtect plus activated carbon, 99.97% down to 0.003 microns`,`Electrostatic filter, 99.97% at 0.3 microns, plus 360° activated carbon`],
+ [`Filter life`,`Up to 5 years (tested)`,`Philips says about every 12 months on average. Confirm for the 3400`,`Up to 5 years (tested)`],
+ [`Filter cost over 5 years`,`₹0 at the listed life`,`About ₹14,400 to ₹17,550 using Philips 3000-series filter prices. Indicative only`,`Confirm replacement price`],
+ [`CADR (cleaning speed)`,`Confirm`,`300 m³/h`,`Confirm`],
+ [`Noise`,`38.8 dB (retailer page)`,`Confirm`,`24 dB in sleep mode, 41 dB at maximum`],
+ [`Humidifier`,`No`,`Yes, 650 ml/h`,`No`],
+ [`Auto mode`,`Clean Sense IQ reads PM1, PM2.5 and PM10 and adjusts`,`Confirm`,`Auto mode, LCD and app`],
+ [`Smells`,`Odor Neutralizer`,`Activated carbon filter`,`360° activated carbon filter`],
+ [`Warranty`,`2 years (retailer page)`,`Confirm`,`Confirm`]],
+ win:[`No yearly filter bill. This is the clearest edge over Philips.`,`The largest room size claim of the three.`,`Debris Defense screens you can vacuum protect the main filter.`],
+ straight:[`Dyson also lists a 5-year filter and is quieter in sleep mode.`,`Philips 3400 humidifies. HP300 does not.`,`Dyson prices are close to HP300. Do not call Dyson more expensive.`,`Filter life and room size are tested maximums. Say "up to".`],
+ lead:`Ask the bedroom size, who sleeps there, and how many years they will keep it. Then show the five-year cost. Compare noise by playing sleep mode on the floor.`,
+ src:`Dyson India, Philips India and Amazon India listings, Epik retailer page. Philips filter price from Philips 3000-series FY3433 listings. Checked Nov 2026.`},
+{id:'combi',label:`Combi`,title:`Ninja Combi against Philips OneChef`,
+ cols:[`Ninja Combi`,`Philips OneChef (NX5300)`],
+ rows:[
+ [`Price`,`MRP ₹29,990`,`MRP ₹19,995. Listed at ₹19,495`],
+ [`Capacity`,`12.5 L`,`6 L`],
+ [`Functions`,`14`,`33-in-1`],
+ [`Power`,`About 1,780 W`,`2,280 W`],
+ [`Temperature`,`Up to 240°C (third-party listing)`,`80 to 200°C`],
+ [`How it cooks`,`HyperSteam with hot air. Cooks a main and two sides together`,`AmbiHeat sensors adjust heat in one 6 L pot`],
+ [`Indian cooking`,`Demo a real dish. Confirm stirring room`,`Listed for dal, biryani and tadka with no spillage`],
+ [`Pan coating`,`Aluminium with nano-ceramic non-stick, listed PTFE-free and PFOA-free. Confirm India wording`,`Confirm`],
+ [`Cooking window`,`Confirm`,`Yes`],
+ [`Weight`,`9.14 kg`,`6.2 kg`],
+ [`Warranty`,`2 years (retailer listing)`,`2 years`]],
+ win:[`Twice the capacity, so it suits bigger families.`,`Hotter top temperature and wet or dry baking.`,`Cooks a main and two sides so they finish together.`],
+ straight:[`OneChef costs about ₹10,000 less.`,`OneChef lists more functions (33 against 14) and a window.`,`OneChef is marketed for Indian curries. Do not run it down.`],
+ lead:`Ask how many people eat, what dinner looks like, and whether they bake. A big family with a busy dinner hour is the Combi shopper. A couple who cook one pot meals may be happy with OneChef.`,
+ src:`Philips India OneChef page, Shark support, retailer listings. Checked Nov 2026.`},
+{id:'crispi',label:`Crispi`,title:`Ninja Crispi against Philips NA231`,
+ cols:[`Ninja Crispi`,`Philips NA231`],
+ rows:[
+ [`Price`,`Promoters quote about ₹16,000. Confirm MRP`,`MRP ₹12,995. Listed around ₹9,400 to ₹9,999`],
+ [`Capacity`,`1.4 L and 3.8 L glass containers`,`6.2 L`],
+ [`Functions`,`4: Air Fry, Roast, Recrisp, Keep Warm`,`13-in-1, including bake and grill`],
+ [`Power`,`1,700 W`,`1,700 W`],
+ [`See the food`,`Glass, 360 degree clear view`,`Cooking window`],
+ [`Container`,`Borosilicate glass. Listed BPA-free and PFAS-free (Croma)`,`Confirm basket coating`],
+ [`Bakes and grills`,`No`,`Yes`],
+ [`Leftovers`,`Dedicated Recrisp function`,`Confirm`],
+ [`Controls`,`Top-mounted soft-touch panel`,`Touch panel`],
+ [`Warranty`,`Confirm`,`2 years`]],
+ win:[`Glass container for shoppers who worry about coatings.`,`A small container for one or two portions, plus a bigger one.`,`Recrisp brings leftovers back to crunchy.`],
+ straight:[`NA231 is cheaper, bigger and does more.`,`NA231 also has a window. Do not say Crispi is the only one you can see through.`,`Both are 1,700 W. Watts do not separate them.`],
+ lead:`Ask who they cook for and whether they bake. A couple who snack and reheat can like Crispi. If they want baking or grilling, show Combi. Do not push Crispi against the facts.`,
+ src:`Philips India, Amazon India, Reliance Digital, Croma. Checked Nov 2026.`}
+];
 
+/* Consumer-friendly terms. Each one says what it is, what it means for the shopper, and what to say. */
+var TERM_GROUPS=[['all','All'],['general','General'],['combi','Combi'],['crispi','Crispi'],['hydrovac','HydroVac'],['hp300','HP300']];
+var TERMS=[
+{g:'general',t:`High wattage (Crispi is 1,700 W)`,
+ plain:`Watts show how much power the heater and fan draw.`,
+ benefit:`More watts usually means it heats up faster and recovers heat faster, so food is ready sooner.`,
+ say:`Zyada watt ka matlab garam jaldi hota hai, toh khana jaldi tayyar hota hai.`,
+ care:`Do not say it saves electricity or cooks better. Philips NA231 is also 1,700 W, so watts alone do not win the sale.`},
+{g:'general',t:`Watts and air watts`,
+ plain:`Dyson quotes suction as air watts. SharkNinja lists watts. They measure different things.`,
+ benefit:`The numbers cannot be compared head to head, so judge by how it cleans their own floor.`,
+ say:`Dono alag tarah se naap rahe hain. Aapke ghar ka sabse mushkil kachra yahin chala ke dikhata hoon.`,
+ care:`Never convert one into the other.`},
+{g:'hp300',t:`NeverChange filter`,
+ plain:`A HEPA filter listed to last up to 5 years, so there is no yearly filter to buy. See the cost table below.`,
+ benefit:`Saves money over the years and means one less thing to remember. The filter bill is the hidden cost of most purifiers.`,
+ say:`Filter 5 saal tak chalne ke liye test hua hai, toh har saal ka filter kharcha nahi.`,
+ care:`Say "up to 5 years". It is a tested maximum and depends on use and air quality. Never say it never needs changing.`},
+{g:'hp300',t:`HEPA and True HEPA 14`,
+ plain:`A very fine filter that catches tiny particles such as dust, smoke, pollen and pet dander. HEPA 14 is a higher grade than basic HEPA.`,
+ benefit:`Cleaner air for families with allergies, kids, elders and pets.`,
+ say:`Ye filter dhool, dhuan, pollen aur pet ke baal jaise bahut chhote kann pakadta hai.`,
+ care:`Brands test at different particle sizes. HP300 lists 99.98% at 0.1 to 0.2 microns. Dyson lists 99.97% at 0.3 microns. Philips quotes down to 0.003 microns. Do not compare the percentages directly.`},
+{g:'hp300',t:`CADR`,
+ plain:`Clean Air Delivery Rate. How much clean air the purifier produces in an hour.`,
+ benefit:`A higher number cleans a room faster. Match it to the room size.`,
+ say:`Ye batata hai ki machine ek ghante mein kitni saaf hawa deti hai. Aapke kamre ke liye hum yahi dekhte hain.`,
+ care:`The India CADR for HP300 is not confirmed. Philips 3400 lists 300 m³/h. Do not quote one without the other in the same units.`},
+{g:'hp300',t:`Room size claims (sq ft)`,
+ plain:`The size of room the purifier can clean in a set time under test conditions.`,
+ benefit:`Helps pick the right machine. A smaller room than the claim should clean faster.`,
+ say:`Ye tested figure hai. Aapka kamra kitna bada hai? Usi ke hisaab se bataunga.`,
+ care:`HP300 says up to 1,400 sq ft in one hour. Do not promise a whole home in an hour.`},
+{g:'hp300',t:`Noise (dB)`,
+ plain:`Decibels measure loudness. A lower number is quieter.`,
+ benefit:`Matters most for a bedroom, where the purifier runs all night.`,
+ say:`Raat ke liye sleep mode yahin chala ke dikhata hoon, aap khud suniye.`,
+ care:`Dyson lists 24 dB in sleep mode. HP300's 38.8 dB is from a retailer page and its mode is not stated. Confirm before quoting.`},
+{g:'hp300',t:`Clean Sense IQ`,
+ plain:`A sensor that reads fine dust (PM1, PM2.5, PM10) and adjusts fan speed.`,
+ benefit:`It works harder when the air is bad and eases off when it is clean, so the shopper never has to adjust it.`,
+ say:`Aapko kuch karna nahi hai. Hawa kharab hogi toh ye khud tez chalega.`,
+ care:`Confirm the exact sensor wording on the approved sheet.`},
+{g:'hp300',t:`Debris Defense`,
+ plain:`Screens in front of the HEPA filter that catch hair, dust and dander.`,
+ benefit:`The main filter stays cleaner and keeps working longer. You vacuum or rinse the screens.`,
+ say:`Pehle baal aur dhool in jaali mein ruk jaate hain. Unko aap vacuum ya dho sakte ho.`,
+ care:`Say the screens are cleaned. Do not say the machine needs no upkeep at all.`},
+{g:'combi',t:`Non-toxic coating (Combi pan)`,
+ plain:`A non-stick coating stops food sticking. Some older coatings (PTFE, PFOA) worry people. Combi's pan is aluminium with a nano-ceramic non-stick coating, listed as PTFE-free and PFOA-free.`,
+ benefit:`Peace of mind for families who cook every day, and easy washing.`,
+ say:`Pan par ceramic non-stick coating hai, jo PTFE aur PFOA free bataya gaya hai.`,
+ care:`Say "PTFE-free and PFOA-free". Do not say chemical-free or 100% safe. The listing is from Shark's US support page. Confirm the India wording first.`},
+{g:'crispi',t:`Glass container (Crispi)`,
+ plain:`Crispi cooks in borosilicate glass containers instead of a coated metal basket. The Croma listing says BPA-free and PFAS-free.`,
+ benefit:`Nothing to flake off a coating. You can see the food cook, and the glass goes from freezer to air fryer.`,
+ say:`Isme glass ka container hai, toh coating ki chinta nahi. Khana andar dikhta bhi hai.`,
+ care:`Do not say it cannot break. Confirm the India warranty and safety wording.`},
+{g:'crispi',t:`Recrisp`,
+ plain:`A setting that brings leftovers back to fryer-fresh crunch.`,
+ benefit:`Yesterday's samosa or fries taste fresh again, instead of going soft in the microwave.`,
+ say:`Kal ka bacha hua snack phir se kurkura ho jaata hai.`,
+ care:`Do not promise it is identical to freshly cooked.`},
+{g:'combi',t:`HyperSteam`,
+ plain:`Superheated steam with fast-moving hot air.`,
+ benefit:`Food stays moist inside and crisp outside. Kebabs and vegetables are less likely to dry out.`,
+ say:`Bhaap aur garam hawa dono saath chalte hain, toh andar se naram aur bahar se kurkura.`,
+ care:`Keep it to the listed benefit.`},
+{g:'combi',t:`Combi Meals`,
+ plain:`A main and two sides cooked together so they finish together, in about 15 minutes.`,
+ benefit:`Dinner lands on the table at the same time, with one cook and one timer.`,
+ say:`Sabzi, chawal aur ek aur cheez ek saath ban jaati hai.`,
+ care:`Confirm how trays keep dishes separate before promising veg and non-veg apart.`},
+{g:'combi',t:`Wet and dry bake`,
+ plain:`Wet mode adds steam for soft breads and cakes. Dry bake is the usual oven-style roasting.`,
+ benefit:`A soft cake and a crisp roast from the same machine.`,
+ say:`Cake naram chahiye toh wet bake, roast ke liye dry bake.`,
+ care:`Do not call it a replacement for every oven recipe.`},
+{g:'general',t:`Air Fry and Max Crisp`,
+ plain:`Air fry moves hot air quickly around food. On Max Pro, Max Crisp is 240°C superheated air with strong airflow.`,
+ benefit:`Fried-style crunch with little to no oil.`,
+ say:`Tel bahut kam, par kurkura wahi.`,
+ care:`The 75% less fat figure is a listing claim. Do not say fat free.`},
+{g:'hydrovac',t:`Self-clean mode`,
+ plain:`On the dock, the brush, floorhead and tubing are washed.`,
+ benefit:`No scrubbing a dirty brush roll after mopping.`,
+ say:`Dock pe rakho, brush khud dhul jaata hai.`,
+ care:`Confirm the exact steps on the approved sheet.`},
+{g:'hydrovac',t:`Freshen mode`,
+ plain:`A mode for refreshing area rugs, thin-pile rugs and mats.`,
+ benefit:`A quick refresh for rugs between deep cleans.`,
+ say:`Chhote rug aur mat ko jaldi taaza karne ke liye hai.`,
+ care:`It is not a deep carpet clean. Do not promise it for wall-to-wall carpet.`},
+{g:'general',t:`BLDC motor`,
+ plain:`A brushless motor, listed for FlexBreeze at 36 W.`,
+ benefit:`Quieter and efficient cooling.`,
+ say:`Isme motor halki awaaz mein chalti hai aur bijli kam khaati hai.`,
+ care:`Do not promise a bill saving.`},
+{g:'general',t:`IPX4`,
+ plain:`Protected against water splashes.`,
+ benefit:`FlexBreeze can be used on a balcony in light rain.`,
+ say:`Halki baarish ke chheente ho toh chalega.`,
+ care:`Not for heavy rain, and do not charge it in rain.`}
+];
+
+/* 5-year filter cost. Philips figure uses 3000-series FY3433 prices (Rs 2,880 to Rs 3,510) and about one filter a year. Indicative. */
+var COST={items:[
+ {n:`Shark HP300`,low:0,high:0,note:`NeverChange filter listed for up to 5 years`},
+ {n:`Philips (3000-series filter price)`,low:2880,high:3510,note:`Philips says about every 12 months. Confirm the 3400 filter price and life`},
+ {n:`Dyson HushJet Compact`,low:null,high:null,note:`Filter listed for up to 5 years. Confirm replacement price`}
+]};
+var inr=function(n){return '₹'+Math.round(n).toLocaleString('en-IN')};
+
+/* Question drills. Each scenario has three possible replies. v: best | ok | risk */
+var DRILLS=[
+{p:'combi',topic:`Price vs Philips`,q:`Philips OneChef ₹10,000 sasta hai aur 33-in-1 hai. Isme kya extra hai?`,
+ opts:[
+ {t:`OneChef mein functions zyada hain, par Combi ki quality better hai.`,v:'risk',f:`Vague and runs down a competitor. You cannot back "better quality" with a fact.`},
+ {t:`Dono alag tarah ke hain. Aapke ghar mein kitne log khaate hain, aur kya banate ho? Combi 12.5 litre ka hai aur main aur do sides ek saath banata hai.`,v:'best',f:`You asked first and then named real differences: size and cooking several dishes at once.`},
+ {t:`Haan OneChef sasta hai, wahi le lo.`,v:'ok',f:`Honest about price, but you gave up without asking what they need.`}],
+ why:`Do not argue on price or function count. OneChef is cheaper and lists more functions. Win on family size and dinner-hour fit.`},
+{p:'combi',topic:`Coating safety`,q:`Andar ka coating safe hai? Non-stick mein koi chemical toh nahi?`,
+ opts:[
+ {t:`Bilkul non-toxic hai, 100% safe.`,v:'risk',f:`Too absolute. No brand can promise "100% safe".`},
+ {t:`Pan aluminium ka hai jis par ceramic non-stick coating hai, jo PTFE aur PFOA free bataya gaya hai. India wali exact wording main approved sheet se confirm karke bata deta hoon.`,v:'best',f:`Specific, uses the listed claim, and offers to confirm the India wording.`},
+ {t:`Sab non-stick coating same hote hain, chinta mat kijiye.`,v:'risk',f:`Dismisses a real worry and is not true. Shoppers care about PTFE and PFOA.`}],
+ why:`Say "PTFE-free and PFOA-free". The listing is from Shark's US support page, so confirm the India wording before using it.`},
+{p:'combi',topic:`Why so expensive`,q:`₹29,990? Itna mehnga kyun?`,
+ opts:[
+ {t:`Aap abhi oven, air fryer aur steamer alag lete toh kitna kharch hota? Combi teeno ka kaam karta hai aur counter pe ek hi jagah leta hai.`,v:'best',f:`You reframed price as total cost and counter space, which is the real concern.`},
+ {t:`Main manager se baat karke discount dila dunga.`,v:'risk',f:`You invented an offer you cannot confirm.`},
+ {t:`Quality ki wajah se.`,v:'ok',f:`Honest but empty. It gives the shopper nothing to weigh.`}],
+ why:`Ask which appliances it would replace, and add them up with the shopper. Only mention offers that are approved.`},
+{p:'combi',topic:`Veg and non-veg`,q:`Veg aur non-veg alag ban sakta hai ek saath?`,
+ opts:[
+ {t:`Haan bilkul, koi problem nahi.`,v:'risk',f:`You promised something that is not confirmed.`},
+ {t:`Do-teen dish ek saath ban sakti hain. Tray kaise lagti hain main abhi dikhata hoon, aur alag rakhne ka tareeka sheet se confirm kar leta hoon.`,v:'best',f:`Accurate, shows the product, and does not promise what you have not checked.`},
+ {t:`Nahi ho sakta.`,v:'ok',f:`May be wrong too. Do not say no until you have checked.`}],
+ why:`Confirm how the trays keep dishes apart before you promise it.`},
+
+{p:'crispi',topic:`Price vs Philips NA231`,q:`Philips ka 6.2 litre ₹10,000 mein aata hai aur bake bhi karta hai. Crispi itna mehnga kyun?`,
+ opts:[
+ {t:`Crispi bhi bake kar leta hai.`,v:'risk',f:`False. Crispi has no baking function.`},
+ {t:`Philips ka quality achha nahi hota.`,v:'risk',f:`Runs down a competitor with no facts.`},
+ {t:`Philips bada hai aur bake-grill karta hai, ye sach hai. Crispi chhote batch ke liye hai aur glass mein khana dikhta hai. Aap kitne log ke liye banate ho, aur bake karte ho?`,v:'best',f:`Honest about their strengths, names your fit, and asks what the shopper needs.`}],
+ why:`NA231 is cheaper, bigger and does more. Win only if the shopper values glass, small batches and Recrisp. Otherwise send them to Combi.`},
+{p:'crispi',topic:`What does 1,700 W mean`,q:`1700 watt ka matlab kya hai? Zyada hai kya?`,
+ opts:[
+ {t:`Sabse zyada power wala air fryer yahi hai.`,v:'risk',f:`Not true. Philips NA231 is also 1,700 W.`},
+ {t:`Zyada watt ka matlab garam jaldi hota hai, toh khana jaldi tayyar hota hai. Philips bhi 1700 W ka hai, isliye asli farak size aur glass ka hai.`,v:'best',f:`Explains the benefit simply and stays honest that watts do not separate the two.`},
+ {t:`Isse bijli ka bill kam aayega.`,v:'risk',f:`Unsupported. More watts does not mean a lower bill.`}],
+ why:`Turn the number into a benefit (faster cooking) and do not claim more than that.`},
+{p:'crispi',topic:`Glass breaking`,q:`Glass tootega toh? Gir gaya toh?`,
+ opts:[
+ {t:`Ye tootega nahi, bahut mazboot hai.`,v:'risk',f:`You cannot promise that.`},
+ {t:`Borosilicate glass hai, freezer se air fryer tak chalne ke liye bataya gaya hai. Girne par kya cover hai, wo main warranty wording se aapko saaf bata deta hoon.`,v:'best',f:`Gives the real claim and is open about what is covered.`},
+ {t:`Steel wala le lo, usme tension nahi.`,v:'ok',f:`Sends them away from your product without checking their need.`}],
+ why:`Do not say it cannot break. Confirm the India warranty wording before you speak about damage.`},
+{p:'crispi',topic:`Baking and grilling`,q:`Isme cake ya grill ho sakta hai?`,
+ opts:[
+ {t:`Crispi mein baking aur grill nahi hai. Air fry, roast, recrisp aur keep warm hai. Baking chahiye toh Combi dikhata hoon.`,v:'best',f:`Clear, honest, and you point them to the right model.`},
+ {t:`Haan thoda bahut ho jayega.`,v:'risk',f:`Vague and untrue. It will disappoint them at home.`},
+ {t:`Ye toh air fryer hai, isme bake kaun karta hai.`,v:'ok',f:`True that it does not bake, but dismissive and you lost the sale to Combi.`}],
+ why:`Recommend the right model even if it is not the one they walked up to.`},
+
+{p:'hydrovac',topic:`Heavier than Dyson`,q:`Ye Dyson se bhaari lag raha hai.`,
+ opts:[
+ {t:`Nahi nahi, ye bilkul halka hai.`,v:'risk',f:`The shopper just felt the weight. Denying it costs you trust.`},
+ {t:`Haan, haath mein dono rakh ke farak lagta hai. Ghar mein zyadatar safai kaun karta hai, aur kitni der?`,v:'best',f:`Acknowledges the truth and asks who will use it, which is what matters.`},
+ {t:`Dyson ka suction kamzor hai, isliye halka hai.`,v:'risk',f:`Unsupported claim about a rival.`}],
+ why:`Acknowledge, ask who cleans and for how long, then let them try it on their own floor type.`},
+{p:'hydrovac',topic:`Sofa and curtains`,q:`Dyson mein sofa aur curtain sab ho jaata hai. Isme?`,
+ opts:[
+ {t:`Hydrovac floor aur rug ke liye hai, sofa-parde ke liye nahi. Aapki safai mein floor kitna hai aur sofa-parde kitne?`,v:'best',f:`Clear about the limit and asks about the real split.`},
+ {t:`Haan, attachments se sab ho jaata hai.`,v:'risk',f:`False. HydroVac is a floor tool.`},
+ {t:`Wo sab ke liye alag machine leni padegi.`,v:'ok',f:`True, but you did not ask whether floors are most of their cleaning.`}],
+ why:`Say it before they find out at home. HydroVac does not cover sofas, curtains or ceilings.`},
+{p:'hydrovac',topic:`Battery`,q:`Battery kitni der chalti hai? Mera ghar bada hai.`,
+ opts:[
+ {t:`Ek ghante tak chalti hai.`,v:'risk',f:`Not supported. Global pages say about 25 minutes.`},
+ {t:`Ghar kitna bada hai? Global pages pe 25 minute ke aas-paas bataya hai. India ka figure confirm karke bataunga. Bada ghar hai toh main seedha bol dunga.`,v:'best',f:`Honest about the figure and asks the size first.`},
+ {t:`Chinta mat kijiye, aaram se ho jaayega.`,v:'ok',f:`Reassuring but not an answer.`}],
+ why:`Do not promise coverage in square feet unless the approved sheet says so.`},
+{p:'hydrovac',topic:`Accidental damage`,q:`Girne par kharab ho gaya toh 2 saal ka damage cover milta hai?`,
+ opts:[
+ {t:`Haan, sab covered hai.`,v:'risk',f:`Shark does not have an accidental damage cover.`},
+ {t:`Accidental damage cover ke saath nahi aata. Standard warranty mein kya hai, wo main saaf bata deta hoon. Aapko kis cheez ka darr hai?`,v:'best',f:`Direct, then asks what the worry is.`},
+ {t:`Warranty mein sab kuch aa jaata hai.`,v:'risk',f:`Vague and implies cover that does not exist.`}],
+ why:`Read the approved warranty wording exactly. Dyson offers two-year cover and shoppers ask about it.`},
+
+{p:'hp300',topic:`Filter cost vs Philips`,q:`Philips ka sasta lag raha hai, par uska filter har saal badalna padta hai. Isme?`,
+ opts:[
+ {t:`HP300 ka filter kabhi change nahi karna padega.`,v:'risk',f:`Too absolute. It is listed as up to 5 years.`},
+ {t:`Philips ka filter bahut mehnga hota hai.`,v:'ok',f:`Without numbers, it is only a claim.`},
+ {t:`HP300 ka filter 5 saal tak chalne ke liye test hua hai. Aap kitne saal ke liye le rahe ho? Main 5 saal ka kharcha likh ke dikhata hoon.`,v:'best',f:`Names the tested life and offers a written cost, which is what this shopper cares about.`}],
+ why:`Use the five-year table in Terms. Say "up to 5 years" and that the Philips price is indicative.`},
+{p:'hp300',topic:`Dyson also has 5 years`,q:`Dyson HushJet mein bhi 5 saal ka filter hai aur woh quiet hai.`,
+ opts:[
+ {t:`Dyson bahut mehnga hai.`,v:'risk',f:`Dyson lists ₹29,900, close to HP300. You would be wrong.`},
+ {t:`Dyson ka filter 5 saal nahi chalta.`,v:'risk',f:`False. Dyson lists up to 5 years.`},
+ {t:`Sahi baat hai, Dyson bhi 5 saal tak bolta hai. Farak aapke kamre, raat ke shor aur budget mein dekhte hain. Aapka bedroom kitna bada hai?`,v:'best',f:`Agrees with the fact and moves to what separates them for this shopper.`}],
+ why:`Do not deny that Dyson is quieter in sleep mode. Compare on room size and what the shopper needs.`},
+{p:'hp300',topic:`Coverage claim`,q:`1,400 sq ft sach mein? Mera hall itna bada nahi.`,
+ opts:[
+ {t:`Poora ghar ek ghante mein saaf ho jayega.`,v:'risk',f:`Overpromises. The figure is for one hour under test conditions.`},
+ {t:`Ye company ka tested figure hai, ek ghante ke liye. Aapka kamra kitna bada hai? Chhote kamre mein aur jaldi hoga.`,v:'best',f:`States the test condition and moves to their room.`},
+ {t:`Number sirf marketing ke liye hota hai.`,v:'ok',f:`Undersells your own product and gives no help.`}],
+ why:`State the test condition and ask the room size.`},
+{p:'hp300',topic:`Humidifier`,q:`Philips mein humidifier bhi hai. Isme hai?`,
+ opts:[
+ {t:`Haan, isme bhi hai.`,v:'risk',f:`False. HP300 is a purifier only.`},
+ {t:`HP300 sirf purifier hai, humidifier nahi hai. Aapke ghar mein hawa sookhi lagti hai ya dhool aur smoke ka problem zyada hai?`,v:'best',f:`Honest, and asks which problem they actually have.`},
+ {t:`Humidifier ki koi zaroorat nahi hoti.`,v:'ok',f:`Dismisses a real need for some homes.`}],
+ why:`Philips 3400 humidifies at 650 ml/h. If dry air is their main problem, say HP300 may not be the fit.`}
+];
 var HINTS=[`Who will use it most at home?`,`What are you using right now, and what annoys you about it?`,`How big is your home, and how often do you clean or cook?`,`What would make you feel this was a good decision a month from now?`,`What worried you when you saw the price?`];
 var DIMS=[{k:'diagnose',n:`Asked before pitching`},{k:'need',n:`Found the real need`},{k:'link',n:`Tied it to their life`},{k:'honest',n:`Stayed honest`}];
 var OUTCOME={would_buy:`She is reaching for her card.`,thinking:`Wants to think about it, and will probably check online tonight.`,walks:`Walked off to compare online.`};
 
 /* ---------- STATE ---------- */
 var S={tab:'home',view:'home',origin:null,diff:2,cat:'all',gseg:'products',persona:null,turns:[],busy:false,speak:false,vlang:'en-IN',
-  listening:false,debrief:null,coaching:false,coachErr:null,ai:'pending',hist:[],dbDocs:null,saved:false,lastErr:false,gcat:'all',lseg:'products',lcat:'all'};
+  listening:false,debrief:null,coaching:false,coachErr:null,ai:'pending',hist:[],dbDocs:null,saved:false,lastErr:false,gcat:'all',lseg:'products',lcat:'all',
+  pmode:'drills',pprod:'all',dprod:'combi',didx:0,dpick:null,dscore:{},cmp:'hp300',tg:'all',yrs:5};
 var sampleFn=null,dbRef=null,ctl=null,rec=null,micErr='';
 try{S.hist=JSON.parse(localStorage.getItem('fr_hist')||'[]')}catch(e){S.hist=[]}
 
@@ -722,7 +1093,8 @@ var SIDX=null;
 var SYN={emi:'finance emi cost',finance:'emi finance',service:'service repair kharab center',repair:'service repair kharab',heavy:'weight bhaari',weight:'weight bhaari',bhaari:'weight bhaari',
   price:'price amazon online discount paise',cheaper:'amazon price online',online:'amazon online price',amazon:'amazon online price',plastic:'plastic steel material interior',steel:'plastic steel material',
   battery:'battery run time minute',window:'window see-through glass',jar:'jar accessory extra',tray:'tray grid accessory extra',recipe:'recipe app',app:'recipe app',demo:'demo',warranty:'warranty accidental damage',
-  suction:'air watts suction',watts:'air watts suction',sofa:'sofa curtain attachments',small:'small capacity chhota'};
+  suction:'air watts suction',watts:'air watts suction',sofa:'sofa curtain attachments',small:'small capacity chhota',
+  filter:'filter cost saal purifier',purifier:'purifier hp300 filter hepa',hepa:'hepa filter purifier',noise:'noise awaaz db',humidifier:'humidifier purifier',coverage:'sq ft coverage purifier',dyson:'dyson weight',philips:'philips'};
 function buildIdx(){SIDX=[];PRODUCTS.forEach(function(p){p.qs.forEach(function(q){SIDX.push({p:p.name,q:q.q,g:q.g,why:q.why,say:q.say,care:q.care,h:(p.name+' '+q.q+' '+q.g+' '+q.why+' '+q.say).toLowerCase()})})})}
 function searchHtml(v){
   v=(v||'').trim().toLowerCase();if(!v)return '';
@@ -738,7 +1110,7 @@ function searchHtml(v){
      +'<div><div class="lab">Be careful</div><div class="care">'+esc(q.care)+'</div></div></div></details>'}).join('')+'</div>';
 }
 function vLanding(){
-  var day=Math.floor(Date.now()/86400000);var tp=PERSONAS[day%PERSONAS.length];
+  var day=Math.floor(Date.now()/86400000);var vis=PERSONAS.filter(function(p){return PERSONA_PROD[p.id]});var tp=vis[day%vis.length];
   var nQ=0;PRODUCTS.forEach(function(p){nQ+=p.qs.length});
   var lp=null;for(var i=S.hist.length-1;i>=0;i--){if(S.hist[i].type==='practice'){lp=S.hist[i];break}}
   var lpP=lp&&PERSONAS.find(function(p){return p.id===lp.persona});
@@ -751,7 +1123,7 @@ function vLanding(){
    +'<section class="today" aria-label="Practise today\'s shopper"><span class="lab">Practise a conversation. Today\'s shopper says:</span>'
    +'<q>'+esc(tp.line)+'</q><p class="who">'+esc(tp.name)+'. '+esc(tp.store)+' Hinglish, by text or voice, with coaching at the end.</p>'
    +'<div class="btnrow"><button class="btn-black" data-act="start" data-id="'+tp.id+'">Start this conversation</button><button class="btn-line" data-act="tab" data-tab="practice">Pick someone else</button></div></section>'
-   +(S.ai==='off'?'<p class="srcnote" style="margin-top:10px">Practice needs Claude access, which is off for this view. Learn and Answers still work.</p>':'')
+   +(S.ai==='off'?'<p class="srcnote" style="margin-top:10px">Live chat runs only inside Claude. Here it opens question drills for the same product.</p>':'')
    +'<div class="tiles">'
    +tile('learn','learn','Learn a product','Specs and features, and what each one means for a shopper.',LEARN.length+' products')
    +tile('guide','guide','Handle a tough question','What to say, and what not to promise, when a shopper pushes back.',nQ+' questions')
@@ -760,8 +1132,43 @@ function vLanding(){
    +(lpP?'<div class="resume"><span>Last practice: '+esc(lpP.name)+', '+esc(({would_buy:'she was ready to buy',thinking:'she wanted to think',walks:'she walked away'})[lp.outcome]||'finished')+'.</span><button class="ghost" data-act="start" data-id="'+lpP.id+'">Go again</button></div>':'')
    +'</div>';
 }
+function drillsFor(p){return DRILLS.filter(function(d){return d.p===p})}
+function pname(id){var m=PRACTICE_PRODS.find(function(x){return x[0]===id});return m?m[1]:id}
 function vPractice(){
-  var list=PERSONAS.filter(function(p){return S.cat==='all'||p.cat===S.cat});
+  var seg=function(k,t){return '<button data-act="pmode" data-k="'+k+'" aria-pressed="'+(S.pmode===k)+'">'+t+'</button>'};
+  var head='<section class="hero"><h1>Practise the questions shoppers really ask</h1>'
+   +'<p class="lede">Pick a product, answer a real shopper question, and see which reply builds trust. Four products for now: Combi, Crispi, HydroVac and HP300.</p></section>'
+   +'<div class="controls"><div class="seg" role="group" aria-label="Practice mode">'+seg('drills','Question drills')+seg('talk','Talk to a shopper')+'</div></div>';
+  return head+(S.pmode==='drills'?vDrills():vTalk());
+}
+function vDrills(){
+  var prods=PRACTICE_PRODS.filter(function(x){return x[0]!=='all'});
+  var chips='<div class="chips" role="group" aria-label="Product">'+prods.map(function(x){
+    var n=drillsFor(x[0]).length,done=Object.keys(S.dscore).filter(function(k){return k.indexOf(x[0]+':')===0}).length;
+    return '<button class="fchip" data-act="dprod" data-p="'+x[0]+'" aria-pressed="'+(S.dprod===x[0])+'">'+x[1]+' '+done+'/'+n+'</button>'}).join('')+'</div>';
+  var list=drillsFor(S.dprod);
+  if(!list.length)return chips+'<div class="empty">No drills for this product yet.</div>';
+  if(S.didx>=list.length)S.didx=0;
+  var d=list[S.didx];var key=S.dprod+':'+S.didx;
+  var topics='<div class="topics" role="group" aria-label="Question topics">'+list.map(function(x,i){
+    var sc=S.dscore[S.dprod+':'+i];
+    return '<button class="topic'+(i===S.didx?' on':'')+'" data-act="didx" data-i="'+i+'" aria-pressed="'+(i===S.didx)+'">'+esc(x.topic)+(sc?'<span class="tk '+sc+'">'+(sc==='best'?'Got it':sc==='ok'?'Close':'Missed')+'</span>':'')+'</button>'}).join('')+'</div>';
+  var picked=S.dpick;
+  var opts=d.opts.map(function(o,i){
+    var cls='opt',tag='';
+    if(picked!==null){cls+=' done '+(i===picked?'sel ':'')+o.v;tag='<span class="vtag '+o.v+'">'+(o.v==='best'?'Strong answer':o.v==='ok'?'Okay, but':'Risky')+'</span>'}
+    return '<button class="'+cls+'" data-act="dpick" data-i="'+i+'"'+(picked!==null?' disabled':'')+'><span class="ol">'+String.fromCharCode(65+i)+'</span><span class="ot">'+esc(o.t)+'</span></button>'
+      +(picked!==null?'<div class="fb '+o.v+'">'+tag+' '+esc(o.f)+'</div>':'');
+  }).join('');
+  var after=picked!==null?'<div class="say"><span class="lab">What to remember</span><p style="margin-top:6px;font-weight:600">'+esc(d.why)+'</p></div>'
+    +'<div class="actions"><button class="primary" data-act="dnext">'+(S.didx<list.length-1?'Next question':'Back to first')+'</button><button class="ghost" data-act="dretry">Try this one again</button></div>':'<p class="srcnote" style="margin-top:12px">Pick the reply you would say on the floor. You will see why each one works or not.</p>';
+  return chips+topics
+   +'<div class="shopbub"><span class="lab">Shopper says</span><q>'+esc(d.q)+'</q></div>'
+   +'<div class="opts">'+opts+'</div>'+after
+   +'<p class="priv">Replies and feedback are training guidance, not approved scripts. Check numbers against the approved sheet.</p>';
+}
+function vTalk(){
+  var list=PERSONAS.filter(function(p){var pp=PERSONA_PROD[p.id];return pp&&(S.cat==='all'||p.cat===S.cat)&&(S.pprod==='all'||pp===S.pprod||pp==='any')});
   var cards=list.map(function(p){
     return '<button class="pcard" data-act="start" data-id="'+p.id+'">'
      +'<span class="pcard-top"><span class="chip '+p.cat.toLowerCase()+'">'+p.cat+'</span><span class="vs">'+esc(p.vs)+'</span></span>'
@@ -769,12 +1176,13 @@ function vPractice(){
      +'<span class="pcard-name">'+esc(p.name)+'</span>'
      +'<span class="pcard-store">'+esc(p.store)+'</span></button>';
   }).join('');
-  var ban=S.ai==='off'?'<div class="banner">Practice needs Claude access, which is switched off for this view. Open this page inside Claude and allow it to ask Claude. The Guide and Insights still work.</div>':'';
+  var ban=S.ai==='off'?'<div class="banner">Live chat with a shopper runs only inside Claude. On this page, use Question drills instead. They work anywhere.</div>':'';
+  function pp(c,t){return '<button data-act="pprod" data-c="'+c+'" aria-pressed="'+(S.pprod===c)+'">'+t+'</button>'}
   function lv(n,t){return '<button data-act="diff" data-n="'+n+'" aria-pressed="'+(S.diff===n)+'">'+t+'</button>'}
   function ct(c,t){return '<button data-act="cat" data-c="'+c+'" aria-pressed="'+(S.cat===c)+'">'+t+'</button>'}
-  return '<section class="hero"><h1>A shopper is walking up. What do you ask first?</h1>'
-   +'<p class="lede">Pick who walks up. Talk it through by text or voice. Then get coached on how well you found what they actually need.</p></section>'+ban
+  return '<p class="lede" style="margin-top:0">Pick who walks up. Talk it through by text or voice. Then get coached on how well you found what they actually need.</p>'+ban
    +'<div class="controls">'
+   +'<div class="field"><span class="lab" id="l0">Product</span><div class="seg" role="group" aria-labelledby="l0">'+PRACTICE_PRODS.map(function(x){return pp(x[0],x[1])}).join('')+'</div></div>'
    +'<div class="field"><span class="lab" id="l1">How hard should they be?</span><div class="seg" role="group" aria-labelledby="l1">'+lv(1,'Friendly')+lv(2,'Realistic')+lv(3,'Tough')+'</div></div>'
    +'<div class="field"><span class="lab" id="l2">Brand</span><div class="seg" role="group" aria-labelledby="l2">'+ct('all','All')+ct('Shark','Shark')+ct('Ninja','Ninja')+'</div></div>'
    +'<button class="ghost" data-act="surprise">Surprise me</button></div>'
@@ -886,14 +1294,44 @@ function vLearn(){
        +'<div class="lact">'+(p.persona?'<button class="ghost" data-act="learnprac" data-id="'+p.persona+'">Practise with a shopper</button>':'')+'<span class="srcnote">Sources: '+esc(p.src)+'. Confirm against the current approved spec sheet.</span></div></details>';
     }).join('');
   }else if(S.lseg==='compare'){
-    var th=CMP.cols.map(function(c){return '<th scope="col">'+esc(c)+'</th>'}).join('');
-    var rows=CMP.rows.map(function(r){return '<tr><th scope="row">'+esc(r[0])+'</th>'+r.slice(1).map(function(c){return '<td>'+esc(c)+'</td>'}).join('')+'</tr>'}).join('');
-    body='<h2 class="h3" style="margin-top:8px">Ninja air fryers and cookers side by side</h2>'
-     +'<div class="tbl" tabindex="0" role="region" aria-label="Ninja air fryer range comparison"><table><thead><tr><th scope="col">&nbsp;</th>'+th+'</tr></thead><tbody>'+rows+'</tbody></table></div>'
-     +'<h2 class="h3">Match the need</h2><div>'+NEEDS.map(function(n){return '<div class="need"><b>'+esc(n[0])+': '+esc(n[1])+'</b><span>'+esc(n[2])+'</span></div>'}).join('')+'</div>'
-     +'<p class="srcnote" style="margin-top:14px">Where a cell says Confirm, no reliable India figure was found. Check the approved spec sheet.</p>';
+    var cc=function(id,t){return '<button class="fchip" data-act="cmp" data-k="'+id+'" aria-pressed="'+(S.cmp===id)+'">'+t+'</button>'};
+    body='<div class="chips" role="group" aria-label="Comparison">'+COMPARE.map(function(c){return cc(c.id,c.label)}).join('')+cc('range','Our air fryers')+'</div>';
+    if(S.cmp==='range'){
+      var th0=CMP.cols.map(function(c){return '<th scope="col">'+esc(c)+'</th>'}).join('');
+      var rows0=CMP.rows.map(function(r){return '<tr><th scope="row">'+esc(r[0])+'</th>'+r.slice(1).map(function(c){return '<td>'+esc(c)+'</td>'}).join('')+'</tr>'}).join('');
+      body+='<h2 class="h3" style="margin-top:8px">Ninja air fryers and cookers side by side</h2>'
+       +'<div class="tbl" tabindex="0" role="region" aria-label="Ninja air fryer range comparison"><table><thead><tr><th scope="col">&nbsp;</th>'+th0+'</tr></thead><tbody>'+rows0+'</tbody></table></div>'
+       +'<h2 class="h3">Match the need</h2><div>'+NEEDS.map(function(n){return '<div class="need"><b>'+esc(n[0])+': '+esc(n[1])+'</b><span>'+esc(n[2])+'</span></div>'}).join('')+'</div>';
+    }else{
+      var c=COMPARE.find(function(x){return x.id===S.cmp})||COMPARE[0];
+      var th=c.cols.map(function(x,i){return '<th scope="col"'+(i===0?' class="us"':'')+'>'+esc(x)+'</th>'}).join('');
+      var rows=c.rows.map(function(r){return '<tr><th scope="row">'+esc(r[0])+'</th>'+r.slice(1).map(function(x,i){return '<td'+(i===0?' class="us"':'')+'>'+esc(x)+'</td>'}).join('')+'</tr>'}).join('');
+      body+='<h2 class="h3" style="margin-top:8px">'+esc(c.title)+'</h2>'
+       +'<div class="tbl" tabindex="0" role="region" aria-label="'+esc(c.title)+'"><table><thead><tr><th scope="col">&nbsp;</th>'+th+'</tr></thead><tbody>'+rows+'</tbody></table></div>'
+       +'<div class="fitgrid"><div class="cmpbox win"><h3>Where we are stronger</h3><ul class="clean">'+li(c.win)+'</ul></div><div class="cmpbox be"><h3>Be straight about</h3><ul class="clean">'+li(c.straight)+'</ul></div></div>'
+       +'<div class="say"><span class="lab">Where to lead</span><p style="margin-top:6px;font-weight:600">'+esc(c.lead)+'</p></div>'
+       +'<p class="srcnote" style="margin-top:14px">Sources: '+esc(c.src)+' Where a cell says Confirm, no reliable India figure was found. Check the approved spec sheet.</p>';
+    }
   }else{
-    body='<dl class="terms">'+TERMS.map(function(t){return '<dt>'+esc(t[0])+'</dt><dd>'+esc(t[1])+'</dd>'}).join('')+'</dl>';
+    var tc=function(g,t){return '<button class="fchip" data-act="tg" data-g="'+g+'" aria-pressed="'+(S.tg===g)+'">'+t+'</button>'};
+    var yb=[1,2,3,4,5].map(function(y){return '<button data-act="yrs" data-y="'+y+'" aria-pressed="'+(S.yrs===y)+'">'+y+(y===1?' year':' years')+'</button>'}).join('');
+    var crow=COST.items.map(function(it){
+      var v=it.low===null?'Confirm':(it.low===0&&it.high===0?'₹0':(it.low===it.high?inr(it.low*S.yrs):inr(it.low*S.yrs)+' to '+inr(it.high*S.yrs)));
+      return '<div class="crow"><div><b>'+esc(it.n)+'</b><span>'+esc(it.note)+'</span></div><em>'+v+'</em></div>'}).join('');
+    var save=S.yrs>=1?inr(COST.items[1].low*S.yrs)+' to '+inr(COST.items[1].high*S.yrs):'';
+    var showCost=(S.tg==='all'||S.tg==='hp300');
+    var costCard=showCost?'<div class="costcard"><h2 class="h3">What the filter costs you over the years</h2>'
+      +'<p class="srcnote" style="margin-bottom:10px">Most purifiers need a new filter about once a year. HP300 is listed for up to 5 years. Pick how long the shopper will keep it.</p>'
+      +'<div class="seg" role="group" aria-label="Years of ownership">'+yb+'</div>'
+      +'<div class="cbody">'+crow+'</div>'
+      +'<p class="cnote"><b>Over '+S.yrs+(S.yrs===1?' year':' years')+', a yearly-filter purifier at Philips 3000-series prices costs about '+save+' in filters. HP300 costs ₹0 in filters at the listed life.</b> That is an indicative figure, not a quote. The 3400 filter price is not confirmed.</p>'
+      +'<p class="srcnote">Shark\'s own retailer page says up to ₹16,000 saved over 5 years against competitors. Confirm that wording is approved before using it. Filter life is a tested maximum and depends on use and air quality.</p></div>':'';
+    var tl=TERMS.filter(function(t){return S.tg==='all'||t.g===S.tg}).map(function(t){
+      return '<details class="q term"><summary><b>'+esc(t.t)+'</b><small>'+esc(t.plain)+'</small></summary><div class="qb">'
+       +'<div class="benefit"><div class="lab">What it means for the shopper</div>'+esc(t.benefit)+'</div>'
+       +'<div><div class="lab">Say it in your words</div><div class="sayline">'+esc(t.say)+'</div></div>'
+       +'<div><div class="lab">Be careful</div><div class="care">'+esc(t.care)+'</div></div></div></details>'}).join('');
+    body='<div class="chips" role="group" aria-label="Terms for">'+TERM_GROUPS.map(function(g){return tc(g[0],g[1])}).join('')+'</div>'+costCard+'<div class="tlist">'+tl+'</div>';
   }
   return head+body;
 }
@@ -932,6 +1370,7 @@ function vInsights(){
 
 /* ---------- RENDER ---------- */
 function render(){
+  var keepY=window.scrollY||0;
   document.body.dataset.view=S.tab==='practice'?S.view:S.tab;
   setTabs();
   var h='';
@@ -940,7 +1379,9 @@ function render(){
   else if(S.tab==='learn')h=vLearn();else if(S.tab==='guide')h=vGuide();else h=vInsights();
   $('#app').innerHTML=h;
   if(S.tab==='practice'&&S.view==='session'){drawThread();var ta=$('#ta');if(ta)ta.focus({preventScroll:true})}
+  else if(S.keep){window.scrollTo(0,keepY)}
   else window.scrollTo(0,0);
+  S.keep=false;
 }
 
 /* ---------- SHOPPER ---------- */
@@ -1084,17 +1525,30 @@ function startSession(id){
   S.turns=[{who:'shopper',text:S.persona.line}];S.view='session';S.busy=false;S.lastErr=false;S.debrief=null;S.saved=false;micErr='';
   render();if(S.speak)say(S.persona.line);
 }
+/* live chat needs Claude. When it is off, send the shopper to the drills for that product */
+function toDrills(personaId){
+  var pp=PERSONA_PROD[personaId];
+  S.tab='practice';S.view='home';S.pmode='drills';
+  if(pp&&pp!=='any'){S.dprod=pp}
+  S.didx=0;S.dpick=null;render();
+  toast(`Live chat runs only inside Claude. Here are question drills instead.`);
+}
+var KEEP=['dpick','dretry','yrs','tg','cmp','pprod','pmode','dprod','didx','gcat','lcat','gseg','lseg'];
 document.addEventListener('click',function(e){
   var t=e.target.closest('[data-act]');if(!t)return;
-  var a=t.dataset.act;
+  var a=t.dataset.act;S.keep=KEEP.indexOf(a)>-1;
   switch(a){
     case 'tab':S.tab=t.dataset.tab;if(S.tab==='practice'&&S.view==='debrief'&&!S.coaching)S.view='home';render();break;
     case 'chip':var qi=$('#q');if(qi){qi.value=t.dataset.q;$('#sres').innerHTML=searchHtml(qi.value);qi.focus()}break;
     case 'diff':S.diff=+t.dataset.n;render();break;
     case 'cat':S.cat=t.dataset.c;render();break;
-    case 'surprise':if(S.ai==='off'){toast(`Practice is not available in this view.`);break}
-      var pool=PERSONAS.filter(function(p){return S.cat==='all'||p.cat===S.cat});startSession(pool[Math.floor(Math.random()*pool.length)].id);break;
-    case 'start':if(S.ai==='off'){toast(`Practice is not available in this view.`);break}startSession(t.dataset.id);break;
+    case 'surprise':
+      var pool=PERSONAS.filter(function(p){var pp=PERSONA_PROD[p.id];return pp&&(S.cat==='all'||p.cat===S.cat)&&(S.pprod==='all'||pp===S.pprod||pp==='any')});
+      if(!pool.length)break;
+      var pick=pool[Math.floor(Math.random()*pool.length)].id;
+      if(S.ai==='off'){toDrills(pick);break}
+      startSession(pick);break;
+    case 'start':if(S.ai==='off'){toDrills(t.dataset.id);break}startSession(t.dataset.id);break;
     case 'leave':stopSay();stopMic();if(ctl)try{ctl.abort()}catch(x){}S.view='home';S.busy=false;if(S.origin==='home'){S.tab='home';S.origin=null}render();break;
     case 'speak':S.speak=!S.speak;t.setAttribute('aria-pressed',String(S.speak));if(!S.speak)stopSay();break;
     case 'send':sendTxt($('#ta').value);break;
@@ -1108,11 +1562,24 @@ document.addEventListener('click',function(e){
       stopSay();stopMic();S.view='debrief';runCoach();break;
     case 'recoach':runCoach();break;
     case 'again':startSession(S.persona.id);break;
+    case 'pmode':S.pmode=t.dataset.k;render();break;
+    case 'pprod':S.pprod=t.dataset.c;render();break;
+    case 'dprod':S.dprod=t.dataset.p;S.didx=0;S.dpick=null;render();break;
+    case 'didx':S.didx=+t.dataset.i;S.dpick=null;render();break;
+    case 'dpick':
+      var dl=drillsFor(S.dprod),dd=dl[S.didx];S.dpick=+t.dataset.i;
+      S.dscore[S.dprod+':'+S.didx]=dd.opts[S.dpick].v;
+      render();var fbe=$('.fb');if(fbe)fbe.scrollIntoView({block:'nearest'});break;
+    case 'dnext':S.didx=(S.didx+1)%drillsFor(S.dprod).length;S.dpick=null;render();break;
+    case 'dretry':S.dpick=null;delete S.dscore[S.dprod+':'+S.didx];render();break;
+    case 'cmp':S.cmp=t.dataset.k;render();break;
+    case 'tg':S.tg=t.dataset.g;render();break;
+    case 'yrs':S.yrs=+t.dataset.y;render();break;
     case 'gseg':S.gseg=t.dataset.k;render();break;
     case 'gcat':S.gcat=t.dataset.c;render();break;
     case 'lseg':S.lseg=t.dataset.k;render();break;
     case 'lcat':S.lcat=t.dataset.c;render();break;
-    case 'learnprac':if(S.ai==='off'){toast(`Practice is not available in this view.`);break}S.tab='practice';startSession(t.dataset.id);break;
+    case 'learnprac':if(S.ai==='off'){toDrills(t.dataset.id);break}S.tab='practice';startSession(t.dataset.id);break;
     case 'logreal':
       var theme=$('#lgT').value,prod=$('#lgP').value,txt=$('#lgX').value.trim().slice(0,240),res=$('#lgR').value;
       saveRec({type:'real',product:prod,theme:theme,text:txt,result:res});toast(`Logged. Thank you.`);render();break;
@@ -1149,3 +1616,5 @@ document.addEventListener('input',function(e){
 })();
 })();
 </script>
+</body>
+</html>
