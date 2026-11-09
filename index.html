@@ -427,7 +427,7 @@ var PRODUCTS=[
  {q:`Ye Dyson se bhaari lag raha hai.`,g:`Weight. Raised in almost every side-by-side demo.`,
   why:`The Dyson counter is next door, so shoppers lift both back to back. Weight is the first thing the hand notices.`,
   say:`Haan, haath mein dono rakh ke farak lagta hai. Ye bataiye, ghar mein zyadatar safai kaun karta hai, aur kitni der?`,
-  care:`Never say it is light or the same as Dyson. Acknowledge it, ask who will use it and for how long, then let them try it on their own floor type.`},
+  care:`Never say it is light or the same as Dyson. Weights differ by model: HydroVac is 4.5 kg, WashG1 is 4.9 kg and V12 Detect Slim is 2.2 kg. Acknowledge it, ask who will use it and for how long, then let them try it on their own floor type.`},
  {q:`Air watts kitne hain?`,g:`Suction. Shoppers compare air watts after seeing Dyson.`,
   why:`Dyson quotes air watts while Shark lists watts. Different measures, so the numbers do not line up and shoppers feel something is hidden.`,
   say:`Dono alag tarah se naap rahe hain, isliye number seedha compare nahi hota. Aapke ghar ka sabse mushkil kachra kya hai? Wahi yahan chala ke dikhata hoon.`,
@@ -463,7 +463,7 @@ var PRODUCTS=[
  {q:`Awaaz kitni hai?`,g:`Noise.`,
   why:`Shoppers compare it with their vacuum.`,
   say:`Lagbhag 86 dB, jaise zyadatar vacuum cleaners.`,
-  care:`Do not call it quiet. Training says 86 dB, like most vacuums.`},
+  care:`Do not call it quiet. Training says 86 dB, like most vacuums. Other notes say 77 to 83 dB, so say "about" and confirm.`},
  {q:`Rug par chalega?`,g:`Rugs.`,
   why:`Training lists rug mode as a point other brands lack.`,
   say:`Haan, Freshen mode rug aur mat ke liye hai. Aap khud chala ke dekhiye.`,
@@ -495,7 +495,23 @@ var PRODUCTS=[
  {q:`Tank empty ka error aaye toh?`,g:`Reliability.`,
   why:`Some owners report a false error message and want to know about service.`,
   say:`Tank aur filter saaf rakhne se aisa kam hota hai. Phir bhi problem aaye toh warranty mein service ka process main aapko saaf bata deta hoon.`,
-  care:`Some online owners report a false "tank empty" error. Do not say it never happens. Service goes through Vijay Sales or the website, as there are no service centres.`}
+  care:`Some online owners report a false "tank empty" error. Do not say it never happens. Service goes through Vijay Sales or the website, as there are no service centres.`},
+ {q:`Dyson WashG1 mein do roller hain aur 35 minute chalta hai. Isme?`,g:`Dyson WashG1 comparison.`,
+  why:`WashG1 is Dyson's wet floor cleaner and the closest match to HydroVac.`,
+  say:`WashG1 bhi sirf hard floor ke liye hai. Uske do roller hain aur 35 minute chalta hai. HydroVac hard floor ke saath rug aur mat bhi refresh karta hai, aur 4.5 kg ka hai jabki WashG1 4.9 kg ka hai. Aapke ghar mein floor kaisa hai, aur rug kitne hain?`,
+  care:`Be fair: WashG1 has a longer run time (35 min against about 25 min), bigger tanks (1 L clean, 0.8 L dirty) and two counter-rotating rollers. Do not run it down. Confirm price of both.`},
+ {q:`Dyson V12 mein toh sab hota hai, carpet bhi.`,g:`Dyson V12 comparison.`,
+  why:`V12 Detect Slim is a popular dry cordless vacuum, so shoppers expect it to do everything.`,
+  say:`V12 ek dry cordless vacuum hai, 2.2 kg ka, carpet aur sofa ke liye. Wet mopping ke liye alag Submarine head wala V12s model aata hai. HydroVac floor par wet aur dry ek saath karta hai. Aapki safai mein floor zyada hai ya carpet aur sofa?`,
+  care:`V12 Detect Slim is dry. The V12s Submarine adds a wet roller head. Do not say a V12 cannot wet clean without naming the Submarine. Confirm price of both.`},
+ {q:`Dyson WashG1 mein filter hi nahi hai. HydroVac mein?`,g:`Filter and smell.`,
+  why:`Dyson highlights that WashG1 is filter-free, which avoids filter odours.`,
+  say:`HydroVac mein foam filter hai, aur debris separator sukhi dhool aur ganda paani alag rakhta hai. Brush roll anti-microbial hai, toh badbu kam aati hai. Filter ko saaf rakhna padta hai.`,
+  care:`Do not say HydroVac is filter-free. Be open that the foam filter needs cleaning.`},
+ {q:`WashG1 ka tank bada hai. Isme chhota kyun?`,g:`Tank size.`,
+  why:`Dyson lists a 1 L clean tank and a 0.8 L dirty tank. HydroVac is 500 ml and 360 ml.`,
+  say:`Sahi baat hai, WashG1 ka tank bada hai. HydroVac ka tank chhota hai, aur machine 4.5 kg ki hai. Aapka ghar kitna bada hai? Usi se hisaab lagate hain ki kitni baar bharna padega.`,
+  care:`Do not hide the difference. Do not promise area coverage per fill.`}
  ]},
 {id:'flex',brand:'Shark',name:`Shark FlexBreeze fan`,sub:`Cordless fan that converts from pedestal to portable`,
  facts:[`A BLDC (brushless) motor: it runs quieter and draws less power`,`Remote with a timer. It stores on the fan with a magnet`,`IPX4 and UV resistant. Handles splashes and light rain, not heavy rain`,`Speed 1 runs about 24 hours, speed 3 about 6 hours, speed 5 about 2 hours. 5 hours to charge, and it works while charging`,`37.5 dB, for work and sleep (APEX training)`,`The pack and website say air throw "up to 70 feet". The Singapore page footnotes the figure as measured at fan speed 1 without oscillation. Confirm the India wording`,`Confirm price`],confirm:true,
@@ -792,8 +808,8 @@ var PRODUCTS=[
 ];
 
 var VERSUS=[
-{n:`Dyson`,says:`Lighter in the hand. Quotes air watts. Two-year accidental damage cover. Wet, dry, sofa, curtain and ceiling in one device. Pre-sale home demo.`,
- straight:`Shark feels heavier side by side. There is no accidental damage cover. Hydrovac covers floors and carpet only. The demo happens after purchase.`,
+{n:`Dyson`,says:`Depends on the model. The V12 Detect Slim is a light dry stick (2.2 kg) that quotes air watts and handles carpets and upholstery. WashG1 is a wet floor cleaner for hard floors (4.9 kg). Two-year accidental damage cover. Pre-sale home demo.`,
+ straight:`Next to a V12 stick, HydroVac feels heavier. Next to WashG1 it is lighter. There is no accidental damage cover. HydroVac covers floors and rugs, not sofas or curtains. The demo happens after purchase.`,
  lead:`Start with their home and who does the cleaning. Let them try both on their own floor type. Win on fit, not on a spec contest.`},
 {n:`Philips`,says:`Philips promoters call Combi a European design that does not suit Indian cooking. Philips has an app and recipe content. Steel interior.`,
  straight:`Combi's interior is plastic. Indian recipe content and an app are requested and need confirming. Capacity looks smaller than it is.`,
@@ -997,7 +1013,7 @@ var LEARN=[
   {n:`Freshen mode`,what:`Refreshes area rugs, thin-pile rugs and mats.`,gain:`A quick refresh for rugs. It is not a deep carpet clean.`}],
  fits:[`Homes with mostly hard floors, kids, pets and spills`,`Shoppers tired of sweeping and then mopping`],
  notFit:[`Shoppers who want one machine for sofas, curtains and ceilings. HydroVac is a floor tool`,`Homes that are mostly wall-to-wall carpet. Freshen mode is for rugs and mats`],
- flags:[`Whether cleaning solution refills are sold in India.`],
+ flags:[`Whether cleaning solution refills are sold in India.`,`Noise: the training deck says 86 dB and other notes say 77 to 83 dB. Self-clean time: the deck says 2 minutes and other notes say about 1 minute. Confirm both.`],
  notes:`Be clear what category this is: a wet-and-dry floor cleaner. When a shopper compares it with a Dyson stick vacuum, compare on the job they need done.`,
  check:[{q:`What are the cleaning modes?`,a:`Hard Floor and Freshen (for area rugs and mats), plus Self-clean on the dock.`},
   {q:`How big are the tanks?`,a:`500 ml clean and 360 ml dirty, per the India listing.`},
@@ -1129,7 +1145,34 @@ var COMPARE=[
  win:[`Two containers: a small one for one or two portions and a bigger one for the family.`,`Store food in the container in the fridge and heat it directly. Less washing up.`,`A glass container that is easy to clean and lets you see the food. Recrisp brings leftovers back to crunchy.`,`Cakes can be made on Air Fry.`],
  straight:[`NA231 is cheaper and bigger, and has a dedicated bake and grill setting.`,`NA231 also has a window. Do not say Crispi is the only one you can see through.`,`Both are 1,700 W. Watts do not separate them.`],
  lead:`Start with the two containers and fridge-to-fryer. Ask who they cook for. A couple who snack, reheat and bake the odd cake can love Crispi. If they need a big daily bake or grill, show Combi.`,
- src:`Philips India, Amazon India, Reliance Digital, Croma. Checked Nov 2026.`}
+ src:`Philips India, Amazon India, Reliance Digital, Croma. Checked Nov 2026.`},
+{id:'hydrovac',label:`HydroVac`,title:`Shark HydroVac against Dyson WashG1 and V12 Detect Slim`,
+ cols:[{n:`Shark HydroVac`,b:`Shark`,price:`Confirm price`,pn:`Changes by retailer and offer`},
+       {n:`Dyson WashG1`,b:`Dyson`,price:`Confirm price`,pn:`Wet cleaner for hard floors`},
+       {n:`Dyson V12 Detect Slim`,b:`Dyson`,price:`Confirm price`,pn:`Dry vacuum. V12s Submarine adds a wet head`}],
+ secs:[
+ {s:`What it cleans`,rows:[
+  [`Hard floors and rugs|Hard Floor and Freshen modes`,`Hard floors only|Tiles, vinyl, laminate, sealed wood`,`Floors, carpets and upholstery|Dry vacuum`],
+  [`Wet and dry|In one pass`,`Wet and dry|Two counter-rotating rollers`,`Dry only|The V12s Submarine has a wet roller head`],
+  [`Freshen mode|Refreshes rugs and mats`,`No|Hard floors only`,`Yes|Carpets and rugs`],
+  [`No|Floor tool`,`No|Hard floors only`,`Yes|Tools for upholstery and hair`]]},
+ {s:`Water, cleaning and filters`,rows:[
+  [`500 ml clean|360 ml dirty`,`1 L clean|0.8 L dirty`,`No water tank|Dry vacuum`],
+  [`2 minutes|Self-clean on the dock`,`140 seconds|Self-clean while it charges`,`Not applicable|Washable filter and brush bar`],
+  [`About 30 seconds|Floor dry time (APEX)`,`Confirm|Floor dry time`,`Not applicable|Dry vacuum`],
+  [`Foam filter|Debris separator keeps wet and dry apart`,`Filter-free|Rollers instead of suction`,`Sealed filtration|99.99% down to 0.3 microns`]]},
+ {s:`Power and size`,rows:[
+  [`About 25 min|Eco mode`,`35 min|Click-in battery`,`Up to 60 min|Eco mode on hard floor`],
+  [`About 4 hours|Charge time`,`About 4.5 hours|Reported. Not on Dyson's page`,`4 hours|Charge time`],
+  [`4.5 kg|Weight`,`4.9 kg|Weight`,`2.2 kg|Weight`],
+  [`170 W|Not comparable with air watts`,`No suction motor|Rollers lift wet and dry dirt`,`150 air watts|Dyson suction measure`],
+  [`86 dB|APEX deck. Other notes say 77 to 83 dB. Confirm`,`70 to 78 dB|Reported. Not on Dyson's page`,`Confirm|Noise`],
+  [`LED|Shows invisible dust`,`Six-point|Edge cleaning`,`Fluffy Optic|Head lights up dust`],
+  [`2 years|Warranty (India listing)`,`2 years|Dyson guarantee`,`2 years|Dyson guarantee`]]}],
+ win:[`Handles hard floors and refreshes rugs and mats with Freshen mode. WashG1 is hard floors only.`,`Lighter than WashG1 (4.5 kg against 4.9 kg).`,`Wet and dry in one pass with a self-clean dock, like WashG1.`],
+ straight:[`WashG1 runs longer (35 min against about 25 min), has bigger tanks and two counter-rollers.`,`WashG1 is filter-free. HydroVac has a foam filter that needs cleaning.`,`V12 Detect Slim is much lighter (2.2 kg), runs up to 60 min and cleans carpets and upholstery. It is a dry vacuum. The V12s Submarine adds a wet head.`,`HydroVac does not clean sofas or curtains. Confirm price for all three.`],
+ lead:`Start with the floors and who cleans. Mostly hard floors with wet spills: compare HydroVac and WashG1 on run time, tank size, rugs and weight, and let them try both. Carpets, sofas and a light stick: a V12 is a different product, so say what each one is for. Never say HydroVac deep cleans carpets.`,
+ src:`Dyson India WashG1, V12 Detect Slim and V12s Submarine pages. HydroVac figures from the APEX training and the India listing. WashG1 charge time and noise come from notes shared by the team, not from Dyson, so confirm them. Checked Nov 2026.`}
 ];
 
 /* Consumer-friendly terms. Each one says what it is, what it means for the shopper, and what to say. */
@@ -1461,7 +1504,7 @@ var DRILLS=[
  {t:`Bilkul silent hai.`,v:'risk',f:`Not accurate. Training says about 86 dB.`},
  {t:`Lagbhag 86 dB, jaise zyadatar vacuum cleaners. Main chala ke dikhata hoon.`,v:'best',f:`Honest and offers a demo.`},
  {t:`Thodi karti hai.`,v:'ok',f:`Honest, but a number helps.`}],
- why:`Do not call it quiet. Training says 86 dB, like most vacuums.`},
+ why:`Do not call it quiet. Training says 86 dB, like most vacuums. Other notes say 77 to 83 dB, so say "about" and confirm.`},
 
 {p:'hp300',topic:`Filter indicator`,q:`Filter kab badalna hai ye kaise pata chalega?`,
  opts:[
@@ -1591,6 +1634,30 @@ var DRILLS=[
  {t:`Bilkul dekhiye. Yahan aap product haath mein lekar demo dekh sakte ho. Aap kitne products ek saath lene ka soch rahe ho?`,v:'best',f:`No pressure, a reason to stay, and a question about the full basket.`},
  {t:`Theek hai.`,v:'ok',f:`Polite but gives up.`}],
  why:`Do not invent a price match or a warranty rule. Offer the demo and ask about the whole basket.`},
+{p:'hydrovac',topic:`Vs Dyson WashG1`,q:`Dyson WashG1 mein do roller hain, 35 minute chalta hai. Isme kya alag?`,
+ opts:[
+ {t:`WashG1 bekaar hai, HydroVac hi lo.`,v:'risk',f:`Running down a competitor without facts. WashG1 has real strengths.`},
+ {t:`WashG1 bhi sirf hard floor ke liye hai aur uska run time lamba hai. HydroVac hard floor ke saath rug aur mat bhi refresh karta hai, aur halka hai: 4.5 kg, WashG1 4.9 kg. Aapke ghar mein rug kitne hain?`,v:'best',f:`Fair to Dyson, names HydroVac's real edge, and asks about their home.`},
+ {t:`Dono bilkul same hain.`,v:'ok',f:`Not accurate. They differ on run time, tanks, rugs and weight.`}],
+ why:`Be fair: WashG1 has a longer run time, bigger tanks and two rollers. HydroVac handles rugs with Freshen mode and is lighter than WashG1. Confirm price of both.`},
+{p:'hydrovac',topic:`Vs Dyson V12`,q:`Dyson V12 se carpet bhi ho jaata hai aur halka bhi hai. Wet kaam ke liye alag kyun?`,
+ opts:[
+ {t:`HydroVac carpet ko bhi deep clean karta hai.`,v:'risk',f:`Not accurate. Freshen mode is for rugs and mats, not a deep carpet clean.`},
+ {t:`V12 ek dry vacuum hai, carpet aur sofa ke liye achha hai. HydroVac floor par wet aur dry ek saath karta hai aur khud saaf hota hai. Aapki safai mein floor zyada hai ya carpet?`,v:'best',f:`Says what each is for and asks about the shopper's home.`},
+ {t:`V12 mein wet kaam hota hi nahi.`,v:'ok',f:`Incomplete. The V12s Submarine model adds a wet roller head.`}],
+ why:`V12 Detect Slim is dry. The V12s Submarine adds a wet head. Say what each is for and let the shopper decide.`},
+{p:'hydrovac',topic:`Bigger tank`,q:`WashG1 ka tank bada hai.`,
+ opts:[
+ {t:`Chhota tank hi behtar hota hai.`,v:'risk',f:`Not a fair answer. A bigger tank means fewer refills.`},
+ {t:`Sahi baat hai, WashG1 ka tank bada hai. HydroVac ka tank chhota hai aur machine halki hai. Aapka ghar kitna bada hai? Usi se hisaab lagate hain ki kitni baar bharna padega.`,v:'best',f:`Honest and turns it into a question about their home.`},
+ {t:`Haan thoda chhota hai.`,v:'ok',f:`Honest but it leaves the shopper there. Ask about their home.`}],
+ why:`Do not hide the difference. Do not promise area coverage per fill.`},
+{p:'hydrovac',topic:`Filter and smell`,q:`Dyson WashG1 mein filter nahi hai, badbu nahi aati. Isme?`,
+ opts:[
+ {t:`HydroVac mein bhi koi filter nahi hai.`,v:'risk',f:`Not accurate. HydroVac has a foam filter.`},
+ {t:`HydroVac mein foam filter hai, aur debris separator sukhi dhool aur ganda paani alag rakhta hai. Brush roll anti-microbial hai, toh badbu kam aati hai. Filter ko saaf rakhna padta hai.`,v:'best',f:`Honest about the filter and names what helps with smell.`},
+ {t:`Badbu nahi aati.`,v:'ok',f:`Too absolute. It depends on cleaning.`}],
+ why:`Do not say HydroVac is filter-free. Be open that the filter needs cleaning.`},
 
 {p:'flex',topic:`What BLDC means`,q:`Isme BLDC motor likha hai. Iska kya matlab hai?`,
  opts:[
@@ -1685,7 +1752,7 @@ var PCHIP=[['hp300','HP300'],['combi','Combi'],['crispi','Crispi'],['hydrovac','
 var PQ_ID={hp300:'hp300',combi:'combi',crispi:'crispy',hydrovac:'hydrovac',flex:'flex',any:'any'};
 var CATS=[['air','Air fryers & cookers'],['purifier','Air purifiers'],['vac','Vacuums'],['more','More']];
 var CAT_PRODS={air:['combi','crispi','maxpro','dualzone'],purifier:['hp300'],vac:['hydrovac'],more:['blast','flexbreeze']};
-var CMP_FOR={air:['combi','crispi','range'],purifier:['hp300'],vac:[],more:[]};
+var CMP_FOR={air:['combi','crispi','range'],purifier:['hp300'],vac:['hydrovac'],more:[]};
 var LEVELS=[[0,'Starter'],[100,'Rising'],[250,'Pro'],[500,'Floor Star']];
 var LOGP=[['hp300','HP300'],['combi','Combi'],['crispi','Crispi'],['hydrovac','HydroVac'],['flex','FlexBreeze'],['other','Other']];
 var QUICK=['EMI','Service centre','Too heavy','Cheaper online','Plastic inside','Filter cost','Noise'];
@@ -1959,7 +2026,7 @@ function vLearn(){
       body='<div class="empty" style="margin-top:12px">'+(S.lcat==='vac'?'HydroVac vs Dyson needs verified Dyson specs. It is not added yet. Dyson talking points are in Practice, under Answers.':'No head-to-head comparison for these yet.')+'</div>';
     }else{
       if(ids.indexOf(S.cmp)<0)S.cmp=ids[0];
-      var lab={combi:'Combi vs OneChef',crispi:'Crispi vs NA231',range:'Our air fryers',hp300:'HP300 vs Philips and Dyson'};
+      var lab={combi:'Combi vs OneChef',crispi:'Crispi vs NA231',range:'Our air fryers',hp300:'HP300 vs Philips and Dyson',hydrovac:'HydroVac vs Dyson WashG1 and V12'};
       var chips2=ids.length>1?'<div class="chips" role="group" aria-label="Comparison">'+ids.map(function(k){return '<button class="fchip" data-act="cmp" data-k="'+k+'" aria-pressed="'+(S.cmp===k)+'">'+lab[k]+'</button>'}).join('')+'</div>':'<div style="height:8px"></div>';
       if(S.cmp==='range'){
         var th0=CMP.cols.map(function(c){return '<th scope="col">'+esc(c)+'</th>'}).join('');
