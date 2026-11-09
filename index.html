@@ -127,6 +127,8 @@ ul.clean{margin:0;padding-left:16px;display:grid;gap:5px;font-size:13px}
 .sayline{padding:8px 11px;background:var(--surface);border-left:4px solid var(--teal);font-weight:600}
 .care{padding:8px 11px;border-left:4px solid var(--warn);background:var(--surface)}
 .why{color:var(--muted);font-size:12.5px}
+.apx{display:grid;gap:8px;padding-bottom:10px;font-size:12.5px}
+.apx ol,.apx ul{margin:0}
 .vcard{border:1.5px solid var(--line);margin-top:8px;border-radius:4px 12px 12px 4px;padding:0 12px}
 .vcard summary{cursor:pointer;padding:10px 0;font-weight:700;list-style:none}
 .vcard summary::-webkit-details-marker{display:none}
@@ -413,7 +415,7 @@ var PRACTICE_PRODS=[['all','All'],['combi','Combi'],['crispi','Crispi'],['hydrov
 
 var PRODUCTS=[
 {id:'hydrovac',brand:'Shark',name:`Shark Hydrovac`,sub:`Cordless wet and dry cleaning`,
- facts:[`Vacuums and mops hard floors in one pass; Freshen mode refreshes area rugs and mats`,`Run time: about 25 minutes on global Shark pages; promoters report 25 to 30`,`Sofa, curtain and ceiling cleaning need a separate product`],confirm:true,
+ facts:[`Vacuums and mops hard floors in one pass; Freshen mode refreshes area rugs and mats`,`Run time: about 25 minutes in Eco mode, about 4 hours to charge (APEX training)`,`Sofa, curtain and ceiling cleaning need a separate product`],confirm:true,
  qs:[
  {q:`Ye Dyson se bhaari lag raha hai.`,g:`Weight. Raised in almost every side-by-side demo.`,
   why:`The Dyson counter is next door, so shoppers lift both back to back. Weight is the first thing the hand notices.`,
@@ -434,11 +436,35 @@ var PRODUCTS=[
  {q:`Battery sirf 25-30 minute?`,g:`Run time. Shoppers expect longer after hearing the charging time.`,
   why:`Long charging next to a short run time feels like a bad trade.`,
   say:`Ghar kitna bada hai? Ek charge mein kitna ho jaata hai wo hum yahin andaza laga lete hain. Zyada bada hai toh main seedha bol dunga.`,
-  care:`Do not promise coverage in square feet unless it is on the approved sheet.`},
+  care:`Training material confirms about 25 minutes in Eco mode and about 4 hours to charge. Do not promise coverage in square feet unless the approved sheet says so.`},
  {q:`Pehle ghar pe demo ho sakta hai?`,g:`Home demo. Competitors offer it before purchase.`,
   why:`Dyson and others offer pre-sale home demos. Shark demos only after purchase, and the process is slow.`,
   say:`Ghar pe demo kharidne ke baad hota hai. Abhi yahan aapke jaise floor pe chala ke dikha deta hoon, aur jo bhi sawal ho poochh lijiye.`,
-  care:`Be upfront about the post-purchase timing. Do not promise a date.`}
+  care:`Be upfront about the post-purchase timing. Do not promise a date.`},
+ {q:`Floor kitni der mein sookhta hai?`,g:`Drying time.`,
+  why:`Wet floors worry families with kids and elders.`,
+  say:`Lagbhag 30 second mein sookh jaata hai, aap turant chal sakte ho.`,
+  care:`Training says 30 seconds. Surface and weather vary, so say "about".`},
+ {q:`Bai ke pochhe se kya farak?`,g:`Maid mopping.`,
+  why:`Maids often reuse one bucket of dirty water.`,
+  say:`Isme saaf paani ka alag tank hai aur ganda paani alag, toh ganda paani wapas floor par nahi lagta. Saaf 500 ml, ganda 360 ml.`,
+  care:`Do not run down household help. Talk about the separate tanks.`},
+ {q:`Machine ko saaf karna jhanjhat hoga?`,g:`Self-clean.`,
+  why:`A dirty mop head puts shoppers off.`,
+  say:`Dock par rakho, 2 minute mein brush aur floorhead khud saaf ho jaate hain. Brush roll anti-microbial hai, toh badbu kam hoti hai.`,
+  care:`Training: self-clean in 2 minutes, anti-microbial brush roll.`},
+ {q:`Awaaz kitni hai?`,g:`Noise.`,
+  why:`Shoppers compare it with their vacuum.`,
+  say:`Lagbhag 86 dB, jaise zyadatar vacuum cleaners.`,
+  care:`Do not call it quiet. Training says 86 dB, like most vacuums.`},
+ {q:`Rug par chalega?`,g:`Rugs.`,
+  why:`Training lists rug mode as a point other brands lack.`,
+  say:`Haan, Freshen mode rug aur mat ke liye hai. Aap khud chala ke dekhiye.`,
+  care:`Do not call it a deep carpet clean. Let the shopper try it, as the training suggests.`},
+ {q:`Chhupi hui dhool kaise dikhegi?`,g:`LED light.`,
+  why:`Shoppers doubt that floors are really clean.`,
+  say:`Isme LED light hai jo chhupi hui dhool dikhati hai. Aap floor par khud dekhiye.`,
+  care:`Training: the LED reveals invisible dust.`}
  ]},
 {id:'flex',brand:'Shark',name:`Shark FlexBreeze fan`,sub:`Promoters call it Flex Beast. Handle the 70 ft claim with care`,
  facts:[`The pack and website say air throw "up to 70 feet", which prompts questions`,`The Singapore page footnotes the figure as measured at fan speed 1 without oscillation. Confirm the India wording`,`SharkNinja is already working to address the questions`],confirm:true,
@@ -474,15 +500,59 @@ var PRODUCTS=[
  {q:`Isme app ya recipe book hai? Philips mein hai.`,g:`Recipes and app. Indian recipes especially.`,
   why:`Philips has an app and LG buyers get 600+ recipes, so shoppers expect the same.`,
   say:`Indian recipes ki demand hai, ye hum note kar rahe hain. Jo recipes abhi available hain wo main aapko dikhata hoon.`,
-  care:`Confirm what recipe content exists today before promising any.`}
+  care:`Confirm what recipe content exists today before promising any.`},
+ {q:`Chawal aur pasta bina ubaale bante hain?`,g:`Rice and pasta.`,
+  why:`Shoppers want fewer pots to manage.`,
+  say:`Haan, Rice/Pasta mode mein na pehle ubaalna, na paani nikaalna. Main ek baar chala ke dikhata hoon.`,
+  care:`Training lists no drain and no pre-boil. Show a demo before you promise results for every kind of rice.`},
+ {q:`Idli aur dhokla ho jaate hain?`,g:`Steam.`,
+  why:`Steaming is a daily need in many homes.`,
+  say:`Steam mode naazuk cheezon ke liye hai, jaise idli aur dhokla. Aap roz kya steam karte ho?`,
+  care:`Training names idli and dhokla. Do not promise a result for every recipe.`},
+ {q:`Cake ya cookies ban jaate hain?`,g:`Baking.`,
+  why:`Shoppers compare it with an OTG.`,
+  say:`Haan, Combi Bake mein jaldi cake ban jaata hai, aur Bake mode mein cookies jaisi oven wali cheezein. Aap kya bake karte ho?`,
+  care:`Training: Combi Bake for quick cakes, Bake for cookies. Do not promise every oven recipe.`},
+ {q:`Kitna garam hota hai?`,g:`Temperature range.`,
+  why:`Shoppers compare it with an OTG and an air fryer.`,
+  say:`40 se 240 degree tak. Dheemi pakai se lekar crispy tak sab ho jaata hai.`,
+  care:`Range is from the training deck.`},
+ {q:`Andar ka coating safe hai? Chemical toh nahi?`,g:`Coating safety.`,
+  why:`Families who cook daily worry about non-stick coatings.`,
+  say:`Pan par safe nano-ceramic coating hai, jisme PTFE aur PFOA nahi hai. Aap zyada kya pakate ho?`,
+  care:`Say "no PTFE, no PFOA". Do not say chemical-free or 100% safe.`},
+ {q:`Naram aur kurkura ek saath kaise?`,g:`Technology.`,
+  why:`Shoppers do not see how one machine does both.`,
+  say:`HyperSteam bhaap aur garam hawa dono chalata hai, isliye ek hi cycle mein ek cheez naram aur ek kurkuri ban sakti hai.`,
+  care:`Training says no other brand offers moist and dry cooking. Do not repeat "no other brand" unless it is approved.`}
  ]},
 {id:'crispy',brand:'Ninja',name:`Ninja Crispi`,sub:`Glass-container air fryer`,
- facts:[`Two glass containers: 1.4 L and 3.8 L`,`Four functions: Air Fry, Roast, Recrisp, Keep Warm. No baking or grilling`,`Promoters quote around ₹16,000. Confirm the MRP`,`Competitor (EDT) bakes and grills, per shoppers`],confirm:true,
+ facts:[`Two glass containers: 1.4 L and 3.8 L`,`Four functions: Air Fry, Roast, Recrisp, Keep Warm. No separate Bake or Grill setting, but cakes can be made on Air Fry`,`Food can be stored in the glass container in the fridge and heated directly in the fryer`,`Promoters quote around ₹16,000. Confirm the MRP`,`Philips NA231 has a dedicated bake and grill setting and a 6.2 L basket`],confirm:true,
  qs:[
- {q:`₹16,000 mein baking aur grilling nahi hai?`,g:`Price vs the EDT competitor.`,
-  why:`The competitor offers more functions and a steel plate for the money.`,
-  say:`Crispi air fry, roast, recrisp aur keep warm ke liye hai. Aap baking ya grilling bhi karte ho? Agar haan, toh Combi aapke liye sahi hai, main wahi dikhata hoon.`,
-  care:`Recommend the right model even if it is not the one they walked up to.`}
+ {q:`₹16,000 mein baking aur grilling nahi hai?`,g:`Price vs Philips NA231.`,
+  why:`The competitor offers a bigger basket and a dedicated bake and grill setting for less money.`,
+  say:`Crispi mein do container hain, chhota aur bada, aur khana fridge se nikal ke seedha garam kar sakte ho. Cake bhi Air Fry mode mein ban jaata hai. Aap kitne log ke liye banate ho, aur kya banate ho?`,
+  care:`Lead with the two containers and fridge-to-fryer. Say cakes can be made on Air Fry. Do not say Crispi has a Bake setting. Confirm cake guidance with the product team. If they need a big daily bake or grill, show Combi.`},
+ {q:`Kitne log ke liye kaafi hai?`,g:`Capacity.`,
+  why:`Shoppers judge by their family size.`,
+  say:`Bada 3.8 litre container 4 log tak ke liye hai, jaise 4 chicken breast ya 600 gram fries. Chhota 1.4 litre container 1 ya 2 logon ke 7 minute ke khane ke liye hai. Aapke ghar mein kitne log?`,
+  care:`Training: 3.8 L feeds up to 4. 1.4 L is for small 7-minute meals. Do not go beyond these.`},
+ {q:`Table par seedha serve kar sakte hain?`,g:`Serving.`,
+  why:`Shoppers want fewer dishes.`,
+  say:`Haan, container ke heat-resistant feet hain, toh table kharab nahi hota. Banao, serve karo aur wahin rakh do.`,
+  care:`Training lists heat-resistant feet. Do not promise it for every surface.`},
+ {q:`Microwave mein jaata hai?`,g:`Microwave use.`,
+  why:`Many homes reheat in the microwave.`,
+  say:`Containers aur lids microwave safe hain. Fridge se nikaalo, microwave ya Crispi mein garam karo.`,
+  care:`Training: containers and lids are microwave safe.`},
+ {q:`Bartan kam kaise honge?`,g:`Washing up.`,
+  why:`Dishes are the main complaint after cooking.`,
+  say:`Aam taur par 3 bartan lagte hain. Isme marinate, pakao, serve aur store ek hi container mein, toh ek hi bartan dhona padta hai.`,
+  care:`Training: reduces 3 dirty dishes per meal to 1.`},
+ {q:`Marinate karke freeze kar sakte hain?`,g:`Prep ahead.`,
+  why:`Busy households prepare ahead.`,
+  say:`Haan, marinate karo, freeze karo aur seedha air fry karo. Glass thermal-shock resistant hai.`,
+  care:`Training lists -5 to 240°C. Do not say it cannot break. Confirm the low end with the trainer.`}
  ]},
 {id:'maxpro',brand:'Ninja',name:`Ninja Max Pro`,sub:`6.2 L air fryer`,
  facts:[`6.2 L basket, 2,000 W`,`Six functions: Air Fry, Max Crisp, Roast, Bake, Reheat, Dehydrate`,`No window is listed; shoppers ask for one`],confirm:true,
@@ -525,8 +595,24 @@ var PRODUCTS=[
   care:`Do not say HP300 humidifies. Do not say humidifiers are not needed.`},
  {q:`Raat ko kitni awaaz karta hai?`,g:`Noise. Bedroom use.`,
   why:`Most purifiers run at night. Dyson advertises 24 dB in sleep mode.`,
-  say:`Ek retailer page pe 38.8 dB likha hai. Main sleep mode yahin chala ke dikhata hoon, aap khud suniye.`,
-  care:`Confirm the noise figure and the mode it was measured in on the approved sheet before quoting.`}
+  say:`Sabse dheemi speed pe lagbhag 39 dB hai aur sabse tez pe 62 dB tak jaata hai. Main sleep mode yahin chala ke dikhata hoon, aap khud suniye.`,
+  care:`Training lists 39 dB to 62 dB across 5 fan speeds. Dyson lists 24 dB in sleep mode, so do not call HP300 the quietest.`},
+ {q:`Filter badalne ka kaise pata chalega?`,g:`Filter indicator.`,
+  why:`Shoppers worry that a purifier fails silently.`,
+  say:`Display par HALO light hai. Neela matlab 100%, amber 70% aur laal 40%. Main yahin dikha deta hoon.`,
+  care:`Training lists the HALO colours as blue 100%, amber 70%, red 40%. Confirm what the percentage measures before you explain it.`},
+ {q:`Khana pakane ki badbu aur dhuan jaayega?`,g:`Cooking smell and smoke.`,
+  why:`Indian homes have strong cooking smells, and many shoppers buy for fumes.`,
+  say:`Isme activated carbon filter hai jo gas aur badbu pakadta hai, aur Indian gharon ke liye odor neutralizer puck bhi hai. Aapka kitchen khula hai ya band?`,
+  care:`Say it helps with smells and fumes. Do not promise that every smell disappears.`},
+ {q:`Pet ke baal aur dhool ka kya?`,g:`Pet hair.`,
+  why:`Pet owners worry about a clogged filter.`,
+  say:`Pehle ek debris layer baal aur dhool rok leti hai, jise aap vacuum ya dho sakte ho. Uske baad HEPA filter aata hai. Ghar mein pet hai?`,
+  care:`The external debris filter is cleaned by the owner. Do not say the machine needs no upkeep.`},
+ {q:`Filter par kitna paisa bachega?`,g:`Savings. The question behind most purifier decisions.`,
+  why:`The training pitch is saving on filter maintenance. Shoppers want a number.`,
+  say:`Aap kitne saal ke liye le rahe ho? Main 5 saal ka filter kharcha likh ke dikhata hoon, saalana filter wali machine ke saath.`,
+  care:`Figures differ. Training says save ₹36,000. A retailer page says up to ₹16,000. Philips 3000-series filters come to about ₹14,400 to ₹17,550 over 5 years. Ask the trainer which competitor and period the ₹36,000 uses before you quote it.`}
  ]},
 {id:'any',brand:'Both',name:`Every product: price, EMI, service`,sub:`The questions a pitch cannot fix`,
  facts:[`No no-cost EMI, card EMI or paper finance today`,`No physical service centres; shoppers are directed to Vijay Sales or the website`,`Online card offers can open a gap of ₹3,000 or more`],confirm:false,
@@ -577,13 +663,13 @@ var LEARN=[
  problem:`Dinner for a busy household usually waits on one burner, so everything is ready at different times. Combi cooks a main and two sides together so the meal finishes together, and it can replace an oven, air fryer and steamer on the counter.`,
  specs:[[`Capacity`,`12.5 L. Listings say it suits family meals for up to 8 people`],
   [`Functions`,`14: Combi Meal, Combi Crisp, Combi Bake, Rice/Pasta, Steam, Prove, Grill, Air Fry, Bake, Reheat, Slow Cook, Sear and Saute, Pizza, Toast`],
-  [`Power`,`About 1,780 W. Retail listings show 1,760 to 1,780 W`],
-  [`Top temperature`,`Up to 240°C`,`third-party listing`],
+  [`Power`,`1,780 W with a 1.1 m cord`,`APEX training`],
+  [`Temperature range`,`40 to 240°C`,`APEX training`],
   [`Weight`,`9.14 kg`],
   [`Warranty`,`2 years`,`retailer listing`],
   [`In the box`,`Bake tray, Crisper tray, Combi pan, Inspiration guide`],
   [`Cavity`,`Retail listings say stainless steel. Confirm before quoting`],
-  [`Pan coating`,`Combi Pan and Crisper Tray are aluminium with a nano-ceramic non-stick coating, listed as PTFE-free and PFOA-free`,`Shark support, US page. Confirm India wording`]],
+  [`Pan coating`,`Safe nano-ceramic non-stick coating. No PTFE, no PFOA`,`APEX training`]],
  features:[
   {n:`Combi Meals`,what:`Cooks a main and two sides together, from scratch, in about 15 minutes.`,gain:`One cook, one timer, one wash-up. Dinner lands together instead of in stages.`},
   {n:`HyperSteam with hot air`,what:`Superheated steam combined with fast-moving air.`,gain:`Food stays moist inside and crisp outside, so kebabs, tikkas and vegetables are less likely to dry out.`},
@@ -598,23 +684,29 @@ var LEARN=[
  src:`sharkninja.in, Reliance Digital, Smartprix`},
 
 {id:'crispi',brand:'Ninja',name:`Ninja Crispi`,tag:`Crisp snacks and leftovers, in glass you can see through`,price:`Promoters quote about ₹16,000. Confirm MRP`,persona:null,
- problem:`Many homes want crispy snacks and revived leftovers without a big appliance. Crispi is an air fryer built around glass containers, so food goes from the freezer to the air fryer in the same container.`,
- specs:[[`Containers`,`Two glass containers: 1.4 L small batch and 3.8 L`],
-  [`Functions`,`4: Air Fry, Roast, Recrisp, Keep Warm. No baking or grilling`],
+ problem:`Many homes want crispy snacks and revived leftovers without a big appliance. Crispi is an air fryer built around glass containers, so food can be stored in the container in the fridge and heated straight in the air fryer.`,
+ specs:[[`Containers`,`3.8 L big batch feeds up to 4. 1.4 L small batch for 7-minute meals`,`APEX training`],
+  [`Functions`,`4: Air Fry, Roast, Recrisp, Keep Warm. No separate Bake or Grill setting. Cakes can be made on Air Fry`,`confirm approved wording`],
   [`Power`,`1,700 W PowerPod`],
   [`Glass`,`Borosilicate, 360 degree clear view`],
   [`Safety claims`,`BPA-free and 100% PFAS-free certification on the Croma listing`],
   [`Controls`,`Top-mounted digital soft-touch panel`],
+  [`Temperatures`,`Air Fry and Roast 175 to 185°C, Recrisp 185°C, Warm 70 to 90°C`,`APEX training`],
+  [`Thermal shock`,`Glass rated for -5 to 240°C`,`APEX training. Confirm the low end`],
+  [`Weight`,`About 5 kg, with permanent easy-grip handles`,`APEX training`],
+  [`Serving`,`Heat-resistant feet. Microwave-safe containers and lids`,`APEX training`],
+  [`Capacity example`,`4 chicken breasts or 600 g of fries in the big container`,`APEX training`],
   [`Warranty`,`Confirm India warranty. Global pages show 2 years`]],
  features:[
   {n:`Two glass containers`,what:`A 1.4 L container for small batches and a 3.8 L container for bigger ones.`,gain:`A snack for one or a batch for the family without a second appliance.`},
   {n:`360 degree clear view`,what:`The glass lets you see the food while it cooks.`,gain:`Answers the shopper who asks for a see-through window on other fryers.`},
   {n:`Recrisp`,what:`A dedicated function to bring leftovers back to fryer-fresh crunch.`,gain:`Yesterday's snacks are crunchy again.`},
-  {n:`Freezer to air fryer`,what:`The glass is listed as going from freezer to air fryer without shattering, and as microwave safe.`,gain:`Less transferring of food and less washing up.`}],
+  {n:`Fridge to fryer`,what:`Store food in the glass container in the fridge and heat it directly in the fryer. The glass is also listed as freezer to air fryer and microwave safe.`,gain:`Cook once, store in the same container, reheat in it. Less transferring and less washing up.`},{n:`One container for everything`,what:`Prep, marinate, cook, serve, store and reheat in the same container.`,gain:`Three dirty dishes per meal become one.`},
+  {n:`Air Fry for cakes`,what:`There is no separate Bake setting, but cakes and other bakes can be made on Air Fry.`,gain:`A shopper who bakes sometimes does not need a bigger machine.`}],
  fits:[`Small households and snack lovers`,`Shoppers who prefer glass over coated baskets`,`Shoppers who want to watch their food`],
- notFit:[`Anyone who wants to bake or grill. Point them to Combi or Max Pro`],
+ notFit:[`Shoppers who want a large 6 L basket or a dedicated Bake or Grill setting. Show Combi or Max Pro`],
  flags:[`India MRP and warranty. The ₹16,000 figure came from promoters.`],
- check:[{q:`Which functions does Crispi have?`,a:`Air Fry, Roast, Recrisp and Keep Warm. No baking or grilling.`},
+ check:[{q:`Which functions does Crispi have?`,a:`Air Fry, Roast, Recrisp and Keep Warm. No separate Bake or Grill setting.`},{q:`Can you make a cake in Crispi?`,a:`Yes, on Air Fry. Confirm cake guidance with the product team.`},{q:`Can you store food in it?`,a:`Yes. Keep food in the glass container in the fridge and heat it directly in the fryer.`},
   {q:`A shopper wants to watch the food cook. What do you say?`,a:`Crispi's glass containers are listed with 360 degree clear view.`},
   {q:`What are the two container sizes?`,a:`1.4 L and 3.8 L.`}],
  src:`Croma India listing, Choice Australia`},
@@ -693,7 +785,10 @@ var LEARN=[
  specs:[[`Filter`,`NeverChange True HEPA 14, listed at 99.98% of particles`,`tested at 0.1 to 0.2 microns`],
   [`Filter life`,`Up to 5 years`,`tested maximum, depends on use`],
   [`Coverage`,`Up to 1,400 sq ft in one hour`,`product page`],
-  [`Noise`,`38.8 dB`,`retailer page. Confirm mode`],
+  [`Noise`,`39 dB on the lowest of 5 fan speeds, up to 62 dB`,`APEX training`],
+  [`Filter layers`,`4: Nano-seal HEPA, activated carbon, pet barrier pre-filter, external debris filter`,`APEX training`],
+  [`Filter indicator`,`HALO light: blue 100%, amber 70%, red 40%`,`APEX training`],
+  [`Smells`,`Activated carbon for gases and odours, plus an odour neutraliser puck for Indian homes`,`APEX training`],
   [`Power`,`54 W`,`retailer page`],
   [`Weight`,`6 kg`,`retailer page`],
   [`Dimensions`,`33.5 x 57 x 33.5 cm`,`retailer page`],
@@ -708,7 +803,7 @@ var LEARN=[
   {n:`Whole-home coverage`,what:`Up to 1,400 sq ft in one hour under test conditions.`,gain:`Suits big living rooms and open plans. A smaller room should clean faster.`}],
  fits:[`Homes with allergies, kids, elders or pets`,`Shoppers in high-AQI cities who run a purifier every day`,`Buyers who want to know the five-year cost before they buy`],
  notFit:[`Shoppers who want a built-in humidifier. Philips 3400 has one`,`Shoppers whose top priority is the lowest noise in sleep mode. Dyson lists 24 dB`],
- flags:[`CADR for the India model.`,`Noise figure (38.8 dB) is from a retailer page and its test mode is not stated.`,`Whether SharkNinja allows the Rs 16,000 filter saving claim on the shop floor.`,`Wattage, weight and warranty come from a retailer page.`],
+ flags:[`CADR for the India model.`,`What the HALO percentages (100%, 70%, 40%) measure.`,`The filter saving claim. Training says ₹36,000. A retailer page says up to ₹16,000. Ask the trainer which competitor and period the figure uses.`,`Wattage, weight and warranty come from a retailer page.`],
  notes:`Be honest that Dyson HushJet also lists a 5-year filter. The edge is the clear five-year cost and the bigger coverage claim, not the filter life alone.`,
  check:[{q:`How long does the filter last?`,a:`Listed as up to 5 years. It is a tested maximum and depends on use and air quality.`},
   {q:`What is the coverage claim?`,a:`Up to 1,400 sq ft in one hour, per the product page.`},
@@ -725,8 +820,14 @@ var LEARN=[
   [`Modes`,`Hard Floor, Freshen (area rugs, thin-pile rugs, mats), Self-clean on the dock`],
   [`Display`,`Smart LED on the handle: battery, tank and mode`],
   [`Filter`,`Foam`],
-  [`Run time`,`About 25 minutes (a Singapore model says up to 30)`,`global pages`],
-  [`Charge time`,`About 4 hours`,`global pages`],
+  [`Weight`,`4.5 kg`,`APEX training`],
+  [`Floor dry time`,`About 30 seconds. Walk on it straight away`,`APEX training`],
+  [`Self-clean`,`2 minutes on the dock`,`APEX training`],
+  [`Noise`,`86 dB, like most vacuums`,`APEX training`],
+  [`Brush roll`,`Anti-microbial`,`APEX training`],
+  [`Extras`,`LED that shows invisible dust, storage tray, debris separator`,`APEX training`],
+  [`Run time`,`About 25 minutes in Eco mode`,`APEX training`],
+  [`Charge time`,`About 4 hours`,`APEX training`],
   [`Warranty`,`2 years`,`India listing`],
   [`Cleaning solution`,`Refills are sold separately on global pages. Confirm India`]],
  features:[
@@ -737,7 +838,7 @@ var LEARN=[
   {n:`Freshen mode`,what:`Refreshes area rugs, thin-pile rugs and mats.`,gain:`A quick refresh for rugs. It is not a deep carpet clean.`}],
  fits:[`Homes with mostly hard floors, kids, pets and spills`,`Shoppers tired of sweeping and then mopping`],
  notFit:[`Shoppers who want one machine for sofas, curtains and ceilings. HydroVac is a floor tool`,`Homes that are mostly wall-to-wall carpet. Freshen mode is for rugs and mats`],
- flags:[`Run time and charge time come from global pages, not the India listing.`,`Whether cleaning solution refills are sold in India.`],
+ flags:[`Whether cleaning solution refills are sold in India.`],
  notes:`Be clear what category this is: a wet-and-dry floor cleaner. When a shopper compares it with a Dyson stick vacuum, compare on the job they need done.`,
  check:[{q:`What are the cleaning modes?`,a:`Hard Floor and Freshen (for area rugs and mats), plus Self-clean on the dock.`},
   {q:`How big are the tanks?`,a:`500 ml clean and 360 ml dirty, per the India listing.`},
@@ -775,7 +876,7 @@ var CMP={cols:[`Combi`,`Crispi`,`Max Pro`,`DualZone 7.6 L`],rows:[
 [`Capacity`,`12.5 L`,`1.4 L and 3.8 L, glass`,`6.2 L`,`7.6 L, two zones`],
 [`Functions`,`14`,`4: Air Fry, Roast, Recrisp, Keep Warm`,`6: Air Fry, Max Crisp, Roast, Bake, Reheat, Dehydrate`,`Dual zones, Sync, Max Crisp`],
 [`Power`,`About 1,780 W`,`1,700 W`,`2,000 W`,`2,470 W`],
-[`Bakes`,`Yes`,`No`,`Yes`,`Confirm`],
+[`Bakes`,`Yes`,`Cakes on Air Fry, no Bake setting`,`Yes`,`Confirm`],
 [`Two dishes together`,`Yes: main and two sides`,`Not listed`,`Not listed`,`Yes: two zones with Sync`],
 [`See the food`,`Confirm`,`Yes: 360 degree clear view`,`No window listed`,`Confirm`],
 [`Warranty`,`2 years`,`Confirm`,`Confirm`,`2 years`],
@@ -806,7 +907,7 @@ var COMPARE=[
  {s:`Performance`,rows:[
   [`1,400 sq ft|Room size, in one hour`,`78 m²|About 840 sq ft`,`100 m²|About 1,076 sq ft`],
   [`Confirm|CADR (cleaning speed)`,`300 m³/h|CADR (cleaning speed)`,`Confirm|CADR (cleaning speed)`],
-  [`38.8 dB|Noise (retailer page)`,`Confirm|Noise`,`24 dB|Sleep mode. 41 dB at maximum`]]},
+  [`39 to 62 dB|Noise across 5 fan speeds (APEX)`,`Confirm|Noise`,`24 dB|Sleep mode. 41 dB at maximum`]]},
  {s:`Features and warranty`,rows:[
   [`No|Humidifier`,`Yes|650 ml/h humidifier`,`No|Humidifier`],
   [`Clean Sense IQ|Reads PM1, PM2.5 and PM10`,`Confirm|Auto mode`,`Auto mode|LCD display and app`],
@@ -822,7 +923,7 @@ var COMPARE=[
  {s:`Size and power`,rows:[
   [`12.5 L|Capacity`,`6 L|Capacity`],
   [`1,780 W|Power`,`2,280 W|Power`],
-  [`240°C|Top temperature (third-party listing)`,`200°C|Top temperature. Range is 80 to 200°C`],
+  [`40 to 240°C|Temperature range (APEX training)`,`200°C|Top temperature. Range is 80 to 200°C`],
   [`9.14 kg|Weight`,`6.2 kg|Weight`]]},
  {s:`Cooking`,rows:[
   [`14|Functions`,`33|Functions (33-in-1)`],
@@ -830,7 +931,7 @@ var COMPARE=[
   [`Demo a real dish|Confirm stirring room`,`Dal, biryani, tadka|Listed as no-spillage`],
   [`Confirm|Cooking window`,`Yes|Cooking window`]]},
  {s:`Coating and warranty`,rows:[
-  [`Ceramic non-stick|PTFE and PFOA free (US page). Confirm India`,`Confirm|Pan coating`],
+  [`Ceramic non-stick|No PTFE, no PFOA (APEX training)`,`Confirm|Pan coating`],
   [`2 years|Warranty (retailer listing)`,`2 years|Warranty`]]}],
  win:[`Twice the capacity, so it suits bigger families.`,`Hotter top temperature and wet or dry baking.`,`Cooks a main and two sides so they finish together.`],
  straight:[`OneChef costs about ₹10,000 less.`,`OneChef lists more functions (33 against 14) and a window.`,`OneChef is marketed for Indian curries. Do not run it down.`],
@@ -845,16 +946,17 @@ var COMPARE=[
   [`1,700 W|Power`,`1,700 W|Power`]]},
  {s:`Cooking`,rows:[
   [`4|Air Fry, Roast, Recrisp, Keep Warm`,`13|13-in-1 cooking methods`],
-  [`No|Bake and grill`,`Yes|Bake and grill`],
+  [`Air Fry mode|Cakes can be made. No Bake or Grill setting`,`Yes|Dedicated bake and grill`],
+  [`Fridge to fryer|Store food in the container, heat it directly`,`Confirm|Fridge storage`],
   [`Recrisp|Dedicated function for leftovers`,`Confirm|Reheating`],
   [`Glass|360 degree clear view`,`Window|Cooking window`]]},
  {s:`Material, controls and warranty`,rows:[
   [`Borosilicate glass|Listed BPA-free and PFAS-free (Croma)`,`Confirm|Basket coating`],
   [`Soft-touch|Top-mounted digital panel`,`Touch panel|Digital`],
   [`Confirm|Warranty`,`2 years|Warranty`]]}],
- win:[`Glass container for shoppers who worry about coatings.`,`A small container for one or two portions, plus a bigger one.`,`Recrisp brings leftovers back to crunchy.`],
- straight:[`NA231 is cheaper, bigger and does more.`,`NA231 also has a window. Do not say Crispi is the only one you can see through.`,`Both are 1,700 W. Watts do not separate them.`],
- lead:`Ask who they cook for and whether they bake. A couple who snack and reheat can like Crispi. If they want baking or grilling, show Combi. Do not push Crispi against the facts.`,
+ win:[`Two containers: a small one for one or two portions and a bigger one for the family.`,`Store food in the container in the fridge and heat it directly. Less washing up.`,`Glass for shoppers who worry about coatings. Recrisp brings leftovers back to crunchy.`,`Cakes can be made on Air Fry.`],
+ straight:[`NA231 is cheaper and bigger, and has a dedicated bake and grill setting.`,`NA231 also has a window. Do not say Crispi is the only one you can see through.`,`Both are 1,700 W. Watts do not separate them.`],
+ lead:`Start with the two containers and fridge-to-fryer. Ask who they cook for. A couple who snack, reheat and bake the odd cake can love Crispi. If they need a big daily bake or grill, show Combi.`,
  src:`Philips India, Amazon India, Reliance Digital, Croma. Checked Nov 2026.`}
 ];
 
@@ -907,14 +1009,14 @@ var TERMS=[
  say:`Pehle baal aur dhool in jaali mein ruk jaate hain. Unko aap vacuum ya dho sakte ho.`,
  care:`Say the screens are cleaned. Do not say the machine needs no upkeep at all.`},
 {g:'combi',t:`Non-toxic coating (Combi pan)`,
- plain:`A non-stick coating stops food sticking. Some older coatings (PTFE, PFOA) worry people. Combi's pan is aluminium with a nano-ceramic non-stick coating, listed as PTFE-free and PFOA-free.`,
+ plain:`A non-stick coating stops food sticking. Some older coatings (PTFE, PFOA) worry people. Combi's pan has a safe nano-ceramic non-stick coating with no PTFE and no PFOA.`,
  benefit:`Peace of mind for families who cook every day, and easy washing.`,
  say:`Pan par ceramic non-stick coating hai, jo PTFE aur PFOA free bataya gaya hai.`,
- care:`Say "PTFE-free and PFOA-free". Do not say chemical-free or 100% safe. The listing is from Shark's US support page. Confirm the India wording first.`},
+ care:`Say "no PTFE, no PFOA", as in the APEX training. Do not say chemical-free or 100% safe.`},
 {g:'crispi',t:`Glass container (Crispi)`,
  plain:`Crispi cooks in borosilicate glass containers instead of a coated metal basket. The Croma listing says BPA-free and PFAS-free.`,
- benefit:`Nothing to flake off a coating. You can see the food cook, and the glass goes from freezer to air fryer.`,
- say:`Isme glass ka container hai, toh coating ki chinta nahi. Khana andar dikhta bhi hai.`,
+ benefit:`Nothing to flake off a coating. You can see the food cook, and the glass goes from the fridge straight to the air fryer.`,
+ say:`Isme glass ka container hai, toh coating ki chinta nahi. Khana andar dikhta hai, aur fridge se nikal ke seedha garam kar sakte ho.`,
  care:`Do not say it cannot break. Confirm the India warranty and safety wording.`},
 {g:'crispi',t:`Recrisp`,
  plain:`A setting that brings leftovers back to fryer-fresh crunch.`,
@@ -960,7 +1062,37 @@ var TERMS=[
  plain:`Protected against water splashes.`,
  benefit:`FlexBreeze can be used on a balcony in light rain.`,
  say:`Halki baarish ke chheente ho toh chalega.`,
- care:`Not for heavy rain, and do not charge it in rain.`}
+ care:`Not for heavy rain, and do not charge it in rain.`},
+{g:'combi',t:`SmartSwitch`,
+ plain:`A quick switch between Combi's two ways of cooking: the Combi Cooker modes and the Air Fry modes.`,
+ benefit:`One machine, two jobs. Switch without moving the food to another appliance.`,
+ say:`Ek switch se Combi cooker se air fry mode mein badal jaata hai.`,
+ care:`The training calls it Smart-switch. Show it in the demo. Confirm the exact modes on the approved sheet.`},
+{g:'crispi',t:`Thermal-shock resistant glass`,
+ plain:`Glass made to go between very cold and very hot without cracking. The training lists -5 to 240°C.`,
+ benefit:`Fridge to fryer in the same container, and straight to the table.`,
+ say:`Ye glass ek hi container mein thande se garam tak jaane ke liye bana hai, isliye fridge se seedha air fryer mein.`,
+ care:`Do not say it cannot break. Confirm the low end of the range.`},
+{g:'hp300',t:`HALO filter light`,
+ plain:`A coloured light that shows the state of the filter: blue 100%, amber 70%, red 40%.`,
+ benefit:`No guessing when to act. The light tells you.`,
+ say:`Light ka rang batata hai ki filter ki kya sthiti hai: neela, amber ya laal.`,
+ care:`Confirm what the percentages measure before you explain them.`},
+{g:'hp300',t:`VOCs and odours`,
+ plain:`VOCs are gases from paint, cleaning products and cooking. Activated carbon in the filter traps many of them.`,
+ benefit:`Helps with smells and fumes, not only dust.`,
+ say:`Dhool ke saath paint, cleaning products aur khane ki gas ya badbu bhi pakadta hai.`,
+ care:`Say it helps. Do not say it removes every smell.`},
+{g:'hydrovac',t:`Debris separator`,
+ plain:`Keeps dry dirt and wet dirt apart inside the machine.`,
+ benefit:`Easier to empty and more hygienic. Dirty water does not go back onto the floor.`,
+ say:`Sukhi dhool aur ganda paani alag alag rehte hain, toh khaali karna aasan aur saaf.`,
+ care:`Training: debris separation for easy cleaning and hygiene.`},
+{g:'hydrovac',t:`Anti-microbial brush roll`,
+ plain:`A brush roll made to resist odours and protect the roller.`,
+ benefit:`Fewer smells from a wet brush, and it lasts.`,
+ say:`Brush roll anti-microbial hai, toh badbu kam aati hai.`,
+ care:`Do not say it kills all germs.`}
 ];
 
 /* 5-year filter cost. Philips figure uses 3000-series FY3433 prices (Rs 2,880 to Rs 3,510) and about one filter a year. Indicative. */
@@ -983,8 +1115,8 @@ var DRILLS=[
  opts:[
  {t:`Bilkul non-toxic hai, 100% safe.`,v:'risk',f:`Too absolute. No brand can promise "100% safe".`},
  {t:`Pan aluminium ka hai jis par ceramic non-stick coating hai, jo PTFE aur PFOA free bataya gaya hai. India wali exact wording main approved sheet se confirm karke bata deta hoon.`,v:'best',f:`Specific, uses the listed claim, and offers to confirm the India wording.`},
- {t:`Sab non-stick coating same hote hain, chinta mat kijiye.`,v:'risk',f:`Dismisses a real worry and is not true. Shoppers care about PTFE and PFOA.`}],
- why:`Say "PTFE-free and PFOA-free". The listing is from Shark's US support page, so confirm the India wording before using it.`},
+ {t:`Sab non-stick coating same hote hain, chinta mat kijiye.`,v:'risk',f:`Brushes off a real worry. Shoppers do care about PTFE and PFOA.`}],
+ why:`Say "no PTFE, no PFOA", as in the APEX training. Avoid "chemical-free" and "100% safe".`},
 {p:'combi',topic:`Why so expensive`,q:`₹29,990? Itna mehnga kyun?`,
  opts:[
  {t:`Aap abhi oven, air fryer aur steamer alag lete toh kitna kharch hota? Combi teeno ka kaam karta hai aur counter pe ek hi jagah leta hai.`,v:'best',f:`You reframed price as total cost and counter space, which is the real concern.`},
@@ -1000,28 +1132,34 @@ var DRILLS=[
 
 {p:'crispi',topic:`Price vs Philips NA231`,q:`Philips ka 6.2 litre ₹10,000 mein aata hai aur bake bhi karta hai. Crispi itna mehnga kyun?`,
  opts:[
- {t:`Crispi bhi bake kar leta hai.`,v:'risk',f:`False. Crispi has no baking function.`},
- {t:`Philips ka quality achha nahi hota.`,v:'risk',f:`Runs down a competitor with no facts.`},
- {t:`Philips bada hai aur bake-grill karta hai, ye sach hai. Crispi chhote batch ke liye hai aur glass mein khana dikhta hai. Aap kitne log ke liye banate ho, aur bake karte ho?`,v:'best',f:`Honest about their strengths, names your fit, and asks what the shopper needs.`}],
- why:`NA231 is cheaper, bigger and does more. Win only if the shopper values glass, small batches and Recrisp. Otherwise send them to Combi.`},
+ {t:`Crispi mein Air Fry mode mein cake bhi ban jaata hai.`,v:'ok',f:`True and useful, but the question was about price. Add the two containers and fridge-to-fryer to give a reason to choose Crispi.`},
+ {t:`Philips bada hai aur bake-grill karta hai, ye sach hai. Crispi mein do container hain, chhota aur bada, aur khana fridge se seedha garam ho jaata hai. Cake bhi Air Fry mein ban jaata hai. Aap kitne log ke liye banate ho?`,v:'best',f:`Honest about their strengths, leads with what Crispi does well, and asks what the shopper needs.`},
+ {t:`Philips ka quality achha nahi hota.`,v:'risk',f:`Running down a competitor without facts costs trust. Talk about Crispi instead.`}],
+ why:`NA231 is cheaper and bigger. Crispi wins on two containers, fridge-to-fryer and glass. Ask who they cook for. Suggest Combi only if they need a big daily bake or grill.`},
 {p:'crispi',topic:`What does 1,700 W mean`,q:`1700 watt ka matlab kya hai? Zyada hai kya?`,
  opts:[
  {t:`Sabse zyada power wala air fryer yahi hai.`,v:'risk',f:`Not true. Philips NA231 is also 1,700 W.`},
- {t:`Zyada watt ka matlab garam jaldi hota hai, toh khana jaldi tayyar hota hai. Philips bhi 1700 W ka hai, isliye asli farak size aur glass ka hai.`,v:'best',f:`Explains the benefit simply and stays honest that watts do not separate the two.`},
+ {t:`Zyada watt ka matlab garam jaldi hota hai, toh khana jaldi tayyar hota hai. Philips bhi 1700 W ka hai, isliye asli farak do containers aur fridge se seedha garam karne mein hai.`,v:'best',f:`Explains the benefit simply and stays honest that watts do not separate the two.`},
  {t:`Isse bijli ka bill kam aayega.`,v:'risk',f:`Unsupported. More watts does not mean a lower bill.`}],
  why:`Turn the number into a benefit (faster cooking) and do not claim more than that.`},
 {p:'crispi',topic:`Glass breaking`,q:`Glass tootega toh? Gir gaya toh?`,
  opts:[
  {t:`Ye tootega nahi, bahut mazboot hai.`,v:'risk',f:`You cannot promise that.`},
- {t:`Borosilicate glass hai, freezer se air fryer tak chalne ke liye bataya gaya hai. Girne par kya cover hai, wo main warranty wording se aapko saaf bata deta hoon.`,v:'best',f:`Gives the real claim and is open about what is covered.`},
+ {t:`Borosilicate glass hai, fridge ya freezer se seedha air fryer mein chalne ke liye bataya gaya hai. Girne par kya cover hai, wo main warranty wording se aapko saaf bata deta hoon.`,v:'best',f:`Gives the real claim and is open about what is covered.`},
  {t:`Steel wala le lo, usme tension nahi.`,v:'ok',f:`Sends them away from your product without checking their need.`}],
  why:`Do not say it cannot break. Confirm the India warranty wording before you speak about damage.`},
 {p:'crispi',topic:`Baking and grilling`,q:`Isme cake ya grill ho sakta hai?`,
  opts:[
- {t:`Crispi mein baking aur grill nahi hai. Air fry, roast, recrisp aur keep warm hai. Baking chahiye toh Combi dikhata hoon.`,v:'best',f:`Clear, honest, and you point them to the right model.`},
- {t:`Haan thoda bahut ho jayega.`,v:'risk',f:`Vague and untrue. It will disappoint them at home.`},
- {t:`Ye toh air fryer hai, isme bake kaun karta hai.`,v:'ok',f:`True that it does not bake, but dismissive and you lost the sale to Combi.`}],
- why:`Recommend the right model even if it is not the one they walked up to.`},
+ {t:`Haan, isme Bake aur Grill dono ke alag setting hain.`,v:'risk',f:`Crispi has no separate Bake or Grill setting. The shopper may be let down at home.`},
+ {t:`Alag Bake setting nahi hai, par Air Fry mode mein cake ban jaata hai. Aap kya banate ho? Agar roz bada bake ya grill chahiye toh Combi bhi dikha deta hoon.`,v:'best',f:`Accurate, shows what Crispi can do, and offers Combi only if the need is bigger.`},
+ {t:`Nahi, isme cake nahi ban sakta.`,v:'risk',f:`Not accurate. Cakes can be made on Air Fry, and saying no may lose the sale.`}],
+ why:`Say there is no separate Bake setting, then say cakes can be made on Air Fry. Mention Combi only for big daily bakes or grills.`},
+{p:'crispi',topic:`Store and reheat`,q:`Kya khana isme rakh ke fridge mein rakh sakte hain aur seedha garam kar sakte hain?`,
+ opts:[
+ {t:`Haan, kar sakte hain.`,v:'ok',f:`Correct but bare. Add why it helps: one container, less washing up.`},
+ {t:`Haan. Khana glass container mein fridge mein rakho aur seedha Crispi mein garam karo. Ek hi bartan, kam dhona. Recrisp se kurkura bhi ho jaata hai.`,v:'best',f:`Clear, true and shows the benefit in the shopper's day.`},
+ {t:`Pehle bartan badalna padega.`,v:'risk',f:`Not accurate. The glass container is made to go from storage to the fryer.`}],
+ why:`This is one of Crispi's best points. Say fridge to fryer in plain words and add the washing-up saving.`},
 
 {p:'hydrovac',topic:`Heavier than Dyson`,q:`Ye Dyson se bhaari lag raha hai.`,
  opts:[
@@ -1037,8 +1175,8 @@ var DRILLS=[
  why:`Say it before they find out at home. HydroVac does not cover sofas, curtains or ceilings.`},
 {p:'hydrovac',topic:`Battery`,q:`Battery kitni der chalti hai? Mera ghar bada hai.`,
  opts:[
- {t:`Ek ghante tak chalti hai.`,v:'risk',f:`Not supported. Global pages say about 25 minutes.`},
- {t:`Ghar kitna bada hai? Global pages pe 25 minute ke aas-paas bataya hai. India ka figure confirm karke bataunga. Bada ghar hai toh main seedha bol dunga.`,v:'best',f:`Honest about the figure and asks the size first.`},
+ {t:`Ek ghante tak chalti hai.`,v:'risk',f:`Not accurate. Training says about 25 minutes in Eco mode.`},
+ {t:`Ghar kitna bada hai? Eco mode mein lagbhag 25 minute chalti hai aur charge hone mein lagbhag 4 ghante lagte hain. Bada ghar hai toh main seedha bol dunga.`,v:'best',f:`Honest about the figure and asks the size first.`},
  {t:`Chinta mat kijiye, aaram se ho jaayega.`,v:'ok',f:`Reassuring but not an answer.`}],
  why:`Do not promise coverage in square feet unless the approved sheet says so.`},
 {p:'hydrovac',topic:`Accidental damage`,q:`Girne par kharab ho gaya toh 2 saal ka damage cover milta hai?`,
@@ -1056,8 +1194,8 @@ var DRILLS=[
  why:`Use the five-year table in Terms. Say "up to 5 years" and that the Philips price is indicative.`},
 {p:'hp300',topic:`Dyson also has 5 years`,q:`Dyson HushJet mein bhi 5 saal ka filter hai aur woh quiet hai.`,
  opts:[
- {t:`Dyson bahut mehnga hai.`,v:'risk',f:`Dyson lists ₹29,900, close to HP300. You would be wrong.`},
- {t:`Dyson ka filter 5 saal nahi chalta.`,v:'risk',f:`False. Dyson lists up to 5 years.`},
+ {t:`Dyson bahut mehnga hai.`,v:'risk',f:`Dyson lists ₹29,900, close to HP300, so that would not be accurate.`},
+ {t:`Dyson ka filter 5 saal nahi chalta.`,v:'risk',f:`Not accurate. Dyson lists up to 5 years.`},
  {t:`Sahi baat hai, Dyson bhi 5 saal tak bolta hai. Farak aapke kamre, raat ke shor aur budget mein dekhte hain. Aapka bedroom kitna bada hai?`,v:'best',f:`Agrees with the fact and moves to what separates them for this shopper.`}],
  why:`Do not deny that Dyson is quieter in sleep mode. Compare on room size and what the shopper needs.`},
 {p:'hp300',topic:`Coverage claim`,q:`1,400 sq ft sach mein? Mera hall itna bada nahi.`,
@@ -1068,11 +1206,168 @@ var DRILLS=[
  why:`State the test condition and ask the room size.`},
 {p:'hp300',topic:`Humidifier`,q:`Philips mein humidifier bhi hai. Isme hai?`,
  opts:[
- {t:`Haan, isme bhi hai.`,v:'risk',f:`False. HP300 is a purifier only.`},
+ {t:`Haan, isme bhi hai.`,v:'risk',f:`Not accurate. HP300 is a purifier only.`},
  {t:`HP300 sirf purifier hai, humidifier nahi hai. Aapke ghar mein hawa sookhi lagti hai ya dhool aur smoke ka problem zyada hai?`,v:'best',f:`Honest, and asks which problem they actually have.`},
- {t:`Humidifier ki koi zaroorat nahi hoti.`,v:'ok',f:`Dismisses a real need for some homes.`}],
- why:`Philips 3400 humidifies at 650 ml/h. If dry air is their main problem, say HP300 may not be the fit.`}
+ {t:`Humidifier ki koi zaroorat nahi hoti.`,v:'ok',f:`Some homes do need this, so brushing it off may lose the sale.`}],
+ why:`Philips 3400 humidifies at 650 ml/h. If dry air is their main problem, say HP300 may not be the fit.`},
+
+{p:'combi',topic:`Rice and pasta`,q:`Pasta aur chawal ke liye alag pot nahi chahiye? Kaise?`,
+ opts:[
+ {t:`Har tarah ka chawal 100% perfect banta hai.`,v:'risk',f:`Too absolute. Show a demo instead of promising every result.`},
+ {t:`Rice/Pasta mode mein na pehle ubaalna, na paani nikaalna. Main ek baar chala ke dikhata hoon.`,v:'best',f:`Names the benefit from the training and offers a demo.`},
+ {t:`Haan ban jaata hai.`,v:'ok',f:`True, but it does not show the benefit. Say what is different: no boiling and no draining.`}],
+ why:`Show Rice/Pasta in the demo. The training lists no drain and no pre-boil.`},
+{p:'combi',topic:`Moist and dry`,q:`Ek hi machine mein naram aur kurkura dono kaise?`,
+ opts:[
+ {t:`Kisi aur brand mein ye hota hi nahi.`,v:'risk',f:`The training makes this claim, but do not use it unless it is approved. It also invites an argument.`},
+ {t:`Technology hai, sheet pe likha hai.`,v:'ok',f:`Does not explain anything. Say how it works in plain words.`},
+ {t:`HyperSteam bhaap aur garam hawa dono chalata hai, toh ek hi cycle mein ek cheez naram aur ek kurkuri ban sakti hai.`,v:'best',f:`Explains the benefit simply without attacking other brands.`}],
+ why:`Explain what happens and what the shopper gets. Leave out "no other brand" unless it is approved.`},
+{p:'combi',topic:`Replaces appliances`,q:`Mere paas OTG, microwave aur air fryer hai. Ye kyun?`,
+ opts:[
+ {t:`Aap teeno bechke ye le lo.`,v:'risk',f:`Pushy and not what they asked. Let them decide.`},
+ {t:`Aap teeno mein se sabse kam kaun sa use karte ho? Combi un sabka kaam ek jagah karta hai, toh counter par jagah bhi bachti hai. Roz kya pakate ho?`,v:'best',f:`Asks first, then links to what the shopper uses, as the training suggests.`},
+ {t:`Aap rakhiye, ye extra hai.`,v:'ok',f:`Honest, but it gives up before understanding the need.`}],
+ why:`The training line is that Combi replaces your kitchen equipment. Ask what they use before you say it.`},
+{p:'combi',topic:`Quick cake`,q:`Cake ya cookies bana sakte hain isme?`,
+ opts:[
+ {t:`Haan, Combi Bake mein jaldi cake ban jaata hai, aur Bake mode mein cookies jaise oven wali cheezein. Aap kya bake karte ho?`,v:'best',f:`Matches the training and asks about their baking.`},
+ {t:`Bilkul oven jaisa, har recipe chalegi.`,v:'risk',f:`Too broad. Not every oven recipe is guaranteed.`},
+ {t:`Haan ho jaata hai.`,v:'ok',f:`True but bare. Name the cake and cookie modes.`}],
+ why:`Training: Combi Bake for quick cakes, Bake for cookies.`},
+
+{p:'crispi',topic:`Family of four`,q:`Humare ghar mein 4 log hain. Itna chhota container?`,
+ opts:[
+ {t:`Bada 3.8 litre container 4 log tak ke liye hai, jaise 4 chicken breast ya 600 gram fries. Chhota 1.4 litre container 1 ya 2 logon ke 7 minute ke khane ke liye hai.`,v:'best',f:`Uses the training numbers for each container.`},
+ {t:`Poori family ke liye bahut hai, 8 log tak.`,v:'risk',f:`Not supported. Training says up to 4 in the big container.`},
+ {t:`Chhota hai, aap bada air fryer dekh lo.`,v:'ok',f:`Sends them away before explaining what the big container can do.`}],
+ why:`Say what each container fits, using the training figures.`},
+{p:'crispi',topic:`Cook, serve, store`,q:`Air fryer mein banake alag plate mein nikalna padta hai na?`,
+ opts:[
+ {t:`Haan, plate mein hi nikaalna padega.`,v:'risk',f:`Not accurate. You can serve and store in the same container.`},
+ {t:`Seedha table par rakh do.`,v:'ok',f:`Close, but add why it is safe: heat-resistant feet.`},
+ {t:`Banao, serve karo aur wahin store karo. Container ke heat-resistant feet hain, toh table kharab nahi hota. 3 bartan ki jagah ek hi dhona padta hai.`,v:'best',f:`Shows serve, store and the washing-up saving.`}],
+ why:`Training: cook, serve and store in the same container, and three dirty dishes become one.`},
+{p:'crispi',topic:`Microwave`,q:`Microwave mein daal sakte hain?`,
+ opts:[
+ {t:`Nahi, sirf air fryer mein.`,v:'risk',f:`Not accurate. Containers and lids are microwave safe.`},
+ {t:`Haan, containers aur lids microwave safe hain. Fridge se nikaalo, microwave ya Crispi mein garam karo.`,v:'best',f:`Accurate and shows the benefit.`},
+ {t:`Haan daal do.`,v:'ok',f:`Right, but add the benefit of one container for storing and heating.`}],
+ why:`Training: containers and lids are microwave safe.`},
+{p:'crispi',topic:`Marinate and freeze`,q:`Pehle se marinate karke freeze kar sakte hain?`,
+ opts:[
+ {t:`Glass freezer se seedha 240 par bhi nahi tootega.`,v:'risk',f:`Overpromises. Do not say it cannot break.`},
+ {t:`Haan, marinate karo, freeze karo aur seedha air fry karo. Glass thermal-shock resistant hai. Aap kya marinate karte ho zyada?`,v:'best',f:`Uses the training and asks what they cook.`},
+ {t:`Kar sakte hain.`,v:'ok',f:`True, but it does not show the benefit of prep ahead.`}],
+ why:`Training lists marinate, freeze, then air fry. Do not say the glass cannot break.`},
+
+{p:'hydrovac',topic:`Drying time`,q:`Floor geela rahega toh bachche phisal jayenge?`,
+ opts:[
+ {t:`Geela hota hi nahi.`,v:'risk',f:`Not accurate. There is a short drying time.`},
+ {t:`Lagbhag 30 second mein sookh jaata hai, aap turant chal sakte ho. Ghar mein chhote bachche hain?`,v:'best',f:`Uses the training figure, says about, and asks about the family.`},
+ {t:`Jaldi sookh jaata hai.`,v:'ok',f:`Correct, but give the number.`}],
+ why:`Training: floor dry in about 30 seconds.`},
+{p:'hydrovac',topic:`Maid mopping`,q:`Humari bai toh pochha lagati hai, usme kya dikkat?`,
+ opts:[
+ {t:`Bai ko pochha lagana nahi aata.`,v:'risk',f:`Disrespectful and loses the shopper. Talk about the machine.`},
+ {t:`Isme saaf paani ka alag tank hai aur ganda paani alag, toh ganda paani wapas floor par nahi lagta. Saaf 500 ml, ganda 360 ml.`,v:'best',f:`Explains the separate tanks without criticising anyone.`},
+ {t:`Machine zyada achhi hai.`,v:'ok',f:`Vague. Say what is different.`}],
+ why:`The training problem is maids using the same dirty water across floors. Raise it kindly.`},
+{p:'hydrovac',topic:`Self-clean`,q:`Mop wali machine ko saaf karna toh jhanjhat hai.`,
+ opts:[
+ {t:`Kabhi saaf karna hi nahi padta.`,v:'risk',f:`Not accurate. It cleans itself on the dock.`},
+ {t:`Dock par rakho, 2 minute mein brush aur floorhead khud saaf ho jaate hain. Brush roll anti-microbial hai, toh badbu kam hoti hai.`,v:'best',f:`Uses the training facts.`},
+ {t:`Aasan hai.`,v:'ok',f:`Vague. Say how it cleans itself.`}],
+ why:`Training: self-clean in 2 minutes on the dock.`},
+{p:'hydrovac',topic:`Noise`,q:`Awaaz bahut karega kya?`,
+ opts:[
+ {t:`Bilkul silent hai.`,v:'risk',f:`Not accurate. Training says about 86 dB.`},
+ {t:`Lagbhag 86 dB, jaise zyadatar vacuum cleaners. Main chala ke dikhata hoon.`,v:'best',f:`Honest and offers a demo.`},
+ {t:`Thodi karti hai.`,v:'ok',f:`Honest, but a number helps.`}],
+ why:`Do not call it quiet. Training says 86 dB, like most vacuums.`},
+
+{p:'hp300',topic:`Filter indicator`,q:`Filter kab badalna hai ye kaise pata chalega?`,
+ opts:[
+ {t:`Ye apne aap badal jaata hai.`,v:'risk',f:`Not accurate. The filter is listed for up to 5 years but it does not change itself.`},
+ {t:`Display par HALO light hai. Neela 100%, amber 70% aur laal 40% dikhata hai. Main yahin dikha deta hoon.`,v:'best',f:`Uses the training. Confirm what the percentages measure before explaining them.`},
+ {t:`Display par dikhta hai.`,v:'ok',f:`True, but name the HALO light and the colours.`}],
+ why:`Training lists the HALO colours. Confirm what the percentage refers to.`},
+{p:'hp300',topic:`Cooking smell`,q:`Kitchen ki badbu aur tadke ka dhuan jaayega?`,
+ opts:[
+ {t:`Sab badbu 100% gayab ho jaati hai.`,v:'risk',f:`Too absolute.`},
+ {t:`Activated carbon filter gas aur badbu pakadta hai, aur Indian gharon ke liye odor neutralizer puck bhi hai. Aapka kitchen khula hai ya band?`,v:'best',f:`Specific and asks about their home.`},
+ {t:`Haan, hawa saaf karta hai.`,v:'ok',f:`Correct but general. Name the carbon filter and the puck.`}],
+ why:`Say it helps with smells and fumes. Do not say every smell goes.`},
+{p:'hp300',topic:`Noise range`,q:`Raat ko tez speed par kitna shor hoga?`,
+ opts:[
+ {t:`Bilkul silent hai, Dyson se bhi shant.`,v:'risk',f:`Not accurate. Dyson lists 24 dB in sleep mode.`},
+ {t:`5 speeds hain. Sabse dheemi pe lagbhag 39 dB aur sabse tez pe 62 dB. Sleep ke liye dheemi speed chala ke dikhata hoon.`,v:'best',f:`Gives the training range and offers a demo.`},
+ {t:`Thoda shor hota hai.`,v:'ok',f:`Honest, but a number helps.`}],
+ why:`Training lists 39 dB to 62 dB across 5 fan speeds.`},
+{p:'hp300',topic:`Savings`,q:`Filter par kitna bachega aap log bolte ho?`,
+ opts:[
+ {t:`₹36,000 pakka bachenge.`,v:'risk',f:`Training says ₹36K, but a retailer page says up to ₹16,000. Confirm the basis before you promise it.`},
+ {t:`Bahut bachega.`,v:'ok',f:`No number or years. Ask how long they will keep it.`},
+ {t:`Aap kitne saal ke liye le rahe ho? Main 5 saal ka filter kharcha likh ke dikhata hoon, saalana filter wali machine ke saath compare karke.`,v:'best',f:`Asks first and offers a written comparison.`}],
+ why:`Training figure is ₹36,000. Another source says ₹16,000. Ask the trainer for the basis before you quote a figure.`},
+
+{p:'any',topic:`Will think about it`,q:`Soch ke batata hoon.`,
+ opts:[
+ {t:`Kal price badh jayega, abhi le lo.`,v:'risk',f:`Invented pressure. Only say what is true and approved.`},
+ {t:`MRP aur aaj ka price, dono bata deta hoon. Aaj aapko itna fark padega, offer ke saath ye kharcha, aur abhi lene par kul itni bachat. Ye stock rehne tak hai.`,v:'best',f:`Follows the closing steps: MRP and current price, difference, offer with cost, total savings, till stocks last.`},
+ {t:`Theek hai, sochiye.`,v:'ok',f:`Polite but you lose the chance to close.`}],
+ why:`Use the closing steps in order: MRP and current price, difference today, offer with cost, total savings, till stocks last. Only mention live, approved offers.`},
+{p:'any',topic:`Just looking`,q:`Bas dekh raha hoon.`,
+ opts:[
+ {t:`Ye 14 functions, 12.5 litre, 1780 watt ka hai, 240 degree tak...`,v:'risk',f:`A spec dump is a presentation, not a conversation.`},
+ {t:`Zaroor. Ghar mein roz kitne log khaate hain? Main wahi dekh kar bataunga ki kaunsa sahi rahega.`,v:'best',f:`Starts a two-way conversation with a Question, as the APEX method says.`},
+ {t:`Theek hai, kuch chahiye toh bataiye.`,v:'ok',f:`Polite but passive. Ask one question.`}],
+ why:`APEX: a two-way conversation. Question first, then Problem, then Compare.`},
+{p:'any',topic:`First line`,q:`Ye kya hai?`,
+ opts:[
+ {t:`Pehle poori spec list padh deta hoon.`,v:'risk',f:`Too much too soon.`},
+ {t:`Ye Ninja Combi hai, ek all-in-one multicooker jo 2-part meals 15 minute mein bana deta hai. Aap roz kitne log ke liye banate ho?`,v:'best',f:`One-line pitch, then a question. Matches APEX.`},
+ {t:`Ye ek cooker hai.`,v:'ok',f:`True, but it does not say who it is for.`}],
+ why:`Open with the one-line pitch, then ask a question. Example uses the Combi line from the deck.`},
+{p:'any',topic:`Final price`,q:`Final price kya hoga? Discount milega?`,
+ opts:[
+ {t:`Main aapko special discount dila dunga.`,v:'risk',f:`Invented discount. Only mention approved offers.`},
+ {t:`MRP ye hai, aaj ka price ye hai, fark itna hai. Live offer ye hai aur uska kharcha itna, toh kul bachat itni. Ye till stocks last hai.`,v:'best',f:`Shows every step of the closing in order.`},
+ {t:`Price ye hai.`,v:'ok',f:`Only one number. Show the difference and the savings.`}],
+ why:`Say every step in order. Never invent a discount.`}
 ];
+/* APEX 2.0 training deck: pitch, two-way conversation, product trick, closing. The "ask" lines are suggestions, not from the deck. */
+var APEX={
+method:{
+ steps:[
+  [`Pitch`,`One line that says what it is and who it is for.`],
+  [`How`,`A two-way conversation, not a presentation demo. Question, then Problem, then Compare.`],
+  [`Trick`,`A product-specific action you do while you talk. Do it at the same time as the conversation.`],
+  [`Technology`,`Link the technology to a change in the shopper's life.`]],
+ close:[`Mention the MRP and the current price.`,`Show the cost difference right now.`,`Mention the offer and what it costs.`,`Show the total savings if they buy now.`,`Finish with: valid till stocks last.`]
+},
+combi:{one:`This is the Ninja Combi, an all-in-one multicooker that can cook 2-part meals within 15 minutes.`,
+ trick:`Show the Smart-switch. It replaces all your kitchen equipment.`,
+ ask:[`Roz kitne log khaate hain?`,`Dinner mein sabse zyada time kis cheez mein jaata hai?`,`Abhi OTG, microwave ya air fryer hai?`],
+ listen:[`Time-taking meals`,`Cost of ordering in`,`Wanting healthier options`,`Moist and dry cooking in one machine`,`Too many pots and pans`],
+ life:`No more juggling 3 pots, 2 pans and 1 hungry family.`},
+crispi:{one:`This is the Ninja Crispi, a 360 viewing air fryer. Prep, crisp, serve, store and clean in the same container.`,
+ trick:`Pick up the Power Pod and place it on both bowls. Explain group cooking and individual cooking.`,
+ ask:[`Ghar mein kitne log hain?`,`Snacks banate ho ya poora khana?`,`Khana banane ke baad kitne bartan dhone padte hain?`],
+ listen:[`Wanting a premium cooking experience`,`Too many dishes to clean`,`Easy to use`,`One bowl for everything`,`Eating healthy`],
+ life:`Three dirty dishes per meal become one. Cook, serve and store in the same container.`},
+hydrovac:{one:`This is the Shark HydroVac, a 3-in-1 cordless cleaner that vacuums, mops and self-cleans automatically.`,
+ trick:`Show Rug mode and hand the machine to the shopper.`,
+ ask:[`Ghar mein floor kaisa hai, tile ya wooden?`,`Pochha kaun lagata hai, aur kitni baar?`,`Ghar mein bachche ya pet hain?`],
+ listen:[`Current cleaning is not effective`,`Maids use the same dirty water across floors`,`Other brands cost more for the same technology`,`Rug mode`,`Wet and dry dirt kept separate`],
+ life:`Wet and dry mess in one pass, floor dry in about 30 seconds, and it cleans itself in 2 minutes.`},
+hp300:{one:`This is the Shark NeverChange air purifier. It senses and purifies the air in your home automatically.`,
+ trick:`Show the external filter and the display.`,
+ ask:[`Kis city mein rehte hain? AQI kaisa rehta hai?`,`Ghar mein bachche, bujurg ya pet hain?`,`Abhi purifier hai? Uska filter kitne ka padta hai?`],
+ listen:[`High AQI area`,`Construction nearby`,`Car smoke`,`Cooking fumes`,`Pollen and allergies`,`Pet hair and dander`,`Cost of filters and maintenance`,`Low quality filters`,`Small room coverage`],
+ life:`A 5-year HEPA filter: no hassle, just plug and breathe. Training says save ₹36K on filter maintenance. Confirm the basis before you quote it.`}
+};
+
 var HINTS=[`Who will use it most at home?`,`What are you using right now, and what annoys you about it?`,`How big is your home, and how often do you clean or cook?`,`What would make you feel this was a good decision a month from now?`,`What worried you when you saw the price?`];
 var DIMS=[{k:'diagnose',n:`Asked before pitching`},{k:'need',n:`Found the real need`},{k:'link',n:`Tied it to their life`},{k:'honest',n:`Stayed honest`}];
 var OUTCOME={would_buy:`She is reaching for her card.`,thinking:`Wants to think about it, and will probably check online tonight.`,walks:`Walked off to compare online.`};
@@ -1124,7 +1419,7 @@ function thumb(id,size){return IMG[id]?'<span class="thumbwrap" style="width:'+s
 function kb(){
   return PRODUCTS.map(function(p){
     return '## '+p.name+' ('+p.sub+')\nKnown facts: '+p.facts.join('; ')+'\n'+p.qs.map(function(q){return '- Shopper asks: '+q.q+' | Why: '+q.why+' | Safe handling: '+q.care}).join('\n');
-  }).join('\n\n')+'\n\n## Verified specs from India listings (Oct 2026)\n'+LEARN.map(function(p){return p.name+': '+p.specs.map(function(x){return x[0]+' '+x[1]}).join('; ')+(p.flags.length?' | Open points to confirm: '+p.flags.join(' '):'')}).join('\n')+'\n\n## Competitor notes\n'+VERSUS.map(function(v){return v.n+': shoppers say: '+v.says+' | be straight: '+v.straight}).join('\n');
+  }).join('\n\n')+'\n\n## Verified specs from India listings (Oct 2026)\n'+LEARN.map(function(p){return p.name+': '+p.specs.map(function(x){return x[0]+' '+x[1]}).join('; ')+(p.flags.length?' | Open points to confirm: '+p.flags.join(' '):'')}).join('\n')+'\n\n## Competitor notes\n'+VERSUS.map(function(v){return v.n+': shoppers say: '+v.says+' | be straight: '+v.straight}).join('\n')+'\n\n## Trainer pitch notes (APEX 2.0)\n'+Object.keys(APEX).filter(function(k){return k!=='method'}).map(function(k){var a=APEX[k];return k+': '+a.one+' | problems shoppers raise: '+a.listen.join('; ')+' | life change: '+a.life}).join('\n');
 }
 function setTabs(){
   var dock='';
@@ -1229,6 +1524,23 @@ function vPractice(){
   var body=S.pmode==='answers'?vAnswers():S.pmode==='drills'?vDrills():vTalk();
   return head+body;
 }
+function apexCard(id){
+  var li2=function(a){return a.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')};
+  if(id==='any'){
+    var m=APEX.method;
+    return '<details class="facts"><summary>The APEX conversation</summary><div class="apx">'
+     +m.steps.map(function(s){return '<div><div class="lab">'+esc(s[0])+'</div>'+esc(s[1])+'</div>'}).join('')
+     +'<div><div class="lab">Closing, in this order</div><ol class="clean">'+li2(m.close)+'</ol></div>'
+     +'<p class="srcnote">From the APEX 2.0 training. Only quote offers that are live and approved.</p></div></details>';
+  }
+  var a=APEX[id];if(!a)return '';
+  return '<details class="facts" open><summary>APEX pitch</summary><div class="apx">'
+   +'<div><div class="lab">Pitch</div><div class="sayline">'+esc(a.one)+'</div></div>'
+   +'<div><div class="lab">Trick: show this</div>'+esc(a.trick)+'</div>'
+   +'<div><div class="lab">Open with a question (ideas)</div><ul class="clean">'+li2(a.ask)+'</ul></div>'
+   +'<div><div class="lab">Problems to listen for</div><ul class="clean">'+li2(a.listen)+'</ul></div>'
+   +'<div><div class="lab">Life change</div>'+esc(a.life)+'</div></div></details>';
+}
 function answersBlock(){
   var p=PRODUCTS.find(function(x){return x.id===PQ_ID[S.pp]});if(!p)return '';
   var facts='<details class="facts"><summary>Key facts</summary><ul>'+p.facts.map(function(f){return '<li>'+esc(f)+'</li>'}).join('')+'</ul>'
@@ -1240,7 +1552,7 @@ function answersBlock(){
        +'<div><div class="lab">Shoppers say</div>'+esc(v.says)+'</div><div><div class="lab">Be straight about</div>'+esc(v.straight)+'</div><div><div class="lab">Where to lead</div>'+esc(v.lead)+'</div></div></details>'}).join('')
      +'<h2 class="h2 sec">Say these plainly</h2>'+GAPS.map(function(g){return '<div class="gap"><b>'+esc(g.t)+'</b><span class="st">'+esc(g.s)+'</span><span>'+esc(g.d)+'</span></div>'}).join('');
   }
-  return phead(S.pp)+facts+'<div class="qlist">'+p.qs.map(function(q){return qHtml(q,'',false)}).join('')+'</div>'+extra;
+  return phead(S.pp)+apexCard(S.pp)+facts+'<div class="qlist">'+p.qs.map(function(q){return qHtml(q,'',false)}).join('')+'</div>'+extra;
 }
 function vAnswers(){
   return pchips(false)
@@ -1250,8 +1562,7 @@ function vAnswers(){
    +'<p class="priv">Wording is a starting point, not a script. Check numbers against the approved sheet.</p>';
 }
 function vDrills(){
-  var chips=pchips(true);
-  if(S.pp==='any')return chips+'<div class="empty">Drills are for one product at a time. Pick a product above.</div>';
+  var chips=pchips(false);
   var list=drillsFor(S.pp);
   if(!list.length)return chips+'<div class="empty">No drills for this product yet.</div>';
   if(S.didx>=list.length)S.didx=0;
@@ -1301,6 +1612,7 @@ function lcard(p){
   var ck=p.check.map(function(c){return '<details class="q"><summary><b>'+esc(c.q)+'</b></summary><div class="qb"><div class="sayline">'+esc(c.a)+'</div></div></details>'}).join('');
   var im=IMG[p.id]?thumb(p.id,56):'<span></span>';
   return '<details class="lprod"><summary>'+im+'<span><b>'+esc(p.name)+'</b><small>'+esc(p.tag)+'</small><span class="pr">'+esc(p.price)+'</span></span><span class="car">'+IC.next+'</span></summary>'
+   +(APEX[p.id]?'<div class="lsec"><h3>Pitch in one line</h3><p>'+esc(APEX[p.id].one)+'</p></div>':'')
    +'<div class="lsec"><h3>Why it matters</h3><p>'+esc(p.problem)+'</p></div>'
    +(p.notes?'<div class="lsec"><p><b>Note:</b> '+esc(p.notes)+'</p></div>':'')
    +'<div class="lsec"><h3>At a glance</h3><dl class="specs">'+sp+'</dl></div>'
@@ -1578,7 +1890,7 @@ function startMic(){
 function coachPrompt(){
   var p=S.persona;
   var tr=S.turns.map(function(t){return (t.who==='you'?'PROMOTER: ':'SHOPPER: ')+t.text}).join('\n');
-  return `You are a retail sales coach for SharkNinja promoters in India. Coach in plain, warm, direct English. Judge the PROMOTER only. The philosophy: a promoter should be a consumer problem-solver, not a feature-lister. Reward asking before recommending, finding the underlying need, connecting a feature to that specific life, recommending the genuinely right model, and being honest about limits.\n\n`
+  return `You are a retail sales coach for SharkNinja promoters in India. Coach in plain, warm, direct English. Judge the PROMOTER only. The philosophy: a promoter should be a consumer problem-solver, not a feature-lister. Reward asking before recommending, finding the underlying need, connecting a feature to that specific life, recommending the genuinely right model, and being honest about limits. The house method is APEX: a one-line pitch, a two-way conversation (Question, then Problem, then Compare) rather than a presentation, a product-specific demo trick, and a closing in order (MRP and current price, cost difference today, offer with cost, total savings if bought now, valid till stocks last). Credit these when you see them and note when the promoter skipped the Question step.\n\n`
    +`The shopper persona: ${p.who}\nThe shopper's hidden need (the promoter was not told): ${p.hidden}\nDifficulty level: ${S.diff} of 3\n\n`
    +`Known facts and safe handling (anything the promoter claims beyond this, or that contradicts it, should be flagged for checking):\n${kb()}\n\n`
    +`CONVERSATION:\n${tr}\n\n`
