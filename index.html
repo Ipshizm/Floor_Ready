@@ -414,10 +414,15 @@ var PERSONAS=[
  line:`Humare yahan power cut bahut hote hain. Ye cordless fan sach mein chalega? Aur baarish mein balcony par?`,
  who:`A man in his early forties with an elderly mother and a small balcony, in a city with frequent power cuts.`,
  surface:[`how long the battery lasts`,`balcony and rain`,`noise at night`,`does it have a remote`,`price versus a normal fan`],
- hidden:`His mother sleeps lightly and gets too hot at night, so a quiet fan that keeps running through a power cut matters more than the airflow figure. He worries about spending on something that fails in the first monsoon.`}
+ hidden:`His mother sleeps lightly and gets too hot at night, so a quiet fan that keeps running through a power cut matters more than the airflow figure. He worries about spending on something that fails in the first monsoon.`},
+{id:'steam',cat:'Shark',name:`The sticky-kitchen parent`,store:`Premium store. Has a toddler who plays on the tile floor.`,vs:`vs an ordinary mop`,
+ line:`Tile floor par bachcha khelta hai, aur kitchen mein chipke hue daag rehte hain. Ye steam mop sach mein chemical ke bina saaf karta hai?`,
+ who:`A mother in her mid-thirties with a toddler and a tiled kitchen and hall.`,
+ surface:[`chemical-free claim`,`child safety around steam`,`marble or tile floor`,`which water to use`,`how it differs from HydroVac`],
+ hidden:`She is tired of using floor cleaner near her toddler and wants a floor she does not worry about. She also dreads washing a dirty mop. She has not mentioned that her hall floor is marble.`}
 ];
 /* personas shown in Practice. Limited to the four focus products plus questions that apply to every product */
-var PERSONA_PROD={dyson:'hydrovac',pethair:'hydrovac',cooking:'combi',upgrader:'combi',crispi:'crispi',purifier:'hp300',online:'any',service:'any',flex:'flex'};
+var PERSONA_PROD={dyson:'hydrovac',pethair:'powerdetect',cooking:'combi',upgrader:'combi',crispi:'crispi',purifier:'hp300',online:'any',service:'any',flex:'flex',steam:'steam'};
 var PRACTICE_PRODS=[['all','All'],['combi','Combi'],['crispi','Crispi'],['hydrovac','HydroVac'],['hp300','HP300']];
 
 var PRODUCTS=[
@@ -512,6 +517,90 @@ var PRODUCTS=[
   why:`Dyson lists a 1 L clean tank and a 0.8 L dirty tank. HydroVac is 500 ml and 360 ml.`,
   say:`Sahi baat hai, WashG1 ka tank bada hai. HydroVac ka tank chhota hai, aur machine 4.5 kg ki hai. Aapka ghar kitna bada hai? Usi se hisaab lagate hain ki kitni baar bharna padega.`,
   care:`Do not hide the difference. Do not promise area coverage per fill.`}
+ ]},
+{id:'powerdetect',brand:'Shark',name:`Shark PowerDetect`,sub:`Cordless vacuum with an auto-empty dock`,
+ facts:[`Up to 70 minutes in Eco handvac mode, about 6 hours to charge`,`The dock empties the vacuum and charges it. Sealed dust storage for up to 45 days in a 2 L bin`,`Cleans forward and backward. Anti-hair wrap. DuoClean Detect dual brushrolls`,`3.6 kg vacuum, 8.4 kg with the dock. 700 ml bin on the vacuum`,`Dry vacuum. It does not mop`,`Confirm price`],confirm:true,
+ qs:[
+ {q:`Dock kitne din tak dust rakhta hai? Kya karna padta hai?`,g:`Auto-empty dock.`,
+  why:`Emptying is the messiest part of a vacuum. The dock is the main reason to choose PowerDetect.`,
+  say:`Vacuum khud dock mein khaali ho jaata hai aur charge bhi hota hai. 2 litre ke sealed bin mein 45 din tak dust rehta hai, tab tak aapko kuch nahi karna. Main yahin dikhata hoon.`,
+  care:`Say "up to 45 days". It depends on how much dust the home makes. Show the dock, as the deck says.`},
+ {q:`Baal brushroll mein phasenge? Ghar mein pet hai.`,g:`Hair.`,
+  why:`Pet and long hair are a main worry, and some online owners say hair still clogs the roller.`,
+  say:`Anti-hair wrap technology brushroll se baal nikaalti rehti hai, jisse tangle aur suction ka nuksan kam hota hai. Main brushroll dikhata hoon. Ghar mein kitne baal girte hain?`,
+  care:`Do not say hair never wraps. Show the brushroll and the pet tool.`},
+ {q:`Battery kitni der chalti hai?`,g:`Run time.`,
+  why:`Shoppers with big homes want to finish in one go.`,
+  say:`Eco handvac mode mein 70 minute tak. Zyada power par kam chalta hai. Charge hone mein lagbhag 6 ghante lagte hain. Aapka ghar kitna bada hai?`,
+  care:`70 minutes is Eco handvac mode. Some online owners report shorter times on stronger modes. Do not promise coverage in square feet.`},
+ {q:`Dock ke saath 8 kg? Bahut bhaari lagta hai.`,g:`Weight.`,
+  why:`Shoppers add the dock weight to the vacuum.`,
+  say:`Vacuum khud 3.6 kg ka hai. 8.4 kg dock ke saath hai, aur dock ek jagah rehta hai. Haath mein pakad ke dekhiye.`,
+  care:`Do not call it light. Say the two weights and hand it to the shopper.`},
+ {q:`Marble, tile aur carpet sab par chalega?`,g:`Floor types.`,
+  why:`Indian homes often have several floor types.`,
+  say:`DuoClean Detect mein do brushroll hain, jo tile, marble, wood aur carpet par kaam karte hain. Aapke ghar mein kaun sa floor zyada hai? Main wahi dikhata hoon.`,
+  care:`Online owners say it can struggle on low-pile rugs and the suction can feel strong. Demo on their floor type. Do not promise every rug.`},
+ {q:`Dyson V12 halka hai. Ye kyun?`,g:`Dyson V12 comparison.`,
+  why:`V12 Detect Slim is a popular light stick vacuum.`,
+  say:`Sahi baat hai, V12 halka hai, 2.2 kg ka. PowerDetect mein auto-empty dock hai jo 45 din tak khud khaali karta hai, aur 70 minute tak chalta hai. Aapko halka chahiye ya khaali karne ki jhanjhat se chhutkara?`,
+  care:`Dyson V12 Detect Slim lists 2.2 kg and up to 60 minutes. Do not run it down. Confirm price of both.`},
+ {q:`Allergy ke liye theek hai? Filter kaisa hai?`,g:`Filtration.`,
+  why:`Families with allergies ask about the filter.`,
+  say:`Pre-motor filter aur HEPA filter hai, aur anti-allergen seal hai jo 0.3 se 10 micron tak ke kann rokta hai. Aur dock mein dust sealed rehta hai.`,
+  care:`Training: anti-allergen seal 99.97% from 0.3 to 10 microns. Do not make medical claims.`},
+ {q:`Dock se badbu toh nahi aayegi?`,g:`Smell.`,
+  why:`Old dust in a sealed bin can smell.`,
+  say:`Dock ke saath odour neutraliser puck aata hai jo dust ki badbu rokta hai.`,
+  care:`Say it helps. Do not say there is never any smell.`},
+ {q:`Ye mop bhi karta hai?`,g:`Mopping.`,
+  why:`Shoppers have seen wet-dry machines on the same shelf.`,
+  say:`Nahi, PowerDetect ek dry vacuum hai. Mopping ke liye HydroVac ya Steam & Scrub dikhata hoon. Aapko mop bhi chahiye ya sirf vacuum?`,
+  care:`Do not say it mops. Point to the right model.`},
+ {q:`Kitni awaaz karta hai?`,g:`Noise.`,
+  why:`Shoppers want to vacuum without waking the house.`,
+  say:`Isme silent mode hai, moon symbol wala. Main chala ke dikhata hoon.`,
+  care:`No decibel figure is confirmed. Do not quote one. Offer a demo.`}
+ ]},
+{id:'steam',brand:'Shark',name:`Shark Steam & Scrub`,sub:`Steam mop with scrubbing pads`,
+ facts:[`Corded, 8 m cord. 350 ml clean tank. Distilled water only`,`3 steam modes: Light, Normal, Deep. About 21 minutes of continuous steam`,`Rotating pads at 150 RPM and a Steam Blaster for stubborn spots`,`4.28 kg. 43 dB. 2 years warranty (APEX training)`,`For sealed hard floors only`,`Confirm price`],confirm:true,
+ qs:[
+ {q:`Marble ya wooden floor kharab toh nahi hoga?`,g:`Floor safety.`,
+  why:`Shoppers worry that steam and water damage their floor.`,
+  say:`Ye sealed hard floors ke liye hai. Aapka floor kaisa hai, tile, marble ya wooden? Floor banane wale ki salah bhi dekh lijiye, aur main kisi chhoti jagah par dikha sakta hoon.`,
+  care:`Not for carpets, rugs or unsealed floors. Some online reviews mention water marks on marble. Do not promise every floor.`},
+ {q:`Kaunsa paani daalna hai? Nal ka chalega?`,g:`Water.`,
+  why:`Water choice affects the machine.`,
+  say:`Isme distilled paani hi daalna hai. Tank 350 ml ka hai.`,
+  care:`Training says distilled water only. Do not say tap water is fine.`},
+ {q:`Pad kitne din chalte hain? Naye kahan milenge?`,g:`Pads.`,
+  why:`Shoppers want to know the running upkeep.`,
+  say:`Training ke hisaab se pad 3 se 4 mahine chalte hain. Naye pad India mein milte hain ya nahi, main confirm karke bataunga.`,
+  care:`Do not promise spare pads, a date or a price. Log the request.`},
+ {q:`Steam kitni der chalti hai? Tank kitna bada hai?`,g:`Run time.`,
+  why:`Shoppers want to finish the whole floor.`,
+  say:`Lagbhag 21 minute lagatar steam chalti hai, 350 ml ke tank se. Aapka ghar kitna bada hai?`,
+  care:`Do not promise coverage in square feet.`},
+ {q:`Kya ye sach mein chemical ke bina sanitise karta hai?`,g:`Chemical-free claim.`,
+  why:`Families want to avoid floor cleaners near children.`,
+  say:`Steam se floor saaf aur sanitise hota hai, bina cleaning chemical ke. Aapke ghar mein chhote bachche hain?`,
+  care:`The deck lists 99% and 99.99% sanitisation. Use approved wording and do not say it kills every germ.`},
+ {q:`Bachche floor par khelte hain. Steam se khatra toh nahi?`,g:`Child safety.`,
+  why:`Hot steam near children is a real worry.`,
+  say:`Steam garam hoti hai, isliye machine bachchon se door rakhiye jab use ho rahi ho. Floor chemical ke bina saaf hota hai, toh baad mein bachche khel sakte hain.`,
+  care:`Do not say it is completely safe. Steam is hot. Keep it away from children while in use.`},
+ {q:`HydroVac aur Steam & Scrub mein kya farak hai?`,g:`Versus HydroVac.`,
+  why:`Both are Shark floor cleaners.`,
+  say:`HydroVac cordless hai aur wet aur dry dono ek saath uthata hai. Steam & Scrub corded steam mop hai, jo steam aur scrub pad se chipke hue daag nikalta hai, par vacuum nahi karta. Aapke floor par kya zyada hota hai, dhool ya chipke daag?`,
+  care:`Steam & Scrub does not vacuum and is for sealed hard floors. Match the machine to the mess.`},
+ {q:`Chipke hue daag kaise nikalta hai?`,g:`Stuck-on stains.`,
+  why:`Sticky kitchen floors are the main use.`,
+  say:`Rotating pad scrub karte hain aur handle ke button se Steam Blaster seedha daag par tez steam deta hai. Training ke hisaab se 5 se 20 second mein. Main daag par dikhata hoon.`,
+  care:`Training says about 5 to 20 seconds. Say about. The deck says 2x better than traditional steam mops and the listing says up to 3x. Do not quote a multiple until confirmed.`},
+ {q:`Kitni awaaz karta hai? Cord kitna lamba hai?`,g:`Noise and cord.`,
+  why:`Quick specs shoppers ask.`,
+  say:`Lagbhag 43 dB, kaafi shaant. Cord 8 meter lamba hai, toh kaafi door tak jaata hai.`,
+  care:`Training: 43 dB and an 8 m cord.`}
  ]},
 {id:'flex',brand:'Shark',name:`Shark FlexBreeze fan`,sub:`Cordless fan that converts from pedestal to portable`,
  facts:[`A BLDC (brushless) motor: it runs quieter and draws less power`,`Remote with a timer. It stores on the fan with a magnet`,`IPX4 and UV resistant. Handles splashes and light rain, not heavy rain`,`Speed 1 runs about 24 hours, speed 3 about 6 hours, speed 5 about 2 hours. 5 hours to charge, and it works while charging`,`37.5 dB, for work and sleep (APEX training)`,`The pack and website say air throw "up to 70 feet". The Singapore page footnotes the figure as measured at fan speed 1 without oscillation. Confirm the India wording`,`Confirm price`],confirm:true,
@@ -1021,6 +1110,75 @@ var LEARN=[
   {q:`What run time do you quote?`,a:`Global pages say about 25 minutes. Confirm the India figure before you quote it.`}],
  src:`Croma India listing, Shark global pages`},
 
+{id:'powerdetect',brand:'Shark',name:`Shark PowerDetect Clean & Empty (IP3251INT)`,tag:`A cordless vacuum that empties itself`,price:`Confirm price`,persona:'pethair',
+ problem:`Emptying a vacuum is the messy part, and cordless vacuums often miss hair and edges. PowerDetect senses dirt and boosts suction, cleans on forward and backward strokes, and empties itself into a sealed dock that holds up to 45 days of dust.`,
+ specs:[[`Type`,`Cordless stick vacuum with an auto-empty and auto-charge dock`],
+  [`Power`,`380 W`,`Amazon India listing`],
+  [`Run time`,`Up to 70 minutes in Eco handvac mode`,`APEX training`],
+  [`Charge time`,`About 6 hours`,`APEX training`],
+  [`Bin`,`700 ml on the vacuum, 2 L in the dock`,`APEX training`],
+  [`Dock`,`Empties and charges. Dust sealed for up to 45 days`,`APEX training`],
+  [`Weight`,`3.6 kg vacuum, 8.4 kg with the dock`,`APEX training`],
+  [`Cleaning head`,`DuoClean Detect with dual brushrolls`,`Amazon India listing`],
+  [`Sensors`,`Dirt, Edge and Floor sensors boost suction up to 3x`,`Amazon India listing`],
+  [`Direction`,`Cleans on forward and backward strokes`,`Amazon India listing`],
+  [`Hair`,`Anti-hair wrap removes hair from the brushroll`,`APEX training`],
+  [`Filtration`,`Pre-motor and HEPA filter. Anti-allergen seal 99.97% from 0.3 to 10 microns`,`APEX training`],
+  [`Smells`,`Odour neutraliser puck`,`APEX training`],
+  [`Tools`,`Motorised hand tool, crevice tool, 2-in-1 pet tool`,`APEX training`],
+  [`Wand`,`MultiFLEX wand that turns into a handheld`,`APEX training`],
+  [`Modes`,`Silent mode (moon symbol)`,`APEX training`],
+  [`Colour`,`Grey and gold`],
+  [`Warranty`,`Confirm`]],
+ features:[
+  {n:`Auto-empty dock`,what:`The vacuum empties itself into a sealed 2 L dock and charges at the same time.`,gain:`No manual emptying for up to 45 days, and no cloud of dust.`},
+  {n:`PowerDetect sensors`,what:`Dirt, edge and floor sensors adjust suction, up to 3x.`,gain:`Extra power only where the dirt is.`},
+  {n:`Forward and reverse cleaning`,what:`Picks up dirt on the push and the pull stroke.`,gain:`Fewer passes, so cleaning is faster.`},
+  {n:`Anti-hair wrap`,what:`Removes hair from the brushroll as you clean.`,gain:`Less untangling, and suction does not drop. Good for pets and long hair.`},
+  {n:`MultiFLEX wand`,what:`The wand bends, and the vacuum turns into a handheld.`,gain:`Reaches under furniture and cleans sofas and mattresses.`},
+  {n:`Odour neutraliser puck`,what:`Fights smell from the dust in the dock.`,gain:`The dock does not smell of old dust.`}],
+ fits:[`Large homes and busy households that want less emptying`,`Homes with pets and long hair`,`Homes with tile, marble, wood and carpet together`],
+ notFit:[`Shoppers who want a mop. Show HydroVac or Steam & Scrub`,`Shoppers who want the lightest stick. The vacuum is 3.6 kg and 8.4 kg with the dock`],
+ flags:[`Price and India warranty.`,`The full name of FRED in the deck. The listing says forward and reverse cleaning.`,`Battery: 70 minutes is Eco handvac mode. Some online owners report shorter times on stronger modes.`,`Hair: some online owners say pet hair can still clog the roller. Do not say hair never wraps.`],
+ notes:`Trick from the deck: show FRED and show the auto-empty dock. Listen for current cleaning that is not effective, maids missing areas, and sofas and mattresses that never get cleaned.`,
+ check:[{q:`How long does the dock hold dust?`,a:`Up to 45 days in the 2 L sealed dock.`},
+  {q:`How long does the battery last?`,a:`Up to 70 minutes in Eco handvac mode. Less on stronger modes.`},
+  {q:`What does it weigh?`,a:`3.6 kg, and 8.4 kg with the dock.`},
+  {q:`Does it mop?`,a:`No. It is a dry vacuum. Show HydroVac or Steam & Scrub for mopping.`}],
+ src:`APEX training, Amazon India listing, sharkninja.in`},
+
+{id:'steamscrub',brand:'Shark',name:`Shark Steam & Scrub (S8201IN)`,tag:`Steam and scrubbing pads for stuck-on stains`,price:`Confirm price`,persona:'steam',
+ problem:`Ordinary mops spread dirt, and stuck-on stains usually need chemicals. Steam & Scrub uses steam and rotating pads to loosen and scrub stains from sealed hard floors, and a Steam Blaster gives a targeted burst for stubborn spots.`,
+ specs:[[`Type`,`Corded automatic steam mop for sealed hard floors`],
+  [`Cord`,`8 m`,`APEX training`],
+  [`Water tank`,`350 ml clean water. Distilled water only`,`APEX training`],
+  [`Steam modes`,`3: Light for a quick refresh, Normal for everyday, Deep for stubborn stains`,`APEX training`],
+  [`Steam run time`,`About 21 minutes of continuous steam`,`APEX training`],
+  [`Pads`,`4 dirt grip soft scrub pads. Change every 3 to 4 months`,`APEX training`],
+  [`Scrubbing`,`Rotating pads at 150 RPM`,`APEX training`],
+  [`Steam Blaster`,`A targeted burst for tough stains. About 5 to 20 seconds`,`APEX training`],
+  [`Weight`,`4.28 kg`,`APEX training`],
+  [`Noise`,`43 dB`,`APEX training`],
+  [`Steering`,`Swivel steering with edge cleaning, plus LED headlights`,`APEX training`],
+  [`Colour`,`White and grey`],
+  [`Warranty`,`2 years`,`APEX training`],
+  [`In the box`,`Filling flask and mop pad`,`Amazon India listing`]],
+ features:[
+  {n:`Steam Blaster`,what:`A button on the handle gives a targeted burst of steam on a stubborn spot.`,gain:`Stuck-on stains lift in seconds, so you do not scrub for long.`},
+  {n:`Rotating scrub pads`,what:`Pads spin at 150 RPM and do the scrubbing.`,gain:`The machine glides along, and stains lift better than with a plain steam mop.`},
+  {n:`3 steam modes`,what:`Light, Normal and Deep.`,gain:`Gentle on a quick refresh, strong on a dried-on mess.`},
+  {n:`Steam sanitising`,what:`Hot steam cleans and sanitises without cleaning chemicals.`,gain:`A floor you do not worry about around small children and pets.`},
+  {n:`LED headlights and swivel steering`,what:`Lights show hidden debris. Swivel steering reaches edges.`,gain:`Fewer missed spots.`}],
+ fits:[`Families with small children and pets on sealed tile, vinyl or laminate floors`,`Shoppers who want chemical-free cleaning`,`Homes with sticky kitchen floors`],
+ notFit:[`Carpets, rugs and unsealed floors`,`Shoppers who want to vacuum first. This is not a vacuum`,`Shoppers who will not use distilled water`],
+ flags:[`Price and India warranty.`,`Stain removal: the deck says 2x better than traditional steam mops and the Amazon listing says up to 3x. Confirm which to use and what it is based on.`,`Sanitising claims: the deck lists 99% and 99.99%. Use approved wording only and do not say it kills every germ.`,`Some online reviews mention water marks on marble. Confirm floor guidance.`],
+ notes:`Trick from the deck: show the Steam Blaster on a target, hand the machine to the shopper and show how easily it moves.`,
+ check:[{q:`Which water goes in the tank?`,a:`Distilled water only.`},
+  {q:`How long does the steam last?`,a:`About 21 minutes of continuous steam from the 350 ml tank.`},
+  {q:`How often do the pads change?`,a:`The deck says every 3 to 4 months. Confirm whether spare pads are sold in India.`},
+  {q:`Which floors is it for?`,a:`Sealed hard floors. Not for carpets or rugs.`}],
+ src:`APEX training, Amazon India listing`},
+
 {id:'flexbreeze',brand:'Shark',name:`Shark FlexBreeze (FA200IN)`,tag:`A fan that goes where you go, indoors or out`,price:`Confirm price`,persona:null,
  problem:`Ordinary fans stay tied to a plug and a spot. FlexBreeze runs on its battery or plugged in, changes from pedestal to tabletop in seconds, and can go out to a balcony or patio.`,
  specs:[[`Motor`,`BLDC (brushless): quieter and draws less power`,`36 W, 3 blades on a global page`],
@@ -1172,7 +1330,28 @@ var COMPARE=[
  win:[`Handles hard floors and refreshes rugs and mats with Freshen mode. WashG1 is hard floors only.`,`Lighter than WashG1 (4.5 kg against 4.9 kg).`,`Wet and dry in one pass with a self-clean dock, like WashG1.`],
  straight:[`WashG1 runs longer (35 min against about 25 min), has bigger tanks and two counter-rollers.`,`WashG1 is filter-free. HydroVac has a foam filter that needs cleaning.`,`V12 Detect Slim is much lighter (2.2 kg), runs up to 60 min and cleans carpets and upholstery. It is a dry vacuum. The V12s Submarine adds a wet head.`,`HydroVac does not clean sofas or curtains. Confirm price for all three.`],
  lead:`Start with the floors and who cleans. Mostly hard floors with wet spills: compare HydroVac and WashG1 on run time, tank size, rugs and weight, and let them try both. Carpets, sofas and a light stick: a V12 is a different product, so say what each one is for. Never say HydroVac deep cleans carpets.`,
- src:`Dyson India WashG1, V12 Detect Slim and V12s Submarine pages. HydroVac figures from the APEX training and the India listing. WashG1 charge time and noise come from notes shared by the team, not from Dyson, so confirm them. Checked Nov 2026.`}
+ src:`Dyson India WashG1, V12 Detect Slim and V12s Submarine pages. HydroVac figures from the APEX training and the India listing. WashG1 charge time and noise come from notes shared by the team, not from Dyson, so confirm them. Checked Nov 2026.`},
+{id:'vacrange',label:`Our vacuums`,title:`Shark HydroVac, PowerDetect and Steam & Scrub: which one for which job`,
+ cols:[{n:`Shark HydroVac`,b:`Shark`,price:`Confirm price`,pn:`Changes by retailer and offer`},
+       {n:`Shark PowerDetect`,b:`Shark`,price:`Confirm price`,pn:`Changes by retailer and offer`},
+       {n:`Shark Steam & Scrub`,b:`Shark`,price:`Confirm price`,pn:`Changes by retailer and offer`}],
+ secs:[
+ {s:`What it does`,rows:[
+  [`Wet and dry cleaner|Vacuums, mops and self-cleans`,`Dry vacuum|Auto-empty dock`,`Steam mop|Steam and scrub pads`],
+  [`Hard floors|Rugs refreshed in Freshen mode`,`Hard floors and carpets|DuoClean Detect`,`Sealed hard floors only|Not for carpets`],
+  [`Yes|Wet and dry in one pass`,`Yes|Dry dirt and hair`,`No|Not a vacuum`],
+  [`Yes|Mops while it vacuums`,`No|Does not mop`,`Yes|Steam and scrubbing`]]},
+ {s:`Power, size and upkeep`,rows:[
+  [`Cordless|About 25 min in Eco mode`,`Cordless|Up to 70 min in Eco handvac mode`,`Corded|8 m cord, about 21 min of steam`],
+  [`4.5 kg|Weight`,`3.6 kg|8.4 kg with the dock`,`4.28 kg|Weight`],
+  [`86 dB|APEX deck. Confirm`,`Confirm|Silent mode available`,`43 dB|APEX deck`],
+  [`Self-cleans|2 minutes on the dock`,`Empties itself|Dock holds up to 45 days of dust`,`Washable pads|Change every 3 to 4 months`],
+  [`500 ml clean, 360 ml dirty|Water tanks`,`No water tank|Dry vacuum`,`350 ml clean|Distilled water only`],
+  [`2 years|India listing`,`Confirm|Warranty`,`2 years|APEX deck`]]}],
+ win:[`Each one does a different job, so a home can match the machine to its mess.`,`PowerDetect empties itself, HydroVac cleans itself, and Steam & Scrub sanitises with steam.`,`HydroVac is the only one that vacuums and mops in one pass.`],
+ straight:[`PowerDetect does not mop. Steam & Scrub does not vacuum.`,`Steam & Scrub is corded and for sealed hard floors only.`,`Confirm price of each.`],
+ lead:`Ask what floors they have and what is hardest to clean: dust and hair, wet mess, or stuck-on stains. Then match the machine. A big home with carpets and pets points to PowerDetect. A tile home with spills points to HydroVac. Sticky floors and a worry about chemicals point to Steam & Scrub.`,
+ src:`APEX training, Amazon India listings, sharkninja.in. Checked Nov 2026.`}
 ];
 
 /* Consumer-friendly terms. Each one says what it is, what it means for the shopper, and what to say. */
@@ -1283,6 +1462,41 @@ var TERMS=[
  benefit:`Control the fan from the bed or sofa, and let it switch off by itself.`,
  say:`Remote se speed aur timer dono set hote hain, aur remote fan par magnet se chipak jaata hai.`,
  care:`Training: remote with timer and magnetic storage. Show it in the demo.`},
+{g:'hydrovac',t:`Auto-empty dock`,
+ plain:`A base that empties the vacuum's bin into a sealed 2 L bin and charges the vacuum.`,
+ benefit:`No manual emptying for up to 45 days, and no cloud of dust.`,
+ say:`Vacuum khud dock mein khaali ho jaata hai, aur 45 din tak aapko kuch nahi karna.`,
+ care:`Say "up to 45 days". It depends on how much dust the home makes.`},
+{g:'hydrovac',t:`Forward and reverse cleaning`,
+ plain:`The vacuum picks up dirt on the push stroke and on the pull stroke.`,
+ benefit:`Fewer passes, so cleaning is faster.`,
+ say:`Aage aur peeche dono taraf se dhool uthata hai.`,
+ care:`The deck calls this FRED. Confirm the full name before you use it.`},
+{g:'hydrovac',t:`Anti-hair wrap`,
+ plain:`A brushroll that removes hair as it spins, so hair does not wrap around it.`,
+ benefit:`Less untangling and less loss of suction. Good for pets and long hair.`,
+ say:`Baal brush mein lapetne ke bajay nikal jaate hain.`,
+ care:`Some online owners say hair can still catch. Do not say hair never wraps.`},
+{g:'hydrovac',t:`PowerDetect sensors`,
+ plain:`Three sensors for dirt, edges and floor type that adjust suction.`,
+ benefit:`More power only where it is needed.`,
+ say:`Jahan zyada gandagi ho wahan suction apne aap badh jaata hai.`,
+ care:`The listing says up to 3x suction boost. Say "up to".`},
+{g:'hydrovac',t:`Steam Blaster`,
+ plain:`A button on the handle that gives a targeted burst of steam on a stubborn spot.`,
+ benefit:`Stuck-on stains lift in seconds, so you do not scrub for long.`,
+ say:`Handle ke button se seedha daag par tez steam deta hai.`,
+ care:`Training says about 5 to 20 seconds on tough stains. Say about.`},
+{g:'hydrovac',t:`Distilled water`,
+ plain:`Water with the minerals removed.`,
+ benefit:`It keeps scale from building up inside the steam mop.`,
+ say:`Steam mop mein distilled paani hi daalna hai, taaki machine mein jaali na jame.`,
+ care:`The training says distilled only. Do not say tap water is fine. Confirm the reason in the manual.`},
+{g:'hydrovac',t:`Steam sanitising`,
+ plain:`Hot steam cleans and sanitises a floor without cleaning chemicals.`,
+ benefit:`A floor you do not worry about around children and pets.`,
+ say:`Steam se floor saaf aur sanitise hota hai, bina chemical ke.`,
+ care:`The deck lists 99% and 99.99%. Use approved wording and do not say it kills every germ. Steam is hot, so keep it away from children.`},
 {g:'combi',t:`SmartSwitch`,
  plain:`A quick switch between Combi's two ways of cooking: the Combi Cooker modes and the Air Fry modes.`,
  benefit:`One machine, two jobs. Switch without moving the food to another appliance.`,
@@ -1700,10 +1914,72 @@ var DRILLS=[
  {t:`Normal fan purana ho gaya, usse bechke ye le lo.`,v:'risk',f:`Pushy. Match the benefit to their need instead.`},
  {t:`Aap fan kahan kahan chalate ho, bedroom, kitchen ya balcony? Ye cordless hai, toh power cut mein bhi chalta hai, aur ek jagah se doosri jagah le ja sakte ho. Price main confirm karke bata deta hoon.`,v:'best',f:`Asks first, links to where they use it, and confirms price.`},
  {t:`Ye zyada achha hai.`,v:'ok',f:`Vague. Say what is different.`}],
- why:`Ask where they use a fan. Match power cuts, portability and quiet to their answer. Confirm price.`}
+ why:`Ask where they use a fan. Match power cuts, portability and quiet to their answer. Confirm price.`},
+
+{p:'powerdetect',topic:`Hair in the roller`,q:`Ghar mein pet hai. Baal brushroll mein phasenge?`,
+ opts:[
+ {t:`Baal kabhi nahi phasenge.`,v:'risk',f:`Too absolute. Some online owners say hair can still clog the roller.`},
+ {t:`Anti-hair wrap brushroll se baal nikaalti rehti hai, jisse tangle kam hota hai. Main brushroll dikhata hoon. Ghar mein kitne baal girte hain?`,v:'best',f:`Names the feature, offers to show it, and asks about their home.`},
+ {t:`Thode phasenge, kar sakte hain kuch nahi.`,v:'ok',f:`Honest but unhelpful. Show the anti-hair wrap and the pet tool.`}],
+ why:`Do not say hair never wraps. Show the brushroll.`},
+{p:'powerdetect',topic:`Battery`,q:`70 minute sach mein chalta hai?`,
+ opts:[
+ {t:`Har mode mein 70 minute chalta hai.`,v:'risk',f:`Not accurate. 70 minutes is Eco handvac mode.`},
+ {t:`70 minute Eco handvac mode mein hai. Zyada power par kam chalta hai. Aapka ghar kitna bada hai? Usi se andaza lagate hain.`,v:'best',f:`Says which mode and asks about their home.`},
+ {t:`Haan, deck mein likha hai.`,v:'ok',f:`Does not explain the mode.`}],
+ why:`Always say the mode with the minutes.`},
+{p:'powerdetect',topic:`Vs Dyson V12`,q:`Dyson V12 halka hai. Ye kyun?`,
+ opts:[
+ {t:`Dyson ka dust bin kharab hota hai.`,v:'risk',f:`Running down a competitor without facts.`},
+ {t:`Sahi baat hai, V12 halka hai. PowerDetect mein auto-empty dock hai, jo 45 din tak khud khaali karta hai, aur 70 minute tak chalta hai. Aapko halka chahiye ya khaali karne ki jhanjhat se chhutkara?`,v:'best',f:`Agrees with the fact and names the real difference.`},
+ {t:`Dono same hain.`,v:'ok',f:`Not accurate. They differ in weight and dock.`}],
+ why:`V12 Detect Slim is lighter (2.2 kg). PowerDetect has the dock. Confirm price of both.`},
+{p:'powerdetect',topic:`Too heavy`,q:`Dock ke saath 8 kg? Bahut bhaari lagta hai.`,
+ opts:[
+ {t:`Ye bilkul halka hai.`,v:'risk',f:`Denying the weight costs trust.`},
+ {t:`Vacuum khud 3.6 kg ka hai. 8.4 kg dock ke saath hai, aur dock ek jagah rehta hai. Haath mein pakad ke dekhiye.`,v:'best',f:`Gives both weights and lets them feel it.`},
+ {t:`Bhaari toh hai.`,v:'ok',f:`Honest but one-sided. Add the vacuum weight.`}],
+ why:`Say both weights and hand it to the shopper.`},
+{p:'powerdetect',topic:`Does it mop`,q:`Ye mop bhi karta hai?`,
+ opts:[
+ {t:`Haan, wet aur dry dono.`,v:'risk',f:`Not accurate. PowerDetect is a dry vacuum.`},
+ {t:`Nahi, PowerDetect dry vacuum hai. Mopping ke liye HydroVac ya Steam & Scrub dikhata hoon. Aapko mop bhi chahiye ya sirf vacuum?`,v:'best',f:`Honest and points to the right model.`},
+ {t:`Nahi.`,v:'ok',f:`Right but it ends the conversation. Offer the right model.`}],
+ why:`Point to HydroVac or Steam & Scrub for mopping.`},
+
+{p:'steam',topic:`Which water`,q:`Nal ka paani daal sakte hain?`,
+ opts:[
+ {t:`Koi bhi paani chalega.`,v:'risk',f:`Not accurate. The training says distilled water only.`},
+ {t:`Isme distilled paani hi daalna hai, taaki machine mein jaali na jame. Tank 350 ml ka hai.`,v:'best',f:`Clear and gives the reason.`},
+ {t:`Distilled behtar hota hai.`,v:'ok',f:`Too soft. The training says distilled only.`}],
+ why:`Training: distilled water only.`},
+{p:'steam',topic:`Marble floor`,q:`Marble floor hai. Kharab toh nahi hoga?`,
+ opts:[
+ {t:`Har floor par safe hai.`,v:'risk',f:`Too absolute. It is for sealed hard floors only.`},
+ {t:`Ye sealed hard floors ke liye hai. Floor banane wale ki salah dekh lijiye, aur main kisi chhoti jagah par dikha sakta hoon. Aapka floor kaisa hai?`,v:'best',f:`Honest, points to the floor maker, and offers a small test.`},
+ {t:`Marble par mat chalana.`,v:'ok',f:`Overcautious without knowing their floor. Ask first.`}],
+ why:`Some online reviews mention water marks on marble. Do not promise every floor.`},
+{p:'steam',topic:`Chemical-free`,q:`Kya ye sach mein chemical ke bina sanitise karta hai?`,
+ opts:[
+ {t:`Saare germs 100% khatam kar deta hai.`,v:'risk',f:`Too absolute. Use approved wording only.`},
+ {t:`Steam se floor saaf aur sanitise hota hai, bina cleaning chemical ke. Aapke ghar mein chhote bachche hain?`,v:'best',f:`Accurate and asks about their home.`},
+ {t:`Haan, bilkul saaf.`,v:'ok',f:`Vague. Say what steam does.`}],
+ why:`The deck lists 99% and 99.99%. Use approved wording and do not say it kills every germ.`},
+{p:'steam',topic:`Vs HydroVac`,q:`HydroVac aur Steam & Scrub mein kya farak hai?`,
+ opts:[
+ {t:`Dono bilkul same hain.`,v:'risk',f:`Not accurate. They do different jobs.`},
+ {t:`HydroVac cordless hai aur wet aur dry dono ek saath uthata hai. Steam & Scrub corded steam mop hai jo steam aur scrub pad se chipke daag nikalta hai, par vacuum nahi karta. Aapke floor par kya zyada hota hai?`,v:'best',f:`Says what each one is for and asks about the mess.`},
+ {t:`HydroVac behtar hai.`,v:'ok',f:`Does not say why. Match the machine to the mess.`}],
+ why:`HydroVac vacuums and mops wet and dry. Steam & Scrub steams and scrubs sealed hard floors and does not vacuum.`},
+{p:'steam',topic:`Kids and steam`,q:`Bachche floor par khelte hain. Steam se khatra toh nahi?`,
+ opts:[
+ {t:`Bilkul koi khatra nahi.`,v:'risk',f:`Steam is hot, so do not say there is no risk.`},
+ {t:`Steam garam hoti hai, isliye use ke dauraan machine bachchon se door rakhiye. Floor chemical ke bina saaf hota hai, toh baad mein bachche khel sakte hain.`,v:'best',f:`Honest about the heat and positive about no chemicals.`},
+ {t:`Dhyan rakhna padega.`,v:'ok',f:`Vague. Say what to watch for.`}],
+ why:`Do not say it is completely safe. Steam is hot.`}
 ];
-/* Demo videos on YouTube. Links open in a new tab. The HydroVac link was a PowerDetect video, so it is not used. */
-var YT={combi:`https://www.youtube.com/shorts/j9xfQ4Pm3BY`,crispi:`https://www.youtube.com/shorts/t_znkFG4mO8`,hp300:`https://www.youtube.com/shorts/LeOv9MDVOj4`,maxpro:`https://www.youtube.com/shorts/tPa0LI4tlQk`,blast:`https://www.youtube.com/shorts/qutQoPogAyc`,flexbreeze:`https://www.youtube.com/shorts/f6xUeGAb9uQ`};
+/* Demo videos on YouTube. Links open in a new tab. The link shared for HydroVac was a PowerDetect video, so it is used for PowerDetect. */
+var YT={combi:`https://www.youtube.com/shorts/j9xfQ4Pm3BY`,crispi:`https://www.youtube.com/shorts/t_znkFG4mO8`,hp300:`https://www.youtube.com/shorts/LeOv9MDVOj4`,powerdetect:`https://www.youtube.com/shorts/V1e8QZVc0Mc`,maxpro:`https://www.youtube.com/shorts/tPa0LI4tlQk`,blast:`https://www.youtube.com/shorts/qutQoPogAyc`,flexbreeze:`https://www.youtube.com/shorts/f6xUeGAb9uQ`};
 /* APEX 2.0 training deck: pitch, two-way conversation, product trick, closing. The "ask" lines are suggestions, not from the deck. */
 var APEX={
 method:{
@@ -1734,6 +2010,16 @@ hp300:{one:`This is the Shark NeverChange air purifier. It senses and purifies t
  ask:[`Kis city mein rehte hain? AQI kaisa rehta hai?`,`Ghar mein bachche, bujurg ya pet hain?`,`Abhi purifier hai? Uska filter kitne ka padta hai?`],
  listen:[`High AQI area`,`Construction nearby`,`Car smoke`,`Cooking fumes`,`Pollen and allergies`,`Pet hair and dander`,`Cost of filters and maintenance`,`Low quality filters`,`Small room coverage`],
  life:`A 5-year HEPA filter: no hassle, just plug and breathe. Training says there is a saving on filter maintenance. Confirm price and the basis before you quote an amount.`},
+powerdetect:{one:`This is the Shark PowerDetect, our most powerful cordless vacuum with an auto-empty dock.`,
+ trick:`Show FRED and show the auto-empty dock.`,
+ ask:[`Ghar kitna bada hai, aur kaun sa floor zyada hai?`,`Safai kaun karta hai, bai ya aap?`,`Sofa aur mattress kitni baar saaf karte ho?`],
+ listen:[`Current cleaning is not effective`,`Maids miss areas`,`Sofas and mattresses never get cleaned`,`Other vacuums have no reverse cleaning or edge detect`,`No auto-empty dock`,`Too many confusing attachments`],
+ life:`Cleaner floors, no manual emptying for up to 45 days, and hair removed as you clean.`},
+steam:{one:`This is the Shark Steam & Scrub, an automatic steam scrubbing machine.`,
+ trick:`Show the Steam Blaster on a target, hand the machine to the shopper and show how easily it moves.`,
+ ask:[`Ghar mein bachche ya pet hain jo floor par khelte hain?`,`Kitchen ke floor par chipke hue daag rehte hain?`,`Abhi pochha kaise lagate ho?`],
+ listen:[`Wanting chemical-free cleaning`,`Worry about germs and children`,`Stuck-on stains`,`Sticky kitchen floors`,`Mops that only spread dirt`],
+ life:`A floor cleaned with steam and scrubbing, without cleaning chemicals.`},
 flex:{one:`This is the Shark FlexBreeze, an ultra-powerful fan that transforms from a pedestal to a portable fan in seconds.`,
  trick:`Switch it on, convert it to portable and walk away. Show the power and oscillation from a distance.`,
  ask:[`Aapke yahan power cut kitne hote hain?`,`Fan kahan kahan chalate ho, bedroom, kitchen ya balcony?`,`Raat ko awaaz se neend mein dikkat hoti hai?`],
@@ -1747,14 +2033,15 @@ var OUTCOME={would_buy:`She is reaching for her card.`,thinking:`Wants to think 
 
 
 /* ---------- NAVIGATION DATA ---------- */
-var PNAME={combi:'Ninja Combi',crispi:'Ninja Crispi',hydrovac:'Shark HydroVac',hp300:'Shark HP300',flex:'Shark FlexBreeze'};
-var PCHIP=[['hp300','HP300'],['combi','Combi'],['crispi','Crispi'],['hydrovac','HydroVac'],['flex','FlexBreeze'],['any','General']];
-var PQ_ID={hp300:'hp300',combi:'combi',crispi:'crispy',hydrovac:'hydrovac',flex:'flex',any:'any'};
+var PNAME={combi:'Ninja Combi',crispi:'Ninja Crispi',hydrovac:'Shark HydroVac',hp300:'Shark HP300',flex:'Shark FlexBreeze',powerdetect:'Shark PowerDetect',steam:'Shark Steam & Scrub'};
+var PCHIP=[['hp300','HP300'],['combi','Combi'],['crispi','Crispi'],['hydrovac','HydroVac'],['powerdetect','PowerDetect'],['steam','Steam & Scrub'],['flex','FlexBreeze'],['any','General']];
+var PQ_ID={hp300:'hp300',combi:'combi',crispi:'crispy',hydrovac:'hydrovac',flex:'flex',powerdetect:'powerdetect',steam:'steam',any:'any'};
+var LID={flex:'flexbreeze',steam:'steamscrub'},RLID={flexbreeze:'flex',steamscrub:'steam'};
 var CATS=[['air','Air fryers & cookers'],['purifier','Air purifiers'],['vac','Vacuums'],['more','More']];
-var CAT_PRODS={air:['combi','crispi','maxpro','dualzone'],purifier:['hp300'],vac:['hydrovac'],more:['blast','flexbreeze']};
-var CMP_FOR={air:['combi','crispi','range'],purifier:['hp300'],vac:['hydrovac'],more:[]};
+var CAT_PRODS={air:['combi','crispi','maxpro','dualzone'],purifier:['hp300'],vac:['hydrovac','powerdetect','steamscrub'],more:['blast','flexbreeze']};
+var CMP_FOR={air:['combi','crispi','range'],purifier:['hp300'],vac:['hydrovac','vacrange'],more:[]};
 var LEVELS=[[0,'Starter'],[100,'Rising'],[250,'Pro'],[500,'Floor Star']];
-var LOGP=[['hp300','HP300'],['combi','Combi'],['crispi','Crispi'],['hydrovac','HydroVac'],['flex','FlexBreeze'],['other','Other']];
+var LOGP=[['hp300','HP300'],['combi','Combi'],['crispi','Crispi'],['hydrovac','HydroVac'],['powerdetect','PowerDetect'],['steam','Steam & Scrub'],['flex','FlexBreeze'],['other','Other']];
 var QUICK=['EMI','Service centre','Too heavy','Cheaper online','Plastic inside','Filter cost','Noise'];
 var RESULTS=[['closed','Bought'],['think','Will think'],['online','Went online']];
 
@@ -1889,7 +2176,7 @@ function pchips(skipAny){
 }
 function phead(id){
   if(id==='any')return '<div class="phead"><div><b>Every product</b><span>EMI, service and online price questions. Confirm price every time.</span></div></div>';
-  var lid=id==='flex'?'flexbreeze':id;
+  var lid=LID[id]||id;
   var p=LEARN.find(function(x){return x.id===lid});
   var yt=YT[lid];
   return '<div class="phead">'+thumb(lid,64)+'<div><b>'+esc(PNAME[id])+'</b><span>'+esc(p?p.tag:'')+'</span>'+(yt?'<a class="yt" href="'+yt+'" target="_blank" rel="noopener">Watch demo on YouTube</a>':'')+'</div></div>';
@@ -1997,7 +2284,7 @@ function lcard(p){
    +'<div class="lsec"><div class="fitgrid"><div><h3>Suits</h3><ul class="clean">'+liList(p.fits)+'</ul></div><div><h3>Not the best fit</h3><ul class="clean">'+liList(p.notFit)+'</ul></div></div></div>'
    +(p.flags.length?'<div class="flagbox"><b>Confirm before you quote</b><ul>'+liList(p.flags)+'</ul></div>':'')
    +'<div class="lsec"><h3>Quick check</h3>'+ck+'</div>'
-   +'<div class="lact">'+(YT[p.id]?'<a class="ghost ytb" href="'+YT[p.id]+'" target="_blank" rel="noopener">Watch demo on YouTube</a>':'')+(drillsFor(p.id==='flexbreeze'?'flex':p.id).length?'<button class="ghost" data-act="learnprac" data-p="'+(p.id==='flexbreeze'?'flex':p.id)+'">Practise this product</button>':'')+(YT[p.id]?'<span class="srcnote">Videos can show old prices or offers. Confirm price.</span>':'')+'<span class="srcnote">Sources: '+esc(p.src)+'. Confirm against the approved sheet.</span></div></details>';
+   +'<div class="lact">'+(YT[p.id]?'<a class="ghost ytb" href="'+YT[p.id]+'" target="_blank" rel="noopener">Watch demo on YouTube</a>':'')+(drillsFor(RLID[p.id]||p.id).length?'<button class="ghost" data-act="learnprac" data-p="'+(RLID[p.id]||p.id)+'">Practise this product</button>':'')+(YT[p.id]?'<span class="srcnote">Videos can show old prices or offers. Confirm price.</span>':'')+'<span class="srcnote">Sources: '+esc(p.src)+'. Confirm against the approved sheet.</span></div></details>';
 }
 function cmpTable(){
   var c=COMPARE.find(function(x){return x.id===S.cmp});if(!c)return '';
@@ -2026,7 +2313,7 @@ function vLearn(){
       body='<div class="empty" style="margin-top:12px">'+(S.lcat==='vac'?'HydroVac vs Dyson needs verified Dyson specs. It is not added yet. Dyson talking points are in Practice, under Answers.':'No head-to-head comparison for these yet.')+'</div>';
     }else{
       if(ids.indexOf(S.cmp)<0)S.cmp=ids[0];
-      var lab={combi:'Combi vs OneChef',crispi:'Crispi vs NA231',range:'Our air fryers',hp300:'HP300 vs Philips and Dyson',hydrovac:'HydroVac vs Dyson WashG1 and V12'};
+      var lab={combi:'Combi vs OneChef',crispi:'Crispi vs NA231',range:'Our air fryers',hp300:'HP300 vs Philips and Dyson',hydrovac:'HydroVac vs Dyson WashG1 and V12',vacrange:'Our vacuums'};
       var chips2=ids.length>1?'<div class="chips" role="group" aria-label="Comparison">'+ids.map(function(k){return '<button class="fchip" data-act="cmp" data-k="'+k+'" aria-pressed="'+(S.cmp===k)+'">'+lab[k]+'</button>'}).join('')+'</div>':'<div style="height:8px"></div>';
       if(S.cmp==='range'){
         var th0=CMP.cols.map(function(c){return '<th scope="col">'+esc(c)+'</th>'}).join('');
