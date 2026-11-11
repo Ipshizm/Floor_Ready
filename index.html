@@ -127,6 +127,7 @@ ul.clean{margin:0;padding-left:16px;display:grid;gap:5px;font-size:13px}
 .sayline{padding:8px 11px;background:var(--surface);border-left:4px solid var(--teal);font-weight:600}
 .care{padding:8px 11px;border-left:4px solid var(--warn);background:var(--surface)}
 .why{color:var(--muted);font-size:12.5px}
+.logout{width:100%;min-height:130px;margin-top:8px;font-size:12px;border:1.5px solid var(--line);border-radius:10px;padding:8px;background:var(--bg);color:var(--ink)}
 .yt{display:inline-block;margin-top:3px;font-size:12px;font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 .ytb{display:inline-block;text-decoration:none}
 .apx{display:grid;gap:8px;padding-bottom:10px;font-size:12.5px}
@@ -2111,6 +2112,36 @@ function scoreAll(){
   });
   return by;
 }
+/* Option A: promoters share their log by message. Only new logs go out by default.
+   Each line has 8 fields split by | so one Excel sheet can read every promoter's message. */
+var sharedMem=0;
+function lastShared(){var s=0;try{s=Number(localStorage.getItem('fr_shared'))||0}catch(e){}return Math.max(s,sharedMem)}
+function markShared(){sharedMem=Date.now();try{localStorage.setItem('fr_shared',String(sharedMem))}catch(e){}}
+function myRealLogs(){
+  var key=nkey(S.me.name);
+  return allRecs().filter(function(r){return r&&r.type==='real'&&nkey(r.name)===key&&r.text}).sort(function(a,b){return (a.ts||0)-(b.ts||0)});
+}
+function unsharedCount(){if(!S.me.name)return 0;var l=lastShared();return myRealLogs().filter(function(r){return (r.ts||0)>l}).length}
+function buildLogText(onlyNew){
+  var key=nkey(S.me.name);
+  var recs=allRecs().filter(function(r){return r&&nkey(r.name)===key});
+  var real=myRealLogs();
+  if(onlyNew){var l=lastShared();real=real.filter(function(r){return (r.ts||0)>l})}
+  var f=function(x){return String(x==null?'':x).replace(/\|/g,'/').replace(/\s+/g,' ').trim()};
+  var tag=key.replace(/[^a-z0-9]/g,'').slice(0,4);
+  var lines=['Floor Ready pilot log','From: '+S.me.name+(S.me.store?' ('+S.me.store+')':''),
+    'Questions in this message: '+real.length,'Drills done: '+recs.filter(function(r){return r.type==='drill'}).length+', coached chats: '+recs.filter(function(r){return r.type==='practice'}).length+', points: '+myStats().pts,''];
+  real.forEach(function(r){
+    var d=new Date(r.ts||0),ds=isNaN(d.getTime())?'':d.toISOString().slice(0,10);
+    lines.push([(r.ts||0).toString(36)+'-'+tag,S.me.name,S.me.store||'-',ds,r.product||'-',r.theme||'-',({closed:'Bought',think:'Will think',online:'Went online'}[r.result]||'-'),r.text].map(f).join(' | '));
+  });
+  return lines.join('\n');
+}
+function shareInfoHtml(){
+  var n=unsharedCount(),l=lastShared(),tot=S.me.name?myRealLogs().length:0;
+  var when=l?new Date(l).toLocaleDateString('en-IN',{day:'numeric',month:'short'}):'never';
+  return '<b>'+n+' new '+(n===1?'log':'logs')+' to share</b>. Last shared: '+when+'. Total logged on this phone: '+tot+'.';
+}
 function myStats(){var by=scoreAll();return by[nkey(S.me.name)]||{name:S.me.name,pts:0,week:0,logs:0,logsToday:0,days:{}}}
 function levelOf(p){var i=0;LEVELS.forEach(function(l,j){if(p>=l[0])i=j});return {name:LEVELS[i][1],from:LEVELS[i][0],next:LEVELS[i+1]||null}}
 function streakOf(days){var n=0,d=new Date(),today=dayStr(Date.now());for(var g=0;g<400;g++){var s=dayStr(d.getTime());if(days[s]){n++;d.setDate(d.getDate()-1)}else if(n===0&&s===today){d.setDate(d.getDate()-1)}else break}return n}
@@ -2163,7 +2194,7 @@ function vHome(){
    +'<div class="hcards">'
    +hcard('practice',IC.practice,'Practice','Shopper questions, best answers and drills.',nQ+' answers, '+DRILLS.length+' drills')
    +hcard('learn',th,'Learn','Specs, comparisons and plain-English terms.','Air fryers, purifiers, vacuums')
-   +hcard('log',IC.log,'Log','Log what shoppers ask. Earn points.',S.me.name?(st.logsToday?st.logsToday+' logged today':'Log one today for +10'):'Add your name to start')
+   +hcard('log',IC.log,'Log','Log what shoppers ask. Earn points.',S.me.name?(unsharedCount()>0?unsharedCount()+' to share with the pilot team':(st.logsToday?st.logsToday+' logged today':'Log one today for +10')):'Add your name to start')
    +'</div>';
 }
 
@@ -2248,6 +2279,7 @@ function vDrills(){
 }
 function vTalk(){
   var chips=pchips(false);
+  if(S.ai==='api'&&S.needCode&&!S.code)return chips+'<div class="card setup"><h2 class="h2">Enter the team access code</h2><p class="srcnote">Live chat is for the team. Ask your trainer for the code.</p><input id="accCode" type="password" autocomplete="off" placeholder="Access code" maxlength="60"><div class="actions"><button class="primary" data-act="savecode">Unlock live chat</button></div></div>';
   if(S.ai==='off')return chips+'<div class="banner">Live chat with a shopper runs only inside Claude. Use Drills here. They work anywhere.</div><div class="actions" style="margin-top:0"><button class="ghost" data-act="pmode" data-k="drills">Go to drills</button></div>';
   var list=PERSONAS.filter(function(p){var pp=PERSONA_PROD[p.id];return pp&&(S.pp==='any'||pp===S.pp||pp==='any')});
   var cards=list.map(function(p){
@@ -2260,7 +2292,7 @@ function vTalk(){
   return chips+'<p class="lede" style="margin:0 0 8px">Pick a shopper and talk it through by text or voice. You get coached at the end.</p>'
    +'<div class="seg" role="group" aria-label="Difficulty">'+lv(1,'Friendly')+lv(2,'Realistic')+lv(3,'Tough')+'</div>'
    +'<div class="personas">'+(cards||'<div class="empty">No shoppers for this product yet.</div>')+'</div>'
-   +'<p class="priv">These shoppers are composites built from what promoters told us. Coached rounds earn 5 points.</p>';
+   +'<p class="priv">These shoppers are composites built from what promoters told us. Coached rounds earn 5 points. Do not type real customer names or phone numbers.</p>';
 }
 
 
@@ -2378,7 +2410,7 @@ function vLog(){
   var pchips2='<div class="chips" role="group" aria-label="Product">'+LOGP.map(function(c){return '<button class="fchip" data-act="lgprod" data-p="'+c[0]+'" aria-pressed="'+(S.lgProd===c[0])+'">'+c[1]+'</button>'}).join('')+'</div>';
   var qchips='<div class="chips" role="group" aria-label="Common questions">'+QUICK.map(function(c){return '<button class="fchip" data-act="lgq" data-q="'+esc(c)+'" aria-pressed="false">'+esc(c)+'</button>'}).join('')+'</div>';
   var rchips='<div class="chips" role="group" aria-label="What happened">'+RESULTS.map(function(c){return '<button class="fchip" data-act="lgres" data-r="'+c[0]+'" aria-pressed="'+(S.lgRes===c[0])+'">'+c[1]+'</button>'}).join('')+'</div>';
-  var th=THEMES.map(function(t){return '<option>'+esc(t)+'</option>'}).join('');
+  var th='<option value="">Not sure</option>'+THEMES.map(function(t){return '<option>'+esc(t)+'</option>'}).join('');
   var mine=allRecs().filter(function(r){return r&&r.type==='real'&&S.me.name&&nkey(r.name)===nkey(S.me.name)&&r.text}).sort(function(a,b){return (b.ts||0)-(a.ts||0)}).slice(0,4);
   var seg=function(k,t){return '<button data-act="board" data-k="'+k+'" aria-pressed="'+(S.board===k)+'">'+t+'</button>'};
   return '<h1 class="h1">Log what shoppers ask</h1><p class="lede">Ten seconds. Every question helps the team and earns you points.</p>'
@@ -2394,6 +2426,7 @@ function vLog(){
    +'<div id="boardWrap" style="margin-top:6px">'+boardHtml()+'</div>'
    +(S.dbDocs?'':'<p class="srcnote" style="margin-top:6px">The team leaderboard works in the Claude version. On this page you see your own points only.</p>')+'</div>'
    +'<div class="sec"><h2 class="h2">Most asked this week</h2>'+topThemes()+'</div>'
+   +'<div class="sec"><h2 class="h2">Send your log to the pilot team</h2><p class="srcnote">Your logs are saved on this phone only. Share them once a week, for example on WhatsApp, so the pilot team can read them.</p><p id="shareInfo" style="margin-top:6px;font-size:13px">'+shareInfoHtml()+'</p><div class="actions" style="margin-top:8px"><button class="primary" data-act="sharelog">Share my new logs</button><button class="ghost" data-act="sharelogall">Share all my logs</button></div><textarea id="logOut" class="logout" readonly hidden aria-label="Your log"></textarea></div>'
    +'<details class="rules"><summary>How points and levels work</summary><div class="rb"><table>'
    +'<tr><td>Log a shopper question</td><td>+10</td></tr><tr><td>Question written in 20+ characters</td><td>+5</td></tr><tr><td>Best answer first try in a drill</td><td>+2</td></tr><tr><td>Coached live chat round</td><td>+5</td></tr></table>'
    +'<p>Daily limits: first 10 logs and first 3 coached rounds count. Levels: Rising 100, Pro 250, Floor Star 500 points.</p>'
@@ -2431,7 +2464,7 @@ function vSession(){
    +'<button class="primary" data-act="end" id="endBtn">Get coaching</button></div>'
    +'<div class="brief"><b>At your counter:</b> '+esc(p.store)+'</div>'
    +'<div class="thread" id="thread" aria-live="polite"></div>'
-   +'<div class="composer"><div class="c-row"><textarea id="ta" rows="1" placeholder="Say it the way you would on the floor" aria-label="Your reply"></textarea>'
+   +'<div class="composer"><div class="c-row"><textarea id="ta" rows="1" maxlength="400" placeholder="Say it the way you would on the floor" aria-label="Your reply"></textarea>'
    +(canMic?'<button class="icon-btn" id="micBtn" data-act="mic" aria-pressed="false" aria-label="Speak your reply">'+IC.mic+'</button>':'')
    +'<button class="icon-btn" data-act="send" id="sendBtn" aria-label="Send">'+IC.send+'</button></div>'
    +'<div class="c-tools"><button class="linkish" data-act="hint">Stuck? Get a question to ask</button>'
@@ -2443,7 +2476,7 @@ function drawThread(extra){
   var th=$('#thread');if(!th)return;
   var h=S.turns.map(function(t){return '<div class="b '+(t.who==='you'?'you':'shopper')+'">'+esc(t.text)+'</div>'}).join('');
   if(S.busy)h+='<div class="b shopper wait" id="typing">Typing&hellip;</div>';
-  if(S.lastErr)h+='<div class="note">'+esc(S.lastErr)+' <button data-act="retry">Try again</button></div>';
+  if(S.lastErr)h+='<div class="note">'+esc(S.lastErr)+(S.noRetry?'':' <button data-act="retry">Try again</button>')+'</div>';
   th.innerHTML=h;
   var last=th.lastElementChild;if(last)last.scrollIntoView({block:'end'});
 }
@@ -2487,28 +2520,43 @@ function buildMsgs(){
 function errCopy(e){
   var c=e&&e.code;
   if(c==='not_granted'){S.ai='off';return `Claude access was declined for this view. Reload and allow it to practise.`}
+  if(c==='bad_code'){S.code='';return `That access code is not right. Go back and enter it again.`}
+  if(c==='rejected')return (e&&e.msg)||`Keep to the shopper conversation.`;
   if(c==='rate_limited')return `Too many requests at once. Wait a few seconds, then try again.`;
   return `The shopper did not answer.`;
 }
 async function getReply(){
-  S.busy=true;S.lastErr=false;drawThread();setBusy(true);
+  S.busy=true;S.lastErr=false;S.noRetry=false;drawThread();setBusy(true);
   ctl=new AbortController();
   try{
-    var r=await sampleFn(buildMsgs(),{cache:false,modelTier:'quick',signal:ctl.signal,onText:function(u){var t=$('#typing');if(t){t.classList.remove('wait');t.textContent=u.text}}});
-    var txt=String(r.text||'').trim();
+    var txt,sig;
+    if(S.ai==='api'){
+      var j=await apiPost('/api/chat',{persona:S.persona.id,diff:S.diff,turns:S.turns.slice(-40).map(function(t){return {who:t.who,text:t.text,sig:t.sig}})},ctl.signal);
+      txt=String(j.text||'').trim();sig=j.sig;
+    }else{
+      var r=await sampleFn(buildMsgs(),{cache:false,modelTier:'quick',signal:ctl.signal,onText:function(u){var t=$('#typing');if(t){t.classList.remove('wait');t.textContent=u.text}}});
+      txt=String(r.text||'').trim();
+    }
     if(!txt)throw {code:'empty'};
-    S.turns.push({who:'shopper',text:txt});
+    S.turns.push({who:'shopper',text:txt,sig:sig});
     if(S.speak)say(txt);
   }catch(e){
     if(e&&e.code==='cancelled'){}
-    else{S.lastErr=errCopy(e)}
+    else{
+      S.lastErr=errCopy(e);
+      if(e&&e.code==='rejected'){
+        S.noRetry=true;
+        var lt=S.turns[S.turns.length-1];
+        if(lt&&lt.who==='you'){S.turns.pop();var ta2=$('#ta');if(ta2)ta2.value=lt.text}
+      }
+    }
   }finally{S.busy=false;setBusy(false);drawThread()}
 }
 function setBusy(b){var s=$('#sendBtn');if(s)s.disabled=b;var e=$('#endBtn');if(e)e.disabled=b}
 async function sendTxt(txt){
   txt=(txt||'').trim();
   if(!txt||S.busy)return;
-  if(!sampleFn){toast(`Practice is not available in this view.`);return}
+  if(!sampleFn&&S.ai!=='api'){toast(`Practice is not available in this view.`);return}
   stopSay();
   S.turns.push({who:'you',text:txt});
   var ta=$('#ta');if(ta){ta.value='';ta.style.height='auto'}
@@ -2577,7 +2625,11 @@ function norm(d){
 async function runCoach(){
   S.coaching=true;S.coachErr=null;S.debrief=null;S.saved=false;render();
   try{
-    var raw=await sampleFn.json(coachPrompt(),{modelTier:'default',cache:false});
+    var raw;
+    if(S.ai==='api'){
+      var cj=await apiPost('/api/coach',{persona:S.persona.id,diff:S.diff,turns:S.turns.slice(-40).map(function(t){return {who:t.who,text:t.text,sig:t.sig}})});
+      raw=cj.result;
+    }else{raw=await sampleFn.json(coachPrompt(),{modelTier:'default',cache:false})}
     S.debrief=norm(raw||{});
     if(!S.saved){
       S.saved=true;
@@ -2586,7 +2638,7 @@ async function runCoach(){
         scores:{diagnose:r.scores.diagnose.score,need:r.scores.need.score,link:r.scores.link.score,honest:r.scores.honest.score},themes:r.themes});
     }
   }catch(e){
-    S.coachErr=(e&&e.code==='not_granted')?`Claude access was declined for this view.`:(e&&e.code==='rate_limited')?`Too many requests at once. Wait a few seconds and try again.`:`Something went wrong reading the conversation. Your practice chat is still here.`;
+    S.coachErr=(e&&e.code==='rejected'&&e.msg)?e.msg:(e&&e.code==='bad_code')?`That access code is not right.`:(e&&e.code==='not_granted')?`Claude access was declined for this view.`:(e&&e.code==='rate_limited')?`Too many requests at once. Wait a few seconds and try again.`:`Something went wrong reading the conversation. Your practice chat is still here.`;
   }
   S.coaching=false;
   if(S.tab==='practice'&&S.view==='debrief')render();
@@ -2648,6 +2700,19 @@ document.addEventListener('click',function(e){
       stopSay();stopMic();S.view='debrief';runCoach();break;
     case 'recoach':runCoach();break;
     case 'again':startSession(S.persona.id);break;
+    case 'sharelog':case 'sharelogall':
+      if(!S.me.name){toast('Add your name first');break}
+      var onlyNew=(a==='sharelog');
+      if(onlyNew&&unsharedCount()===0){toast('No new logs to share. Log a question first, or tap Share all.');break}
+      var lt2=buildLogText(onlyNew);
+      var done=function(){markShared();var si=$('#shareInfo');if(si)si.innerHTML=shareInfoHtml();var hc=document.querySelector('.hcard .ht em');if(hc)hc.textContent=''};
+      if(navigator.share){navigator.share({title:'Floor Ready log',text:lt2}).then(done).catch(function(){})}
+      else{
+        var showBox=function(){var lo=$('#logOut');if(lo){lo.hidden=false;lo.value=lt2;lo.focus();lo.select()}toast('Select the text, copy it and send it');done()};
+        try{navigator.clipboard.writeText(lt2).then(function(){toast('Copied. Paste it in a message to the pilot team');done()},showBox)}catch(x){showBox()}
+      }
+      break;
+    case 'savecode':var ac=$('#accCode');S.code=(ac&&ac.value||'').trim();try{sessionStorage.setItem('fr_code',S.code)}catch(x){}render();break;
     case 'lcat':S.lcat=t.dataset.c;render();break;
     case 'lseg':S.lseg=t.dataset.k;render();break;
     case 'cmp':S.cmp=t.dataset.k;render();break;
@@ -2684,6 +2749,27 @@ document.addEventListener('input',function(e){
   if(id==='q2'){S.pq=e.target.value;var r2=$('#res2');if(r2)r2.innerHTML=searchHtml(S.pq);var pb=$('#pblock');if(pb)pb.hidden=!!S.pq.trim()}
 });
 
+/* ---------- LIVE CHAT SERVER (used when the page is not inside Claude) ---------- */
+async function probeApi(){
+  try{
+    var r=await fetch('/api/health',{cache:'no-store'});
+    if(!r.ok)return;
+    var j=await r.json();
+    if(j&&j.ok){S.ai='api';S.needCode=!!j.needsCode;try{S.code=sessionStorage.getItem('fr_code')||''}catch(e){}}
+  }catch(e){}
+}
+async function apiPost(path,body,signal){
+  var h={'content-type':'application/json'};if(S.code)h['x-access-code']=S.code;
+  var r=await fetch(path,{method:'POST',headers:h,body:JSON.stringify(body),signal:signal});
+  var j=null;try{j=await r.json()}catch(e){}
+  if(!r.ok){
+    var err=new Error((j&&j.error)||'failed');
+    err.code=r.status===429?'rate_limited':r.status===401?'bad_code':r.status===400?'rejected':'failed';
+    err.msg=j&&j.error;
+    throw err;
+  }
+  return j;
+}
 /* ---------- CAPABILITIES ---------- */
 (async function(){
   var lg=$('#logoImg');if(lg)lg.src=IMG.logo;
@@ -2702,7 +2788,7 @@ document.addEventListener('input',function(e){
           },function(){S.dbDocs=null});
         }
       }catch(e){}
-    }else S.ai='off';
+    }else{S.ai='off';await probeApi()}
   }catch(e){S.ai='off'}
   var ae=document.activeElement;
   if(!(ae&&/INPUT|TEXTAREA|SELECT/.test(ae.tagName))&&S.view!=='session'&&!S.coaching)render();
